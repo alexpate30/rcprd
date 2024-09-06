@@ -13,9 +13,11 @@ extract_test_data(
   t = NULL,
   t.varname = TRUE,
   time.prev = Inf,
-  time.post = Inf,
+  time.post = 0,
   lower.bound = -Inf,
   upper.bound = Inf,
+  numobs = 1,
+  keep.numunit = FALSE,
   db.open = NULL,
   db = NULL,
   db.filepath = NULL,
@@ -34,9 +36,11 @@ extract_test_data(
   t = NULL,
   t.varname = TRUE,
   time.prev = Inf,
-  time.post = Inf,
+  time.post = 0,
   lower.bound = -Inf,
   upper.bound = Inf,
+  numobs = 1,
+  keep.numunit = FALSE,
   db.open = NULL,
   db = NULL,
   db.filepath = NULL,
@@ -68,6 +72,10 @@ extract_test_data(
 \item{lower.bound}{Lower bound for returned values.}
 
 \item{upper.bound}{Upper bound for returned values.}
+
+\item{numobs}{Number of test results to return. Will return most recent values that are in the valid time and bound ranges.}
+
+\item{keep.numunit}{TRUE/FALSE whether to keep numunitid, medcodeid and obsdate in the outputted dataset}
 
 \item{db.open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
 

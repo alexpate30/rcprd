@@ -3,7 +3,7 @@
 #' @description
 #' Query an RSQLite database and a data frame with the time until first code of interest or censoring, and an event/censoring indicator.
 #'
-#' @param cohort Cohort of individuals to extract the 'history of' variable for.
+#' @param cohort Cohort of individuals to extract the variable for.
 #' @param varname.time Name of time variable in the outputted data frame.
 #' @param varname.indicator Name of event/censoring indicator in the outputted data frame.
 #' @param codelist Name of codelist (stored on hard disk) to query the database with.

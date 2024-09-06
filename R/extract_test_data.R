@@ -14,6 +14,8 @@
 #' @param time.post Number of days after index date to look for codes.
 #' @param lower.bound Lower bound for returned values.
 #' @param upper.bound Upper bound for returned values.
+#' @param numobs Number of test results to return. Will return most recent values that are in the valid time and bound ranges.
+#' @param keep.numunit TRUE/FALSE whether to keep numunitid, medcodeid and obsdate in the outputted dataset
 #' @param db.open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
 #' @param db Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.
 #' @param db.filepath Full filepath to SQLITE database on hard disk, to be queried.
@@ -73,9 +75,11 @@ extract_test_data <- function(cohort,
                               t = NULL,
                               t.varname = TRUE,
                               time.prev = Inf,
-                              time.post = Inf,
+                              time.post = 0,
                               lower.bound = -Inf,
                               upper.bound = Inf,
+                              numobs = 1,
+                              keep.numunit = FALSE,
                               db.open = NULL,
                               db = NULL,
                               db.filepath = NULL,
@@ -129,13 +133,18 @@ extract_test_data <- function(cohort,
                                 time.post = time.post,
                                 lower.bound = lower.bound,
                                 upper.bound = upper.bound,
-                                numobs = 10000)
+                                numobs = numobs)
 
   ### Create dataframe of cohort and the variable of interest
   variable.dat <- merge(dplyr::select(cohort, patid), variable.dat, by.x = "patid", by.y = "patid", all.x = TRUE)
 
   ### Reduce to variables of interest
-  variable.dat <- variable.dat[,c("patid", "value", "numunitid", "medcodeid", "obsdate")]
+  if (keep.numunit == FALSE){
+    variable.dat <- variable.dat[,c("patid", "value")]
+  } else {
+    variable.dat <- variable.dat[,c("patid", "value", "numunitid", "medcodeid", "obsdate")]
+  }
+
 
   ### Change name of variable to varname
   colnames(variable.dat)[colnames(variable.dat) == "value"] <- varname

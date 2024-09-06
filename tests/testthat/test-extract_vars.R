@@ -1,7 +1,7 @@
 ###
 ### Tests for variable extraction programs
 ###
-testthat::test_that("Test extract_ho, extract_time_until and extract_test_recent, and specification of underlying directory systems", {
+testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, and specification of underlying directory systems", {
 
   ### Connect
   aurum_extract <- connect_database(tempfile("temp.sqlite"))
@@ -68,8 +68,8 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_recent
   codelist <- "498521000006119"
 
   ###
-  ### Extract most recent test result using extract_test_recent
-  test_data <- extract_test_recent(pat,
+  ### Extract most recent test result using extract_test_data
+  test_data <- extract_test_data(pat,
                                    codelist.vector = codelist,
                                    indexdt = "fup_start",
                                    db.open = aurum_extract,
@@ -77,7 +77,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_recent
                                    return.output = TRUE)
 
   testthat::expect_equal(nrow(test_data), 6)
-  testthat::expect_equal(colnames(test_data), c("patid", "value", "numunitid"))
+  testthat::expect_equal(colnames(test_data), c("patid", "value"))
   testthat::expect_equal(test_data$value, c(48, NA,  NA,  NA,  18,  NA))
 
   ###
@@ -85,6 +85,9 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_recent
   test_data <- extract_test_data(pat,
                                  codelist.vector = codelist,
                                  indexdt = "fup_start",
+                                 time.post = Inf,
+                                 numobs = Inf,
+                                 keep.numunit = TRUE,
                                  db.open = aurum_extract,
                                  return.output = TRUE)
 
@@ -93,7 +96,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_recent
   testthat::expect_equal(test_data$value, c(48, 43, 36, 75, 41, NA, NA, 32, 18, NA))
 
   ###
-  ### Extract all test results using extract_test_data
+  ### Extract standard deviation of all test results using extract_test_var
   test_data <- extract_test_data_var(pat,
                                      codelist.vector = codelist,
                                      indexdt = "fup_start",

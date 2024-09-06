@@ -26,7 +26,7 @@ extract_time_until(
 )
 }
 \arguments{
-\item{cohort}{Cohort of individuals to extract the 'history of' variable for.}
+\item{cohort}{Cohort of individuals to extract the variable for.}
 
 \item{varname.time}{Name of time variable in the outputted data frame.}
 
