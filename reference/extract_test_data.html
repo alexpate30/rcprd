@@ -55,9 +55,11 @@ Query an RSQLite database and return a data frame containing the most recent tes
 <span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  t.varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  time.prev <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  time.post <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  time.post <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  lower.bound <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>,</span>
 <span>  upper.bound <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  numobs <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  keep.numunit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  db.open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -76,9 +78,11 @@ Query an RSQLite database and return a data frame containing the most recent tes
 <span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  t.varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  time.prev <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  time.post <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  time.post <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  lower.bound <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>,</span>
 <span>  upper.bound <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  numobs <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  keep.numunit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  db.open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -135,6 +139,14 @@ Query an RSQLite database and return a data frame containing the most recent tes
 
 <dt id="arg-upper-bound">upper.bound<a class="anchor" aria-label="anchor" href="#arg-upper-bound"></a></dt>
 <dd><p>Upper bound for returned values.</p></dd>
+
+
+<dt id="arg-numobs">numobs<a class="anchor" aria-label="anchor" href="#arg-numobs"></a></dt>
+<dd><p>Number of test results to return. Will return most recent values that are in the valid time and bound ranges.</p></dd>
+
+
+<dt id="arg-keep-numunit">keep.numunit<a class="anchor" aria-label="anchor" href="#arg-keep-numunit"></a></dt>
+<dd><p>TRUE/FALSE whether to keep numunitid, medcodeid and obsdate in the outputted dataset</p></dd>
 
 
 <dt id="arg-db-open">db.open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
@@ -212,9 +224,9 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</
 <span class="r-in"><span><span class="fu"><a href="cprd_extract.html">cprd_extract</a></span><span class="op">(</span><span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rAURUM"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use.set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-08-02 16:56:24.121695"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-08-02 16:56:24.135371"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-08-02 16:56:24.147364"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-09-06 11:14:18.107488"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-09-06 11:14:18.120131"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-09-06 11:14:18.131281"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
@@ -228,19 +240,19 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</
 <span class="r-in"><span>db.open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>time.prev <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
 <span class="r-in"><span>return.output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    patid value numunitid       medcodeid obsdate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    84        79 187341000000114   -5373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     10    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     12    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2    46        92 187341000000114   -5769</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      5    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      6    28        20 187341000000114  -14727</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     7    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     8    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     9    NA        NA            &lt;NA&gt;      NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    patid value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     10    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     12    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2    46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      5    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      6    28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     7    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     8    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     9    NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Connect</span></span></span>
@@ -250,9 +262,9 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</
 <span class="r-in"><span><span class="fu"><a href="cprd_extract.html">cprd_extract</a></span><span class="op">(</span><span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rAURUM"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use.set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-08-02 16:56:24.18049"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-08-02 16:56:24.193669"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-08-02 16:56:24.205152"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-09-06 11:14:18.161782"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-09-06 11:14:18.174062"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-09-06 11:14:18.184914"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
@@ -266,19 +278,19 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</
 <span class="r-in"><span>db.open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>time.prev <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
 <span class="r-in"><span>return.output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    patid value numunitid       medcodeid obsdate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    84        79 187341000000114   -5373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     10    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     12    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2    46        92 187341000000114   -5769</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      5    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      6    28        20 187341000000114  -14727</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     7    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     8    NA        NA            &lt;NA&gt;      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     9    NA        NA            &lt;NA&gt;      NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    patid value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     10    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     12    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2    46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      5    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      6    28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     7    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     8    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     9    NA</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
