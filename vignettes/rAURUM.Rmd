@@ -127,9 +127,9 @@ Next, we add medical diagnoses data from the observation files to this database 
 ```{r}
 add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rAURUM"), 
                 filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, overwrite = TRUE)
-add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rAURUM"), 
+add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_002.txt", package = "rAURUM"), 
                 filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
-add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rAURUM"), 
+add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_003.txt", package = "rAURUM"), 
                 filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
 ```
 
@@ -144,9 +144,9 @@ Note that when reading the raw data into R, the dates are converted into date fo
 ```{r}
 add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rAURUM"), 
                 filetype = "drugissue", subset.patids = c(1,3,4,6), db = aurum_extract, overwrite = TRUE)
-add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rAURUM"), 
+add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_002.txt", package = "rAURUM"), 
                 filetype = "drugissue", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
-add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rAURUM"), 
+add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_003.txt", package = "rAURUM"), 
                 filetype = "drugissue", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
 ```
 
