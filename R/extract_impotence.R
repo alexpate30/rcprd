@@ -100,12 +100,12 @@ extract_impotence <- function(cohort,
                           codelist.vector = codelist.drug.vector)
 
   ### Identify which individuals have a history of type 1 or type 2
-  cohort[,"med"] <- combine_query_boolean(cohort,
-                                          db.qry.med,
+  cohort[,"med"] <- combine_query_boolean(db.query = db.qry.med,
+                                          cohort = cohort,
                                           query.type = "obs")
 
-  cohort[,"drug"] <-   combine_query_boolean(cohort,
-                                             db.query = db.qry.drug,
+  cohort[,"drug"] <-   combine_query_boolean(db.query = db.qry.drug,
+                                             cohort = cohort,
                                              query.type = "drug",
                                              time.prev = drug.time.prev,
                                              time.post = 0,

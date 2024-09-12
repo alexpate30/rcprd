@@ -154,8 +154,8 @@ extract_time_until <- function(cohort,
 
   ## Combine query
   ## reduce.output = FALSE because we want access to censdt and
-  variable.dat <- combine_query(cohort,
-                                db.query = db.qry,
+  variable.dat <- combine_query(db.query = db.qry,
+                                cohort = cohort,
                                 query.type = query.type,
                                 time.prev = 0,
                                 time.post = Inf,

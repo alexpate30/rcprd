@@ -271,6 +271,7 @@ cprd_extract <- function(db,
 #' @param db.open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
 #' @param db Name of SQLITE database on hard disk, to be queried.
 #' @param db.filepath Full filepath to SQLITE database on hard disk, to be queried.
+#' @param db.cprd CPRD Aurum ('aurum') or gold ('gold').
 #' @param tab Name of table in SQLite database that is to be queried.
 #' @param codelist.vector Vector of codes to query the database with. This takes precedent over `codelist` if both are specified.
 #'
@@ -305,19 +306,31 @@ db_query <- function(codelist,
                      db.open = NULL,
                      db = NULL,
                      db.filepath = NULL,
+                     db.cprd = c("aurum", "gold"),
                      tab = c("observation", "drugissue", "hes_primary", "death"),
                      codelist.vector = NULL){
+
+  ### Match args
+  db.cprd <- match.arg(db.cprd)
 
   ### Extract codelist
   if (is.null(codelist.vector)){
     codelist <- data.table::fread(file = paste(getwd(),"/codelists/analysis/", codelist, ".csv", sep = ""),
                                   sep = ",", header = TRUE, colClasses = "character")
-    if (tab == "observation"){
-      codelist <- codelist$medcodeid
-    } else if (tab == "drugissue"){
-      codelist <- codelist$prodcodeid
-    } else if (tab %in% c("hes_primary", "death")){
+    if (tab %in% c("hes_primary", "death")){
       codelist <- codelist$ICD10
+    } else if (db.cprd == "aurum"){
+      if (tab == "observation"){
+        codelist <- codelist$medcodeid
+      } else if (tab == "drugissue"){
+        codelist <- codelist$prodcodeid
+      }
+    } else if (db.cprd == "gold"){
+      if (tab %in% c("clinical", "immunisation", "test")){
+        codelist <- codelist$medcode
+      } else if (tab == "therapy"){
+        codelist <- codelist$prodcode
+      }
     }
   } else {
     codelist <- codelist.vector
@@ -335,18 +348,28 @@ db_query <- function(codelist,
   }
 
   ### Create the query
-  if (tab == "observation"){
-    where_clause <- paste0("`medcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-    qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
-  } else if (tab == "drugissue"){
-    where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-    qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
-  } else if (tab == "hes_primary"){
+  if (tab == "hes_primary"){
     where_clause <- paste0("`ICD_PRIMARY` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
     qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
   } else if (tab == "death"){
     where_clause <- paste0("`cause` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
     qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+  } else if (db.cprd == "aurum"){
+    if (tab == "observation"){
+      where_clause <- paste0("`medcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+    } else if (tab == "drugissue"){
+      where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+    }
+  } else if (db.cprd == "gold"){
+    if (tab %in% c("clinical", "immunisation", "test")){
+      where_clause <- paste0("`medcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+    } else if (tab == "therapy"){
+      where_clause <- paste0("`prodcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+    }
   }
 
   ### Run the query and turn into data.table
@@ -358,22 +381,54 @@ db_query <- function(codelist,
     RSQLite::dbDisconnect(mydb)
   }
 
+  ### Assign class
+  if (db.cprd == "aurum"){
+    class(db.query) <- append("aurum", class(db.query))
+  } else if (db.cprd == "gold"){
+    class(db.query) <- append("gold", class(db.query))
+  }
+
   ### Return query
   return(db.query)
 
 }
 
-
 #' Combine a database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
 #'
 #' @description
+#' An S3 generic function that can be used on database queries from Aurum or GOLD extracts.
 #' Combine a database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
 #' `cohort` must contain variables `patid` and `indexdt`. The database query will be merged with the cohort by variable \code{patid}.
 #' If an individual has at least `numobs` observations between `time.prev` days prior to \code{indexdt}, and `time.post` days after
 #'  \code{indexdt}, a 1 will be returned, 0 otherwise. The `type` of query must be specified for appropriate data manipulation.
 #'
-#' @param cohort Cohort to combine with the database query.
 #' @param db.query Output from database query (ideally obtained through \code{\link{db_query}}).
+#' @param cohort Cohort to combine with the database query.
+#' @param query.type Type of query
+#' @param time.prev Number of days prior to index date to look for codes.
+#' @param time.post Number of days after index date to look for codes.
+#' @param numobs Number of observations required to be observed in specified time window to return a 1.
+#'
+#' @export
+combine_query_boolean <- function(db.query,
+                                  cohort,
+                                  query.type = c("observation", "drugissue", "hes_primary"),
+                                  time.prev = Inf,
+                                  time.post = 0,
+                                  numobs = 1){
+  UseMethod("combine_query_boolean")
+}
+
+#' Combine an aurum database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
+#'
+#' @description
+#' An S3 method that can be used on database queries from Aurum extracts. Combine a database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
+#' `cohort` must contain variables `patid` and `indexdt`. The database query will be merged with the cohort by variable \code{patid}.
+#' If an individual has at least `numobs` observations between `time.prev` days prior to \code{indexdt}, and `time.post` days after
+#'  \code{indexdt}, a 1 will be returned, 0 otherwise. The `type` of query must be specified for appropriate data manipulation.
+#'
+#' @param db.query Output from database query (ideally obtained through \code{\link{db_query}}).
+#' @param cohort Cohort to combine with the database query.
 #' @param query.type Type of query
 #' @param time.prev Number of days prior to index date to look for codes.
 #' @param time.post Number of days after index date to look for codes.
@@ -381,38 +436,13 @@ db_query <- function(codelist,
 #'
 #' @returns A 0/1 vector.
 #'
-#' @examples
-#' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
-#'
-#' ## Add observation data from all observation files in specified directory
-#' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
-#' filetype = "observation")
-#'
-#' ## Query database for a specific medcode
-#' db.query <- db_query(db.open = aurum_extract,
-#' tab ="observation",
-#' codelist.vector = "187341000000114")
-#'
-#' ## Define cohort
-#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
-#'
-#' ### Add an index date to pat
-#' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
-#'
-#' ## Combine query with cohort creating a 'history of' boolean variable
-#' combine_query_boolean(cohort = pat,
-#' db.query = db.query,
-#' query.type = "observation")
-#'
 #' @export
-combine_query_boolean <- function(cohort,
-                                  db.query,
-                                  query.type = c("observation", "drugissue", "hes_primary"),
-                                  time.prev = Inf,
-                                  time.post = 0,
-                                  numobs = 1){
+combine_query_boolean.aurum <- function(db.query,
+                                        cohort,
+                                        query.type = c("observation", "drugissue", "hes_primary"),
+                                        time.prev = Inf,
+                                        time.post = 0,
+                                        numobs = 1){
 
   ### Merge cohort with the database query keeping observations that are in both
   cohort.qry <- merge(cohort, db.query, by.x = "patid", by.y = "patid")
@@ -453,13 +483,55 @@ combine_query_boolean <- function(cohort,
 #' Combine a database query with a cohort.
 #'
 #' @description
+#' An S3 generic function that can be used on database queries from Aurum or GOLD extracts.
 #' Combine a database query with a cohort, only retaining observations between `time.prev` days prior to \code{indexdt}, and `time.post` days after
 #'  \code{indexdt}, and for test data with values between `lower.bound` and `upper.bound`. The most recent `numobs` observations will be returned.
 #'  `cohort` must contain variables `patid` and `indexdt`. The `type` of query must be specified for appropriate data manipulation. Input `type = med` if
 #'  interested in medical diagnoses from the observation file, and `type = test` if interseted in test data from the observation file.
 #'
-#' @param cohort Cohort to combine with the database query.
 #' @param db.query Output from database query (ideally obtained through \code{\link{db_query}}).
+#' @param cohort Cohort to combine with the database query.
+#' @param query.type Type of query
+#' @param time.prev Number of days prior to index date to look for codes.
+#' @param time.post Number of days after index date to look for codes.
+#' @param lower.bound Lower bound for returned values when `query.type = "test"`.
+#' @param upper.bound Upper bound for returned values when `query.type = "test"`.
+#' @param numobs Number of observations to be returned.
+#' @param value.na.rm If TRUE will remove data with NA in the \code{value} column of the queried data and remove values outside of `lower.bound` and `upper.bound` when `query.type = "test"`.
+#' @param earliest.values If TRUE will return the earliest values as opposed to most recent.
+#' @param reduce.output If TRUE will reduce output to just `patid`, `obsdate`, medical/product code, and test `value`.
+#'
+#' @details `value.na.rm = FALSE` may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
+#' but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
+#'
+#' @returns A data.table with observations that meet specified criteria.
+#'
+#' @export
+combine_query <- function(db.query,
+                          cohort,
+                          query.type = c("med", "test", "drugissue", "hes_primary", "death"),
+                          time.prev = Inf,
+                          time.post = Inf,
+                          lower.bound = -Inf,
+                          upper.bound = Inf,
+                          numobs = 1,
+                          value.na.rm = TRUE,
+                          earliest.values = FALSE,
+                          reduce.output = TRUE){
+  UseMethod("combine_query")
+}
+
+#' Combine an aurum database query with a cohort.
+#'
+#' @description
+#' An S3 method that can be used on database queries from Aurum extracts.
+#' Combine a database query with a cohort, only retaining observations between `time.prev` days prior to \code{indexdt}, and `time.post` days after
+#'  \code{indexdt}, and for test data with values between `lower.bound` and `upper.bound`. The most recent `numobs` observations will be returned.
+#'  `cohort` must contain variables `patid` and `indexdt`. The `type` of query must be specified for appropriate data manipulation. Input `type = med` if
+#'  interested in medical diagnoses from the observation file, and `type = test` if interseted in test data from the observation file.
+#'
+#' @param db.query Output from database query (ideally obtained through \code{\link{db_query}}).
+#' @param cohort Cohort to combine with the database query.
 #' @param query.type Type of query
 #' @param time.prev Number of days prior to index date to look for codes.
 #' @param time.post Number of days after index date to look for codes.
@@ -502,17 +574,17 @@ combine_query_boolean <- function(cohort,
 #' numobs = 3)
 #'
 #' @export
-combine_query <- function(cohort,
-                          db.query,
-                          query.type = c("med", "test", "drugissue", "hes_primary", "death"),
-                          time.prev = Inf,
-                          time.post = Inf,
-                          lower.bound = -Inf,
-                          upper.bound = Inf,
-                          numobs = 1,
-                          value.na.rm = TRUE,
-                          earliest.values = FALSE,
-                          reduce.output = TRUE){
+combine_query.aurum <- function(db.query,
+                                cohort,
+                                query.type = c("med", "test", "drugissue", "hes_primary", "death"),
+                                time.prev = Inf,
+                                time.post = Inf,
+                                lower.bound = -Inf,
+                                upper.bound = Inf,
+                                numobs = 1,
+                                value.na.rm = TRUE,
+                                earliest.values = FALSE,
+                                reduce.output = TRUE){
 
   ### Merge cohort with the database query keeping observations that are in both
   cohort.qry <- merge(cohort, db.query, by.x = "patid", by.y = "patid")
@@ -578,6 +650,7 @@ combine_query <- function(cohort,
   return(cohort.qry)
 
 }
+
 
 #' Internal function to prepare cohort when extracting variables.
 #'

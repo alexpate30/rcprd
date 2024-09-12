@@ -167,34 +167,34 @@ extract_smoking <- function(cohort,
   ### We treat this as test data, because smoking status may be identified through number of cigarettes smoked per day
   ### We specify value.na.rm = FALSE, as we want to keep the NA values, because smoking status can also be identified through
   ### the medcodeid itself.
-  smoking.non <- combine_query(cohort,
-                               db.qry.non,
+  smoking.non <- combine_query(db.query = db.qry.non,
+                               cohort= cohort,
                                query.type = "test",
-                               numobs = 100,
+                               numobs = Inf,
                                value.na.rm = FALSE)
 
-  smoking.ex <- combine_query(cohort,
-                              db.qry.ex,
+  smoking.ex <- combine_query(db.query = db.qry.ex,
+                              cohort = cohort,
                               query.type = "test",
-                              numobs = 100,
+                              numobs = Inf,
                               value.na.rm = FALSE)
 
-  smoking.light <- combine_query(cohort,
-                                 db.qry.light,
+  smoking.light <- combine_query(db.query = db.qry.light,
+                                 cohort = cohort,
                                  query.type = "test",
-                                 numobs = 100,
+                                 numobs = Inf,
                                  value.na.rm = FALSE)
 
-  smoking.mod <- combine_query(cohort,
-                               db.qry.mod,
+  smoking.mod <- combine_query(db.query = db.qry.mod,
+                               cohort = cohort,
                                query.type = "test",
-                               numobs = 100,
+                               numobs = Inf,
                                value.na.rm = FALSE)
 
-  smoking.heavy <- combine_query(cohort,
-                                 db.qry.heavy,
+  smoking.heavy <- combine_query(db.query = db.qry.heavy,
+                                 cohort = cohort,
                                  query.type = "test",
-                                 numobs = 100,
+                                 numobs = Inf,
                                  value.na.rm = FALSE)
 
   ### Currently heavy and moderate have no number of cigarettes smoked per day data

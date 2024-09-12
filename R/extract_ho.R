@@ -94,7 +94,15 @@ extract_ho <- function(cohort,
   #       out.filepath = NULL
   #       out.subdir = NULL
   #       return.output = TRUE
-
+  # cohort <- pat
+  # codelist = NULL
+  # codelist.vector = "187341000000114"
+  # indexdt = "fup_start"
+  # db.open = aurum_extract
+  # db = NULL
+  # db.filepath = NULL
+  # tab = "observation"
+  # t <- NULL
   ### Preparation
   ## Add index date variable to cohort and change indexdt based on t
   cohort <- prep_cohort(cohort, indexdt, t)
@@ -113,11 +121,11 @@ extract_ho <- function(cohort,
                      db = db,
                      db.filepath = db.filepath,
                      tab = tab,
-                     codelist.vector)
+                     codelist.vector = codelist.vector)
 
   ### Identify which individuals have a history of XXX
-  cohort[,"ho"] <- combine_query_boolean(cohort,
-                                         db.query = db.qry,
+  cohort[,"ho"] <- combine_query_boolean(db.query = db.qry,
+                                         cohort = cohort,
                                          query.type = tab,
                                          time.prev = time.prev,
                                          time.post = time.post,

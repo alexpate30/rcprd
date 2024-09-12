@@ -121,12 +121,12 @@ extract_diabetes <- function(cohort,
                            codelist.vector = codelist.type2.vector)
 
   ### Identify which individuals have a history of type 1 or type 2
-  cohort[,"t1dia"] <- combine_query_boolean(cohort,
-                                            db.qry.type1,
+  cohort[,"t1dia"] <- combine_query_boolean(db.query = db.qry.type1,
+                                            cohort = cohort,
                                             query.type = "obs")
 
-  cohort[,"t2dia"] <- combine_query_boolean(cohort,
-                                            db.qry.type2,
+  cohort[,"t2dia"] <- combine_query_boolean(db.query = db.qry.type2,
+                                            cohort = cohort,
                                             query.type = "obs")
 
   ### Create the varaible of interest from these

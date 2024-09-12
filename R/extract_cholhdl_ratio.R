@@ -151,22 +151,22 @@ extract_cholhdl_ratio <- function(cohort,
                          codelist.vector = codelist.hdl.vector)
 
   ### Get latest test result for ratio, chol and hdl from the last five years
-  variable.dat.ratio <- combine_query(cohort,
-                                      db.qry.ratio,
+  variable.dat.ratio <- combine_query(db.query = db.qry.ratio,
+                                      cohort= cohort,
                                       query.type = "test",
                                       time.prev = time.prev,
                                       time.post = time.post,
                                       lower.bound = lower.bound,
                                       upper.bound = upper.bound)
 
-  variable.dat.chol <- combine_query(cohort,
-                                     db.qry.chol,
+  variable.dat.chol <- combine_query(db.query = db.qry.chol,
+                                     cohort = cohort,
                                      query.type = "test",
                                      time.prev = time.prev,
                                      time.post = time.post)
 
-  variable.dat.hdl <- combine_query(cohort,
-                                    db.qry.hdl,
+  variable.dat.hdl <- combine_query(db.query = db.qry.hdl,
+                                    cohort = cohort,
                                     query.type = "test",
                                     time.prev = time.prev,
                                     time.post = time.post)

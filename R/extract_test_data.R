@@ -126,8 +126,8 @@ extract_test_data <- function(cohort,
                      codelist.vector = codelist.vector)
 
   ### Get test data for individuals in cohort, within time range and remove outliers
-  variable.dat <- combine_query(cohort,
-                                db.qry,
+  variable.dat <- combine_query(db.query = db.qry,
+                                cohort = cohort,
                                 query.type = "test",
                                 time.prev = time.prev,
                                 time.post = time.post,

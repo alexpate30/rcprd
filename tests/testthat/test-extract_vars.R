@@ -39,11 +39,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract a medication history of type variable using extract_ho
   ho.drug <- extract_ho(pat,
-                   codelist.vector = "3092241000033113",
-                   indexdt = "fup_start",
-                   db.open = aurum_extract,
-                   tab = "drugissue",
-                   return.output = TRUE)
+                        codelist.vector = "3092241000033113",
+                        indexdt = "fup_start",
+                        db.open = aurum_extract,
+                        tab = "drugissue",
+                        return.output = TRUE)
 
   testthat::expect_equal(nrow(ho.drug), 6)
   testthat::expect_equal(colnames(ho.drug), c("patid", "ho"))
@@ -70,11 +70,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract most recent test result using extract_test_data
   test_data <- extract_test_data(pat,
-                                   codelist.vector = codelist,
-                                   indexdt = "fup_start",
-                                   db.open = aurum_extract,
-                                   time.prev = Inf,
-                                   return.output = TRUE)
+                                 codelist.vector = codelist,
+                                 indexdt = "fup_start",
+                                 db.open = aurum_extract,
+                                 time.prev = Inf,
+                                 return.output = TRUE)
 
   testthat::expect_equal(nrow(test_data), 6)
   testthat::expect_equal(colnames(test_data), c("patid", "value"))
@@ -226,14 +226,14 @@ testthat::test_that("BMI", {
 
   ### Extract BMI
   var <- extract_bmi(cohort = pat,
-                          codelist.bmi.vector = 498521000006119,
-                          codelist.weight.vector = 401539014,
-                          codelist.height.vector = 13483031000006114,
-                          indexdt = "indexdt",
-                          time.prev = Inf,
-                          time.post = Inf,
-                          db.open = aurum_extract,
-                          return.output = TRUE)
+                     codelist.bmi.vector = 498521000006119,
+                     codelist.weight.vector = 401539014,
+                     codelist.height.vector = 13483031000006114,
+                     indexdt = "indexdt",
+                     time.prev = Inf,
+                     time.post = Inf,
+                     db.open = aurum_extract,
+                     return.output = TRUE)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "bmi"))
@@ -265,14 +265,14 @@ testthat::test_that("Cholhdl ratio", {
 
   ### Extract cholhdl_ratio
   var <- extract_cholhdl_ratio(cohort = pat,
-                     codelist.ratio.vector = 498521000006119,
-                     codelist.chol.vector = 401539014,
-                     codelist.hdl.vector = 13483031000006114,
-                     indexdt = "indexdt",
-                     time.prev = Inf,
-                     time.post = Inf,
-                     db.open = aurum_extract,
-                     return.output = TRUE)
+                               codelist.ratio.vector = 498521000006119,
+                               codelist.chol.vector = 401539014,
+                               codelist.hdl.vector = 13483031000006114,
+                               indexdt = "indexdt",
+                               time.prev = Inf,
+                               time.post = Inf,
+                               db.open = aurum_extract,
+                               return.output = TRUE)
 
   ## NB: Value for cholhdl_ratio test are same as BMI test, because its the "ratio" medcode id that is finding the values,
   ## As opposed to finding them seperately and calculating the value from the components, which would be different
@@ -306,10 +306,10 @@ testthat::test_that("Diabetes", {
 
   ### Extract diabetes
   var <- extract_diabetes(cohort = pat,
-                     codelist.type1.vector = 498521000006119,
-                     codelist.type2.vector = 401539014,
-                     indexdt = "indexdt",
-                     db.open = aurum_extract)
+                          codelist.type1.vector = 498521000006119,
+                          codelist.type2.vector = 401539014,
+                          indexdt = "indexdt",
+                          db.open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "diabetes"))
@@ -346,8 +346,8 @@ testthat::test_that("Smoking", {
                          codelist.light.vector = 128011000000115,
                          codelist.mod.vector = 380389013,
                          codelist.heavy.vector = 13483031000006114,
-                          indexdt = "indexdt",
-                          db.open = aurum_extract)
+                         indexdt = "indexdt",
+                         db.open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "smoking"))
@@ -379,10 +379,10 @@ testthat::test_that("Impotence", {
 
   ### Extract impotence
   var <- extract_impotence(cohort = pat,
-                         codelist.med.vector = 498521000006119,
-                         codelist.drug.vector = 3092241000033113,
-                         indexdt = "indexdt",
-                         db.open = aurum_extract)
+                           codelist.med.vector = 498521000006119,
+                           codelist.drug.vector = 3092241000033113,
+                           indexdt = "indexdt",
+                           db.open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "impotence"))

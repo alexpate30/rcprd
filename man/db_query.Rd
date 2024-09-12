@@ -9,6 +9,7 @@ db_query(
   db.open = NULL,
   db = NULL,
   db.filepath = NULL,
+  db.cprd = c("aurum", "gold"),
   tab = c("observation", "drugissue", "hes_primary", "death"),
   codelist.vector = NULL
 )
@@ -21,6 +22,8 @@ db_query(
 \item{db}{Name of SQLITE database on hard disk, to be queried.}
 
 \item{db.filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
+
+\item{db.cprd}{CPRD Aurum ('aurum') or gold ('gold').}
 
 \item{tab}{Name of table in SQLite database that is to be queried.}
 

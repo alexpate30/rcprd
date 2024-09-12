@@ -95,26 +95,36 @@ extract_bmi <- function(cohort,
                         out.filepath = NULL,
                         return.output = TRUE){
 
-  #         varname = NULL
-  #         cohort = cohortZ
-  #         codelist.bmi = "edh_bmi_medcodeid"
-  #         codelist.height = "height_medcodeid"
-  #         codelist.weight = "weight_medcodeid"
-  #         indexdt = "fup_start"
-  #         t = 0
-  #         t.varname = TRUE
-  #         time.prev = round(365.25*5)
-  #         time.post = 0
-  #         lower.bound = 18
-  #         upper.bound = 47
-  #         db = "aurum_small"
-  #         db.filepath = NULL
-  #         out.save.disk = FALSE
-  #         out.filepath = NULL
-  #         out.subdir = NULL
-  #         return.output = TRUE
-
+          # varname = NULL
+          # cohort = cohortZ
+          # codelist.bmi = "edh_bmi_medcodeid"
+          # codelist.height = "height_medcodeid"
+          # codelist.weight = "weight_medcodeid"
+          # indexdt = "fup_start"
+          # t = 0
+          # t.varname = TRUE
+          # time.prev = round(365.25*5)
+          # time.post = 0
+          # lower.bound = 18
+          # upper.bound = 47
+          # db = "aurum_small"
+          # db.filepath = NULL
+          # out.save.disk = FALSE
+          # out.filepath = NULL
+          # out.subdir = NULL
+          # return.output = TRUE
+          #
+          #
+          # codelist.bmi.vector = 498521000006119
+          # codelist.weight.vector = 401539014
+          # codelist.height.vector = 13483031000006114
+          # indexdt = "indexdt"
+          # time.prev = Inf
+          # time.post = Inf
+          # db.open = aurum_extract
+          # return.output = TRUE
   ### ADD TEST TO ENSURE THEY SPECIFY TIME FRAME
+
 
   ### Preparation
   ## Add index date variable to cohort and change indexdt based on t
@@ -137,8 +147,8 @@ extract_bmi <- function(cohort,
                          tab = "observation",
                          codelist.vector = codelist.bmi.vector)
 
-  variable.dat.bmi <- combine_query(cohort,
-                                    db.qry.bmi,
+  variable.dat.bmi <- combine_query(db.query = db.qry.bmi,
+                                    cohort = cohort,
                                     query.type = "test",
                                     time.prev = time.prev,
                                     time.post = time.post,
@@ -153,8 +163,8 @@ extract_bmi <- function(cohort,
                             tab = "observation",
                             codelist.vector = codelist.height.vector)
 
-  variable.dat.height <- combine_query(cohort,
-                                       db.qry.height,
+  variable.dat.height <- combine_query(db.query = db.qry.height,
+                                       cohort = cohort,
                                        query.type = "test",
                                        time.prev = time.prev,
                                        time.post = time.post)
@@ -167,17 +177,17 @@ extract_bmi <- function(cohort,
                             tab = "observation",
                             codelist.vector = codelist.weight.vector)
 
-  variable.dat.weight <- combine_query(cohort,
-                                       db.qry.weight,
+  variable.dat.weight <- combine_query(db.query = db.qry.weight,
+                                       cohort = cohort,
                                        query.type = "test",
                                        time.prev = time.prev,
                                        time.post = time.post)
 
   ### For the height query, we need to rescale those without numunitid = 173, 432 or 3202 from cm to m
-  db.qry.height <- dplyr::mutate(db.qry.height, value = dplyr::case_when(numunitid %in% c(173, 432, 3202) ~ value,
+  variable.dat.height <- dplyr::mutate(variable.dat.height, value = dplyr::case_when(numunitid %in% c(173, 432, 3202) ~ value,
                                                                          !(numunitid %in% c(173, 432, 3202)) ~ value/100))
   ### For the weight query, we need to rescale those with numunitid = 1691, 2318, 2997 or 6265 from stone to kg
-  db.qry.height <- dplyr::mutate(db.qry.height, value = dplyr::case_when(numunitid %in% c(1691, 2318, 2997, 6265) ~ 6.35029*value,
+  variable.dat.weight <- dplyr::mutate(variable.dat.weight, value = dplyr::case_when(numunitid %in% c(1691, 2318, 2997, 6265) ~ 6.35029*value,
                                                                          !(numunitid %in% c(1691, 2318, 2997, 6265)) ~ value))
 
   ### Calculate bmi's estimated from height/weight
