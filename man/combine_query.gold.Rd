@@ -7,7 +7,7 @@
 \method{combine_query}{gold}(
   db.query,
   cohort,
-  query.type = c("med", "test", "drugissue", "hes_primary", "death"),
+  query.type = c("med", "drug", "test", "hes_primary", "death"),
   time.prev = Inf,
   time.post = Inf,
   lower.bound = -Inf,

@@ -7,8 +7,7 @@
 \method{combine_query_boolean}{gold}(
   db.query,
   cohort,
-  query.type = c("observation", "drugissue", "clinical", "immunisation", "test",
-    "therapy", "hes_primary"),
+  query.type,
   time.prev = Inf,
   time.post = 0,
   numobs = 1

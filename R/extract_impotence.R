@@ -102,7 +102,7 @@ extract_impotence <- function(cohort,
   ### Identify which individuals have a history of type 1 or type 2
   cohort[,"med"] <- combine_query_boolean(db.query = db.qry.med,
                                           cohort = cohort,
-                                          query.type = "obs")
+                                          query.type = "med")
 
   cohort[,"drug"] <-   combine_query_boolean(db.query = db.qry.drug,
                                              cohort = cohort,

@@ -354,7 +354,7 @@ pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
 ### Combine query with cohort creating a boolean variable denoting 'history of'
 combine.query.boolean <- combine_query_boolean(cohort = pat,
                                                db.query = db.query,
-                                               query.type = "observation")
+                                               query.type = "med")
   
 combine.query.boolean
 ```
@@ -386,7 +386,7 @@ combine.query
 RSQLite::dbDisconnect(aurum_extract)
 ```
 
-If the query was from the `drugissue` table, then `query.type = "drugissue"` should be specified, and the date of the observations and the *prodcodeid* will be returned. The functions in this section do little processing of the extracted data, and further manipulation is required in order to define most variables.
+If the query was from the `drugissue` table, then `query.type = "drug"` should be specified, and the date of the observations and the *prodcodeid* will be returned. The functions in this section do little processing of the extracted data, and further manipulation is required in order to define most variables.
 
 ### Saving extracted variables directly to a disk drive, and utilising rAURUMs suggested directory system
 

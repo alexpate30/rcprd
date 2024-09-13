@@ -149,8 +149,12 @@ extract_time_until <- function(cohort,
 
   ### Identify the first CVD event happening after the indexdt
   ## If tab = "observation", this could be a query.type of "med" or "test", choose "med" as not interested in test results themselves
-  query.type <- tab
-  if (query.type == "observation"){query.type <- "med"}
+  ### Assign query.type
+  if (tab == "observation"){
+    query.type == "med"
+  } else if (tab == "drugissue"){
+    query.type == "drug"
+  }
 
   ## Combine query
   ## reduce.output = FALSE because we want access to censdt and

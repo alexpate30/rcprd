@@ -7,7 +7,21 @@
 \method{combine_query}{aurum}(
   db.query,
   cohort,
-  query.type = c("med", "test", "drugissue", "hes_primary", "death"),
+  query.type = c("med", "drug", "test", "hes_primary", "death"),
+  time.prev = Inf,
+  time.post = Inf,
+  lower.bound = -Inf,
+  upper.bound = Inf,
+  numobs = 1,
+  value.na.rm = TRUE,
+  earliest.values = FALSE,
+  reduce.output = TRUE
+)
+
+\method{combine_query}{aurum}(
+  db.query,
+  cohort,
+  query.type = c("med", "drug", "test", "hes_primary", "death"),
   time.prev = Inf,
   time.post = Inf,
   lower.bound = -Inf,
@@ -43,8 +57,16 @@
 }
 \value{
 A data.table with observations that meet specified criteria.
+
+A data.table with observations that meet specified criteria.
 }
 \description{
+An S3 method that can be used on database queries from Aurum extracts.
+Combine a database query with a cohort, only retaining observations between \code{time.prev} days prior to \code{indexdt}, and \code{time.post} days after
+\code{indexdt}, and for test data with values between \code{lower.bound} and \code{upper.bound}. The most recent \code{numobs} observations will be returned.
+\code{cohort} must contain variables \code{patid} and \code{indexdt}. The \code{type} of query must be specified for appropriate data manipulation. Input \code{type = med} if
+interested in medical diagnoses from the observation file, and \code{type = test} if interseted in test data from the observation file.
+
 An S3 method that can be used on database queries from Aurum extracts.
 Combine a database query with a cohort, only retaining observations between \code{time.prev} days prior to \code{indexdt}, and \code{time.post} days after
 \code{indexdt}, and for test data with values between \code{lower.bound} and \code{upper.bound}. The most recent \code{numobs} observations will be returned.
@@ -54,8 +76,36 @@ interested in medical diagnoses from the observation file, and \code{type = test
 \details{
 \code{value.na.rm = FALSE} may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
 but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
+
+\code{value.na.rm = FALSE} may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
+but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
 }
 \examples{
+## Create connection to a temporary database
+aurum_extract <- connect_database(tempfile("temp.sqlite"))
+
+## Add observation data from all observation files in specified directory
+cprd_extract(db = aurum_extract,
+filepath = system.file("aurum_data", package = "rAURUM"),
+filetype = "observation")
+
+## Query database for a specific medcode
+db.query <- db_query(db.open = aurum_extract,
+tab ="observation",
+codelist.vector = "187341000000114")
+
+## Define cohort
+pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+
+### Add an index date to pat
+pat$indexdt <- as.Date("01/01/2020", format = "\%d/\%m/\%Y")
+
+## Combine query with cohort retaining most recent three records
+combine_query(cohort = pat,
+db.query = db.query,
+query.type = "med",
+numobs = 3)
+
 ## Create connection to a temporary database
 aurum_extract <- connect_database(tempfile("temp.sqlite"))
 

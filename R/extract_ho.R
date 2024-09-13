@@ -123,10 +123,17 @@ extract_ho <- function(cohort,
                      tab = tab,
                      codelist.vector = codelist.vector)
 
+  ### Assign query.type
+  if (tab == "observation"){
+    query.type == "med"
+  } else if (tab == "drugissue"){
+    query.type == "drug"
+  }
+
   ### Identify which individuals have a history of XXX
   cohort[,"ho"] <- combine_query_boolean(db.query = db.qry,
                                          cohort = cohort,
-                                         query.type = tab,
+                                         query.type = query.type,
                                          time.prev = time.prev,
                                          time.post = time.post,
                                          numobs = numobs)
