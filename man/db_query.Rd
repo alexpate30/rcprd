@@ -10,7 +10,8 @@ db_query(
   db = NULL,
   db.filepath = NULL,
   db.cprd = c("aurum", "gold"),
-  tab = c("observation", "drugissue", "hes_primary", "death"),
+  tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy",
+    "hes_primary", "death"),
   codelist.vector = NULL
 )
 }

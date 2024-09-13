@@ -7,7 +7,8 @@
 combine_query_boolean(
   db.query,
   cohort,
-  query.type = c("observation", "drugissue", "hes_primary"),
+  query.type = c("observation", "drugissue", "clinical", "immunisation", "test",
+    "therapy", "hes_primary"),
   time.prev = Inf,
   time.post = 0,
   numobs = 1

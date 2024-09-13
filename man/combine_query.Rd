@@ -39,7 +39,7 @@ combine_query(
 
 \item{earliest.values}{If TRUE will return the earliest values as opposed to most recent.}
 
-\item{reduce.output}{If TRUE will reduce output to just \code{patid}, \code{obsdate}, medical/product code, and test \code{value}.}
+\item{reduce.output}{If TRUE will reduce output to just \code{patid}, event date, medical/product code, and test \code{value}.}
 }
 \value{
 A data.table with observations that meet specified criteria.
