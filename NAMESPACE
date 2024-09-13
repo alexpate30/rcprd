@@ -3,6 +3,8 @@
 S3method(combine_query,aurum)
 S3method(combine_query_boolean,aurum)
 export(add_to_database)
+export(combine_query)
+export(combine_query_boolean)
 export(connect_database)
 export(cprd_extract)
 export(create_directory_system)

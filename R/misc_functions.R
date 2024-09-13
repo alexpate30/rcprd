@@ -409,6 +409,7 @@ db_query <- function(codelist,
 #' @param time.post Number of days after index date to look for codes.
 #' @param numobs Number of observations required to be observed in specified time window to return a 1.
 #'
+#' @export
 combine_query_boolean <- function(db.query,
                                   cohort,
                                   query.type = c("observation", "drugissue", "hes_primary"),
@@ -505,6 +506,7 @@ combine_query_boolean.aurum <- function(db.query,
 #'
 #' @returns A data.table with observations that meet specified criteria.
 #'
+#' @export
 combine_query <- function(db.query,
                           cohort,
                           query.type = c("med", "test", "drugissue", "hes_primary", "death"),
