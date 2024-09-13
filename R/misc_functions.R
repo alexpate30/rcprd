@@ -307,7 +307,7 @@ db_query <- function(codelist,
                      db = NULL,
                      db.filepath = NULL,
                      db.cprd = c("aurum", "gold"),
-                     tab = c("observation", "drugissue", "hes_primary", "death"),
+                     tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary", "death"),
                      codelist.vector = NULL){
 
   ### Match args
@@ -412,14 +412,14 @@ db_query <- function(codelist,
 #' @export
 combine_query_boolean <- function(db.query,
                                   cohort,
-                                  query.type = c("observation", "drugissue", "hes_primary"),
+                                  query.type = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary"),
                                   time.prev = Inf,
                                   time.post = 0,
                                   numobs = 1){
   UseMethod("combine_query_boolean")
 }
 
-#' Combine an aurum database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
+#' Combine a CPRD aurum database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
 #'
 #' @description
 #' An S3 method that can be used on database queries from Aurum extracts. Combine a database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
@@ -439,7 +439,7 @@ combine_query_boolean <- function(db.query,
 #' @export
 combine_query_boolean.aurum <- function(db.query,
                                         cohort,
-                                        query.type = c("observation", "drugissue", "hes_primary"),
+                                        query.type = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary"),
                                         time.prev = Inf,
                                         time.post = 0,
                                         numobs = 1){
@@ -480,6 +480,62 @@ combine_query_boolean.aurum <- function(db.query,
 }
 
 
+#' Combine a CPRD GOLD database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
+#'
+#' @description
+#' An S3 method that can be used on database queries from Aurum extracts. Combine a database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.
+#' `cohort` must contain variables `patid` and `indexdt`. The database query will be merged with the cohort by variable \code{patid}.
+#' If an individual has at least `numobs` observations between `time.prev` days prior to \code{indexdt}, and `time.post` days after
+#'  \code{indexdt}, a 1 will be returned, 0 otherwise. The `type` of query must be specified for appropriate data manipulation.
+#'
+#' @param db.query Output from database query (ideally obtained through \code{\link{db_query}}).
+#' @param cohort Cohort to combine with the database query.
+#' @param query.type Type of query
+#' @param time.prev Number of days prior to index date to look for codes.
+#' @param time.post Number of days after index date to look for codes.
+#' @param numobs Number of observations required to be observed in specified time window to return a 1.
+#'
+#' @returns A 0/1 vector.
+#'
+#' @export
+combine_query_boolean.gold <- function(db.query,
+                                        cohort,
+                                        query.type = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary"),
+                                        time.prev = Inf,
+                                        time.post = 0,
+                                        numobs = 1){
+
+  ### Merge cohort with the database query keeping observations that are in both
+  cohort.qry <- merge(cohort, db.query, by.x = "patid", by.y = "patid")
+  cohort.qry <- data.table::as.data.table(cohort.qry)
+
+  ### Reduce to variables of interest
+  if (query.type %in% c("clinical", "immunisation", "test", "therapy")){
+    cohort.qry <- cohort.qry[,c("patid", "indexdt", "eventdate")]
+  } else if (query.type == "hes_primary"){
+    cohort.qry <- cohort.qry[,c("patid", "indexdt", "admidate")]
+    ## rename admidate to eventdate so we can use same code for medical or drug queries
+    colnames(cohort.qry)[colnames(cohort.qry) == "admidate"] <- "eventdate"
+  }
+
+  ### Remove values outside of specified time range
+  cohort.qry <- cohort.qry[eventdate <= indexdt + time.post & eventdate > indexdt - time.prev]
+
+  ### Identify which patients have had the required number of events in the specified time period
+  cohort.qry <- cohort.qry |>
+    dplyr::group_by(patid) |>
+    dplyr::summarise(total = dplyr::n()) |>
+    dplyr::filter(total >= numobs) |>
+    dplyr::pull(patid)
+
+  ### Create a 0/1 vector for whether patients are in this list and add to cohort
+  cohort.qry <- as.integer(!is.na(fastmatch::fmatch(cohort$patid, cohort.qry)))
+
+  ### Return this vector
+  return(cohort.qry)
+
+}
+
 #' Combine a database query with a cohort.
 #'
 #' @description
@@ -499,7 +555,7 @@ combine_query_boolean.aurum <- function(db.query,
 #' @param numobs Number of observations to be returned.
 #' @param value.na.rm If TRUE will remove data with NA in the \code{value} column of the queried data and remove values outside of `lower.bound` and `upper.bound` when `query.type = "test"`.
 #' @param earliest.values If TRUE will return the earliest values as opposed to most recent.
-#' @param reduce.output If TRUE will reduce output to just `patid`, `obsdate`, medical/product code, and test `value`.
+#' @param reduce.output If TRUE will reduce output to just `patid`, event date, medical/product code, and test `value`.
 #'
 #' @details `value.na.rm = FALSE` may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
 #' but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
@@ -521,7 +577,7 @@ combine_query <- function(db.query,
   UseMethod("combine_query")
 }
 
-#' Combine an aurum database query with a cohort.
+#' Combine a CPRD aurum database query with a cohort.
 #'
 #' @description
 #' An S3 method that can be used on database queries from Aurum extracts.
@@ -540,7 +596,7 @@ combine_query <- function(db.query,
 #' @param numobs Number of observations to be returned.
 #' @param value.na.rm If TRUE will remove data with NA in the \code{value} column of the queried data and remove values outside of `lower.bound` and `upper.bound` when `query.type = "test"`.
 #' @param earliest.values If TRUE will return the earliest values as opposed to most recent.
-#' @param reduce.output If TRUE will reduce output to just `patid`, `obsdate`, medical/product code, and test `value`.
+#' @param reduce.output If TRUE will reduce output to just `patid`, event date, medical/product code, and test `value`.
 #'
 #' @details `value.na.rm = FALSE` may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
 #' but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
@@ -643,6 +699,136 @@ combine_query.aurum <- function(db.query,
   } else if (earliest.values == TRUE){
     cohort.qry <- dplyr::group_by(cohort.qry, patid) |>
       dplyr::filter(dplyr::row_number(obsdate) <= numobs) |>
+      data.table::as.data.table()
+  }
+
+  ### Return cohort.qry
+  return(cohort.qry)
+
+}
+
+#' Combine a CPRD GOLD database query with a cohort.
+#'
+#' @description
+#' An S3 method that can be used on database queries from Aurum extracts.
+#' Combine a database query with a cohort, only retaining observations between `time.prev` days prior to \code{indexdt}, and `time.post` days after
+#'  \code{indexdt}, and for test data with values between `lower.bound` and `upper.bound`. The most recent `numobs` observations will be returned.
+#'  `cohort` must contain variables `patid` and `indexdt`. The `type` of query must be specified for appropriate data manipulation. Input `type = med` if
+#'  interested in medical diagnoses from the observation file, and `type = test` if interseted in test data from the observation file.
+#'
+#' @param db.query Output from database query (ideally obtained through \code{\link{db_query}}).
+#' @param cohort Cohort to combine with the database query.
+#' @param query.type Type of query
+#' @param time.prev Number of days prior to index date to look for codes.
+#' @param time.post Number of days after index date to look for codes.
+#' @param lower.bound Lower bound for returned values when `query.type = "test"`.
+#' @param upper.bound Upper bound for returned values when `query.type = "test"`.
+#' @param numobs Number of observations to be returned.
+#' @param value.na.rm If TRUE will remove data with NA in the \code{value} column of the queried data and remove values outside of `lower.bound` and `upper.bound` when `query.type = "test"`.
+#' @param earliest.values If TRUE will return the earliest values as opposed to most recent.
+#' @param reduce.output If TRUE will reduce output to just `patid`, event date, medical/product code, and test `value`.
+#'
+#' @details `value.na.rm = FALSE` may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
+#' but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
+#'
+#' @returns A data.table with observations that meet specified criteria.
+#'
+#' @examples
+#' ## Create connection to a temporary database
+#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#'
+#' ## Add observation data from all observation files in specified directory
+#' cprd_extract(db = aurum_extract,
+#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filetype = "observation")
+#'
+#' ## Query database for a specific medcode
+#' db.query <- db_query(db.open = aurum_extract,
+#' tab ="observation",
+#' codelist.vector = "187341000000114")
+#'
+#' ## Define cohort
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+#'
+#' ### Add an index date to pat
+#' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
+#'
+#' ## Combine query with cohort retaining most recent three records
+#' combine_query(cohort = pat,
+#' db.query = db.query,
+#' query.type = "med",
+#' numobs = 3)
+#'
+#' @export
+combine_query.gold <- function(db.query,
+                                cohort,
+                                query.type = c("med", "test", "drugissue", "hes_primary", "death"),
+                                time.prev = Inf,
+                                time.post = Inf,
+                                lower.bound = -Inf,
+                                upper.bound = Inf,
+                                numobs = 1,
+                                value.na.rm = TRUE,
+                                earliest.values = FALSE,
+                                reduce.output = TRUE){
+
+  ### Merge cohort with the database query keeping observations that are in both
+  cohort.qry <- merge(cohort, db.query, by.x = "patid", by.y = "patid")
+  cohort.qry <- data.table::as.data.table(cohort.qry)
+
+  ### Rename event date variables to all be "eventdate"
+  if (query.type == c("med")){
+
+  } else if (query.type == "test"){
+
+  } else if (query.type == "drugissue"){
+
+  } else if (query.type == "hes_primary"){
+    ## rename admidate to eventdate so we can use same naming for all queries
+    colnames(cohort.qry)[colnames(cohort.qry) == "admidate"] <- "eventdate"
+  }  else if (query.type == "death"){
+    ## rename dod to eventdate so we can use same naming for all queries
+    colnames(cohort.qry)[colnames(cohort.qry) == "dod"] <- "eventdate"
+  }
+
+  ### Remove values outside of specified time range
+  cohort.qry <- cohort.qry[eventdate <= indexdt + time.post & eventdate > indexdt - time.prev]
+
+  ### For test data, remove values outside of value range
+  if (query.type == "test"){
+    ### If values are missing, < lower.bound or > upper.bound then delete
+    if (value.na.rm == TRUE){
+      cohort.qry <- cohort.qry[!is.na(value) & value > lower.bound & value < upper.bound]
+    }
+  }
+
+  ### Note that if value.na.rm = FALSE, we will skip this step and keep all test results including NA's.
+  ### This will be of use for deriving smoking status
+
+  ### Reduce to variables of interest
+  if (reduce.output == TRUE){
+    if (query.type == c("med")){
+      cohort.qry <- cohort.qry[,c("patid", "medcode", "eventdate")]
+    } else if (query.type == "test"){
+      cohort.qry <- cohort.qry[,c("patid", "medcode", "eventdate", "data2", "data3", "data5", "data6")]
+      cohort.qry <- dplyr::rename(cohort.qry, value = data2, lookup_sum = data3, numrangelow = data5, numrangehigh = data6)
+    } else if (query.type == "drugissue"){
+      cohort.qry <- cohort.qry[,c("patid", "prodcode", "eventdate")]
+    } else if (query.type == "hes_primary"){
+      cohort.qry <- cohort.qry[,c("patid", "eventdate")]
+    }  else if (query.type == "death"){
+      cohort.qry <- cohort.qry[,c("patid", "eventdate")]
+    }
+  }
+
+  ### Group by patid and eventdate and keep the most recent 'numobs' number of observations
+  if (earliest.values == FALSE){
+    cohort.qry <- dplyr::group_by(cohort.qry, patid) |>
+      dplyr::filter(dplyr::row_number(dplyr::desc(eventdate)) <= numobs) |>
+      data.table::as.data.table()
+  } else if (earliest.values == TRUE){
+    cohort.qry <- dplyr::group_by(cohort.qry, patid) |>
+      dplyr::filter(dplyr::row_number(eventdate) <= numobs) |>
       data.table::as.data.table()
   }
 
