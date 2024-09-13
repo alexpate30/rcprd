@@ -96,7 +96,7 @@ extract_impotence <- function(cohort,
                           db.open = db.open,
                           db = db,
                           db.filepath = db.filepath,
-                          tab = "observation",
+                          tab = "drugissue",
                           codelist.vector = codelist.drug.vector)
 
   ### Identify which individuals have a history of type 1 or type 2

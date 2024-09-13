@@ -2,10 +2,11 @@
 
 S3method(combine_query,aurum)
 S3method(combine_query,gold)
-S3method(combine_query,hes)
+S3method(combine_query,hes_primary)
+S3method(combine_query,ons_death)
 S3method(combine_query_boolean,aurum)
 S3method(combine_query_boolean,gold)
-S3method(combine_query_boolean,hes)
+S3method(combine_query_boolean,hes_primary)
 export(add_to_database)
 export(combine_query)
 export(combine_query_boolean)

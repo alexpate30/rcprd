@@ -151,9 +151,9 @@ extract_time_until <- function(cohort,
   ## If tab = "observation", this could be a query.type of "med" or "test", choose "med" as not interested in test results themselves
   ### Assign query.type
   if (tab == "observation"){
-    query.type == "med"
+    query.type <- "med"
   } else if (tab == "drugissue"){
-    query.type == "drug"
+    query.type <- "drug"
   }
 
   ## Combine query

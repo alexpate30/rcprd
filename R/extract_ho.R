@@ -125,9 +125,9 @@ extract_ho <- function(cohort,
 
   ### Assign query.type
   if (tab == "observation"){
-    query.type == "med"
+    query.type <- "med"
   } else if (tab == "drugissue"){
-    query.type == "drug"
+    query.type <- "drug"
   }
 
   ### Identify which individuals have a history of XXX

@@ -547,7 +547,7 @@ combine_query_boolean.gold <- function(db.query,
 #' @returns A 0/1 vector.
 #'
 #' @export
-combine_query_boolean.hes <- function(db.query,
+combine_query_boolean.hes_primary <- function(db.query,
                                       cohort,
                                       query.type,
                                       time.prev = Inf,
@@ -676,7 +676,7 @@ combine_query <- function(db.query,
 #' @export
 combine_query.aurum <- function(db.query,
                                 cohort,
-                                query.type = c("med", "drug", "test", "hes_primary", "death"),
+                                query.type,
                                 time.prev = Inf,
                                 time.post = Inf,
                                 lower.bound = -Inf,
@@ -698,12 +698,6 @@ combine_query.aurum <- function(db.query,
   } else if (query.type == "drug"){
     ## rename issuedate to obsdate so we can use same naming for all queries
     colnames(cohort.qry)[colnames(cohort.qry) == "issuedate"] <- "obsdate"
-  } else if (query.type == "hes_primary"){
-    ## rename admidate to obsdate so we can use same naming for all queries
-    colnames(cohort.qry)[colnames(cohort.qry) == "admidate"] <- "obsdate"
-  }  else if (query.type == "death"){
-    ## rename dod to obsdate so we can use same naming for all queries
-    colnames(cohort.qry)[colnames(cohort.qry) == "dod"] <- "obsdate"
   }
 
   ### Remove values outside of specified time range
@@ -728,10 +722,6 @@ combine_query.aurum <- function(db.query,
       cohort.qry <- cohort.qry[,c("patid", "medcodeid", "obsdate", "value", "numunitid", "numrangelow", "numrangehigh")]
     } else if (query.type == "drug"){
       cohort.qry <- cohort.qry[,c("patid", "prodcodeid", "obsdate")]
-    } else if (query.type == "hes_primary"){
-      cohort.qry <- cohort.qry[,c("patid", "obsdate")]
-    }  else if (query.type == "death"){
-      cohort.qry <- cohort.qry[,c("patid", "obsdate")]
     }
   }
 
@@ -820,20 +810,7 @@ combine_query.gold <- function(db.query,
   cohort.qry <- merge(cohort, db.query, by.x = "patid", by.y = "patid")
   cohort.qry <- data.table::as.data.table(cohort.qry)
 
-  ### Rename event date variables to all be "eventdate"
-  if (query.type == c("med")){
-
-  } else if (query.type == "test"){
-
-  } else if (query.type == "drug"){
-
-  } else if (query.type == "hes_primary"){
-    ## rename admidate to eventdate so we can use same naming for all queries
-    colnames(cohort.qry)[colnames(cohort.qry) == "admidate"] <- "eventdate"
-  }  else if (query.type == "death"){
-    ## rename dod to eventdate so we can use same naming for all queries
-    colnames(cohort.qry)[colnames(cohort.qry) == "dod"] <- "eventdate"
-  }
+  ### "eventdate" is used in all gold files, so no need to rename anything
 
   ### Remove values outside of specified time range
   cohort.qry <- cohort.qry[eventdate <= indexdt + time.post & eventdate > indexdt - time.prev]
@@ -842,7 +819,7 @@ combine_query.gold <- function(db.query,
   if (query.type == "test"){
     ### If values are missing, < lower.bound or > upper.bound then delete
     if (value.na.rm == TRUE){
-      cohort.qry <- cohort.qry[!is.na(value) & value > lower.bound & value < upper.bound]
+      cohort.qry <- cohort.qry[!is.na(value) & data2 > lower.bound & data2 < upper.bound]
     }
   }
 
@@ -855,6 +832,7 @@ combine_query.gold <- function(db.query,
       cohort.qry <- cohort.qry[,c("patid", "medcode", "eventdate")]
     } else if (query.type == "test"){
       cohort.qry <- cohort.qry[,c("patid", "medcode", "eventdate", "data2", "data3", "data5", "data6")]
+      ### Rename test data variables for interpretability
       cohort.qry <- dplyr::rename(cohort.qry, value = data2, lookup_sum = data3, numrangelow = data5, numrangehigh = data6)
     } else if (query.type == "drug"){
       cohort.qry <- cohort.qry[,c("patid", "prodcode", "eventdate")]
@@ -930,7 +908,7 @@ combine_query.gold <- function(db.query,
 #' numobs = 3)
 #'
 #' @export
-combine_query.hes <- function(db.query,
+combine_query.hes_primary <- function(db.query,
                                 cohort,
                                 query.type,
                                 time.prev = Inf,
@@ -1024,9 +1002,9 @@ combine_query.hes <- function(db.query,
 #' numobs = 3)
 #'
 #' @export
-combine_query.aurum <- function(db.query,
+combine_query.ons_death <- function(db.query,
                                 cohort,
-                                query.type = c("med", "drug", "test", "hes_primary", "death"),
+                                query.type,
                                 time.prev = Inf,
                                 time.post = Inf,
                                 lower.bound = -Inf,
