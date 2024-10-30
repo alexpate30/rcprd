@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(rAURUM)
+library(rcprd)
 
-test_check("rAURUM")
+test_check("rcprd")

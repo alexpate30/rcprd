@@ -8,18 +8,18 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
 
   ### Add observation and drugissue to database manually
   ## Obs
-  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rAURUM"),
+  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rcprd"),
                   filetype = "observation", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, db = aurum_extract, overwrite = TRUE)
-  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_002.txt", package = "rAURUM"),
+  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_002.txt", package = "rcprd"),
                   filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
-  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_003.txt", package = "rAURUM"),
+  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_003.txt", package = "rcprd"),
                   filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
   ## Drugissue
-  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rAURUM"),
+  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rcprd"),
                   filetype = "drugissue", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, aurum_extract, overwrite = TRUE)
-  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_002.txt", package = "rAURUM"),
+  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_002.txt", package = "rcprd"),
                   filetype = "drugissue", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, aurum_extract, append = TRUE)
-  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_003.txt", package = "rAURUM"),
+  add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_003.txt", package = "rcprd"),
                   filetype = "drugissue", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, aurum_extract, append = TRUE)
 
   ### Save output
@@ -38,11 +38,11 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", subset.patids = c(1,3,4,6), use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", subset.patids = c(1,3,4,6), use.set = FALSE)
 
   ### Save output
@@ -60,17 +60,17 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
   ### Define pat
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"), set = TRUE)
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"), set = TRUE)
   pat <- subset(pat, patid %in% c(1,3,4,6))
 
   ### Add observation files
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", nrows = -1, select = NULL, subset.patids = pat, use.set = TRUE)
 
   ### Add drugissue files
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", nrows = -1, select = NULL, subset.patids = pat, use.set = TRUE)
 
   ### Save output
@@ -89,12 +89,12 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", subset.patids = c(1,3,4,6),
                extract.txt.func = extract_txt_obs, str.match = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", subset.patids = c(1,3,4,6),
                extract.txt.func = extract_txt_drug, str.match = "drugissue", use.set = FALSE)
 
@@ -114,12 +114,12 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", subset.patids = c(1,3,4,6),
                str.match = "observation", tablename = "scrambled", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", subset.patids = c(1,3,4,6),
                str.match = "drugissue", tablename = "eggs", use.set = FALSE)
 
@@ -150,7 +150,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Extract data using cprd_Extract
   testthat::expect_error(
     cprd_extract(aurum_extract,
-                 filepath = system.file("aurum_data", package = "rAURUM"),
+                 filepath = system.file("aurum_data", package = "rcprd"),
                  filetype = "observation", subset.patids = c(1,3,4,6),
                  str.match = "eggs", use.set = FALSE))
 
@@ -176,13 +176,13 @@ testthat::test_that("Test low-level db query functions", {
 testthat::test_that("Test creation of cohort", {
 
   ### Create a number of different ways
-  cohort1 <- extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+  cohort1 <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
   testthat::expect_equal(cohort1$patid, as.character(1:12))
   testthat::expect_equal(nrow(cohort1), 12)
   testthat::expect_equal(ncol(cohort1), 12)
 
   ### Create a number of different ways
-  cohort2 <- extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"),
+  cohort2 <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"),
                             set = TRUE)
   testthat::expect_equal(cohort2$patid, as.character(1:12))
   testthat::expect_true("set" %in% colnames(cohort2))
@@ -190,7 +190,7 @@ testthat::test_that("Test creation of cohort", {
   testthat::expect_equal(ncol(cohort2), 13)
 
   ### Create a number of different ways
-  cohort3 <- extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"),
+  cohort3 <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"),
                             patids = as.character(c(1,2,3)),
                             set = TRUE)
   testthat::expect_equal(cohort3$patid, as.character(1:3))
@@ -199,7 +199,7 @@ testthat::test_that("Test creation of cohort", {
   testthat::expect_equal(ncol(cohort3), 13)
 
   ### Create a number of different ways
-  cohort4 <- extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"),
+  cohort4 <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"),
                             patids = as.character(c(1,2,3)),
                             select = c("patid", "yob"))
   testthat::expect_equal(cohort4$patid, as.character(1:3))

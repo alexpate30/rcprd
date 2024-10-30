@@ -51,11 +51,11 @@
 #'
 #' ## Create SQLite database using cprd_extract
 #' cprd_extract(aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation", use.set = FALSE)
 #'
 #' ## Define cohort and add index date
-#' pat<-extract_cohort(system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
 #' pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
 #'
 #' ## Extract most recent test value prior to index date

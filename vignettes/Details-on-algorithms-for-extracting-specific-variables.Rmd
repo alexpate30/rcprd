@@ -17,12 +17,12 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(rAURUM)
+library(rcprd)
 ```
 
 # Introduction
 
-**rAURUM** contains a number of functions which extract specific variables, namely:
+**rcprd** contains a number of functions which extract specific variables, namely:
 
 * BMI: `extract_BMI`
 * Cholesterol/high-density lipoprotein (HDL) ratio: `extract_cholhdl_ratio`
@@ -88,10 +88,10 @@ Extraction of smoking status requires the user to specify five codelists. One fo
 
 # Summary of units of measurement for test data
 
-In this section we report the different units of measurement that the test data for the above variables may be recorded in. The unit of measurement is denoted with the *numunitid* variable in the observation file, which has a corresponding lookup file in the CPRD data. We queried the observation data for a large cohort of individuals aged 18 - 85 between 2005 - 2020 using the code lists provided within *inst/codelists* directory of **rAURUM**.
+In this section we report the different units of measurement that the test data for the above variables may be recorded in. The unit of measurement is denoted with the *numunitid* variable in the observation file, which has a corresponding lookup file in the CPRD data. We queried the observation data for a large cohort of individuals aged 18 - 85 between 2005 - 2020 using the code lists provided within *inst/codelists* directory of **rcprd**.
 
 ```{r}
-list.files(system.file("codelists", package = "rAURUM"))
+list.files(system.file("codelists", package = "rcprd"))
 ```
 
 The test data was searched separately using each code list, and the resulting unit measurements that were recorded in more than 0.01% of the query are presented. The results of this were fed into the programs for deriving each of those variables (see section 2). When defining a variable, the aim is to convert all measurements to be on the scame scale/unit of measurement. For example, height measurements in metres should be converted to the same scale as those recorded in centimeters. However, for some records, the unit of measurement might be something odd, or missing, meaning it is unclear how to convert onto the desired scale. For observations with such unit measurements, we do not exclude these observations, as they may be correct measurements with a mis-recorded unit measurement. Instead, when extracting variables, and converting relevant unit measurements, we define a minimum and maximum value, and exclude observations that do not fit into this range. As will be seen below, the proportion of observations with unclear unit measurement is small (with the exception of cholesterol/hdl ratio, which is a special case).

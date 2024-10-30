@@ -11,7 +11,7 @@
 #' ## Print current working directory
 #' getwd()
 #'
-#' ## Create directory system compatible with rAURUM's automatic saving of
+#' ## Create directory system compatible with rcprd's automatic saving of
 #' ## output
 #' create_directory_system()
 #'
@@ -20,11 +20,11 @@
 #'
 #' ## Create SQLite database using cprd_extract
 #' cprd_extract(aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation", use.set = FALSE)
 #'
 #' ## Define cohort and add index date
-#' pat<-extract_cohort(system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
 #' pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
 #'
 #' ## Extract a history of type variable and save to disc automatically,

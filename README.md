@@ -1,20 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rAURUM
+# rcprd
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/alexpate30/rAURUM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/alexpate30/rAURUM/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/alexpate30/rAURUM/branch/main/graph/badge.svg)](https://app.codecov.io/gh/alexpate30/rAURUM?branch=main)
+coverage](https://codecov.io/gh/alexpate30/rcprd/branch/main/graph/badge.svg)](https://app.codecov.io/gh/alexpate30/rcprd?branch=main)
 <!-- badges: end -->
 
-The goal of rAURUM is to simplify the process of extracting and
+The goal of rcprd is to simplify the process of extracting and
 processing CPRD Aurum data into an ‘analysis-ready’ dataset which can be
 used for statistical analyses. This process is somewhat difficult in R,
 as the raw data is very large, provided in a large number of .txt files,
-which cannot all be read into the R workspace. rAURUM utilises
+which cannot all be read into the R workspace. rcprd utilises
 [RSQLite](https://CRAN.R-project.org/package=RSQLite) to create SQLite
 databases which are stored on the hard disk. These are then queried to
 extract the required information for a cohort of interest. The processes
@@ -23,17 +23,17 @@ follow closely that from the
 which was designed for extractin CPRD GOLD data, and is no longer
 available on CRAN.
 
-For a detailed guide on how to use **rAURUM** please see the [user-guide
-vignette](https://alexpate30.github.io/rAURUM/articles/rAURUM.html).
+For a detailed guide on how to use **rcprd** please see the [user-guide
+vignette](https://alexpate30.github.io/rcprd/articles/rcprd.html).
 
 ## Installation
 
-You can install the development version of rAURUM from
-[GitHub](https://github.com/alexpate30/rAURUM) with:
+You can install the development version of rcprd from
+[GitHub](https://github.com/alexpate30/rcprd) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("alexpate30/rAURUM")
+devtools::install_github("alexpate30/rcprd")
 ```
 
 The package is not yet available on CRAN.
@@ -44,17 +44,17 @@ This is a basic example which shows you how to create a dataset
 containing age. All data provided with package and utilised in this
 example is simulated.
 
-Load rAURUM:
+Load rcprd:
 
 ``` r
-library(rAURUM)
+library(rcprd)
 #> Loading required package: data.table
 ```
 
 Create cohort based on patient files:
 
 ``` r
-pat <- extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 str(pat)
 #> 'data.frame':    12 obs. of  12 variables:
 #>  $ patid         : chr  "1" "2" "3" "4" ...
@@ -83,11 +83,12 @@ database.
 
 ``` r
 cprd_extract(db = aurum_extract, 
-             filepath = system.file("aurum_data", package = "rAURUM"), 
+             filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
-#> [1] "Adding C:/Program Files/R/R-4.4.0/library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-06-12 16:31:32.306484"
-#> [1] "Adding C:/Program Files/R/R-4.4.0/library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-06-12 16:31:33.039292"
-#> [1] "Adding C:/Program Files/R/R-4.4.0/library/rAURUM/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-06-12 16:31:34.068722"
+#>   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.0/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-10-30 17:36:17.811075"
+#>   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.0/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-10-30 17:36:17.936362"
+#>   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.0/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-10-30 17:36:18.054836"
+#>   |                                                                              |======================================================================| 100%
 ```
 
 Query the database for specific codes and store in an R object using the
@@ -159,22 +160,22 @@ analysis.ready.pat
 #> 12     9 2020-01-01      1  0
 ```
 
-Currently functionality exists in rAURUM to extract medical data from
-the observation file (including specific functions for extracting test
-data) and medication data from the drugissue file. Low level functions
-exist to allow the user to query the RSQLite database and write their
-own functions to define variables of interest. There are mid-level
-functions which allow users to extract variables of certain types
-(‘history of’, ‘time to event’, and ‘most recent test result’). There
-are then very high level functions which allow users to extract specific
-variables, such as body mass index, systolic blood pressure, smoking
-status, diabetes status, etc. There are all functions where decisions
-have been made over how to define variables. Be sure to check the code
-to make sure it matches with your definition. For example,
-`extract_diabetes` will return a categorical variable with three
-categories, `Absent`, `type1` and `type2`. If an individual has a record
-for both type 1 and type 2 diabetes (according to the users code lists),
-`extract_diabetes` will assign the individual to the group `type1`.
+Currently functionality exists in rcprd to extract medical data from the
+observation file (including specific functions for extracting test data)
+and medication data from the drugissue file. Low level functions exist
+to allow the user to query the RSQLite database and write their own
+functions to define variables of interest. There are mid-level functions
+which allow users to extract variables of certain types (‘history of’,
+‘time to event’, and ‘most recent test result’). There are then very
+high level functions which allow users to extract specific variables,
+such as body mass index, systolic blood pressure, smoking status,
+diabetes status, etc. There are all functions where decisions have been
+made over how to define variables. Be sure to check the code to make
+sure it matches with your definition. For example, `extract_diabetes`
+will return a categorical variable with three categories, `Absent`,
+`type1` and `type2`. If an individual has a record for both type 1 and
+type 2 diabetes (according to the users code lists), `extract_diabetes`
+will assign the individual to the group `type1`.
 
 ## Package maintainence
 
@@ -184,7 +185,7 @@ functions to read in the raw text files (e.g. `extract_txt_obs`) are
 hard coded to format variables with specific names in a certain way
 (e.g. convert `obsdate` from a character variable to a date variable).
 Over time, the structure of the CPRD Aurum data may change, which could
-impact the utility of this package. We will endeavor to keep rAURUM
+impact the utility of this package. We will endeavor to keep rcprd
 updated with new releases of CPRD Aurum. However, where possible, we
 have tried to protect against this by giving the user flexible options
 as well as the defaults. For example, `add_to_database` defaults to
@@ -200,4 +201,4 @@ in which case please let us know.
 ## Getting help
 
 If you encounter a bug, please file an issue with a minimal reproducible
-example on [GitHub](https://github.com/alexpate30/rAURUM).
+example on [GitHub](https://github.com/alexpate30/rcprd).

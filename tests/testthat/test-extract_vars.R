@@ -8,15 +8,15 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
   ### Define pat and add index date and censoring date
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"))
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
   pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 
@@ -132,11 +132,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   ### Extract data using cprd_extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
 
@@ -212,15 +212,15 @@ testthat::test_that("BMI", {
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
   ### Define pat and add index date and censoring date
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"))
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
   pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 
@@ -251,15 +251,15 @@ testthat::test_that("Cholhdl ratio", {
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
   ### Define pat and add index date and censoring date
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"))
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
   pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 
@@ -292,15 +292,15 @@ testthat::test_that("Diabetes", {
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
   ### Define pat and add index date and censoring date
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"))
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
   pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 
@@ -327,15 +327,15 @@ testthat::test_that("Smoking", {
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
   ### Define pat and add index date and censoring date
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"))
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
   pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 
@@ -365,15 +365,15 @@ testthat::test_that("Impotence", {
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", use.set = FALSE)
 
   cprd_extract(aurum_extract,
-               filepath = system.file("aurum_data", package = "rAURUM"),
+               filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", use.set = FALSE)
 
   ### Define pat and add index date and censoring date
-  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rAURUM"))
+  pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
   pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 

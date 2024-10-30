@@ -32,7 +32,7 @@
 #' If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 #' can be ignored.
 #'
-#' The function for reading in the .txt file will be chosen from a set of functions provided with rAURUM, based on  the fletype (`filetype`).
+#' The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the fletype (`filetype`).
 #' `extract.txt.func` does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
 #' change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM.
 #'
@@ -42,7 +42,7 @@
 #'
 #' ## Add observation data
 #' add_to_database(filepath = system.file("aurum_data",
-#' "aurum_allpatid_set1_extract_observation_001.txt", package = "rAURUM"),
+#' "aurum_allpatid_set1_extract_observation_001.txt", package = "rcprd"),
 #' filetype = "observation", db = aurum_extract, overwrite = TRUE)
 #'
 #' ## Query database
@@ -135,7 +135,7 @@ add_to_database <- function(filepath,
 #' In this case, `filetype` will still be used to choose which function reads in and formats the raw data, although this can be overwritten with
 #' `extract.txt.func`. If argument `tablename` is specified, data will be added to a table called `tablename` in the SQLite database.
 #'
-#' Currently, rAURUM only deals with `filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")` by default.
+#' Currently, rcprd only deals with `filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")` by default.
 #' However, by using `str.match` and `extract.txt.func`, the user can manually search for files with any string in the file name, and read them in
 #' and format using a user-defined function. This means the user is not restricted to only adding the pre-defined file types to the SQLite database.
 #'
@@ -152,9 +152,9 @@ add_to_database <- function(filepath,
 #' If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 #' can be ignored.
 #'
-#' The function for reading in the .txt file will be chosen from a set of functions provided with rAURUM, based on  the filetype (`filetype`).
+#' The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the filetype (`filetype`).
 #' `extract.txt.func` does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
-#' change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM and rAURUM has not been updated.
+#' change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM and rcprd has not been updated.
 #'
 #' @examples
 #' ## Create connection to a temporary database
@@ -162,7 +162,7 @@ add_to_database <- function(filepath,
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation")
 #'
 #' ## Query database
@@ -293,7 +293,7 @@ cprd_extract <- function(db,
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation")
 #'
 #' ## Query database for a specific medcode
@@ -653,7 +653,7 @@ combine_query <- function(db.query,
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation")
 #'
 #' ## Query database for a specific medcode
@@ -662,7 +662,7 @@ combine_query <- function(db.query,
 #' codelist.vector = "187341000000114")
 #'
 #' ## Define cohort
-#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 #'
 #' ### Add an index date to pat
 #' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
@@ -773,7 +773,7 @@ combine_query.aurum <- function(db.query,
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation")
 #'
 #' ## Query database for a specific medcode
@@ -782,7 +782,7 @@ combine_query.aurum <- function(db.query,
 #' codelist.vector = "187341000000114")
 #'
 #' ## Define cohort
-#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 #'
 #' ### Add an index date to pat
 #' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
@@ -887,7 +887,7 @@ combine_query.gold <- function(db.query,
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation")
 #'
 #' ## Query database for a specific medcode
@@ -896,7 +896,7 @@ combine_query.gold <- function(db.query,
 #' codelist.vector = "187341000000114")
 #'
 #' ## Define cohort
-#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 #'
 #' ### Add an index date to pat
 #' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
@@ -981,7 +981,7 @@ combine_query.hes_primary <- function(db.query,
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
-#' filepath = system.file("aurum_data", package = "rAURUM"),
+#' filepath = system.file("aurum_data", package = "rcprd"),
 #' filetype = "observation")
 #'
 #' ## Query database for a specific medcode
@@ -990,7 +990,7 @@ combine_query.hes_primary <- function(db.query,
 #' codelist.vector = "187341000000114")
 #'
 #' ## Define cohort
-#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 #'
 #' ### Add an index date to pat
 #' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
@@ -1160,7 +1160,7 @@ implement_output <- function(variable.dat, varname, out.save.disk, out.subdir, o
 #' @examples
 #'
 #' ## Extract cohort data
-#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 #' pat
 #'
 #' @export
