@@ -61,7 +61,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
 ## Add observation data from all observation files in specified directory
 cprd_extract(db = aurum_extract,
-filepath = system.file("aurum_data", package = "rAURUM"),
+filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation")
 
 ## Query database for a specific medcode
@@ -70,7 +70,7 @@ tab ="observation",
 codelist.vector = "187341000000114")
 
 ## Define cohort
-pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 
 ### Add an index date to pat
 pat$indexdt <- as.Date("01/01/2020", format = "\%d/\%m/\%Y")

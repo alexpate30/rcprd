@@ -51,7 +51,7 @@ If \code{str.match} is specified, will add files that contain \code{str.match} i
 In this case, \code{filetype} will still be used to choose which function reads in and formats the raw data, although this can be overwritten with
 \code{extract.txt.func}. If argument \code{tablename} is specified, data will be added to a table called \code{tablename} in the SQLite database.
 
-Currently, rAURUM only deals with \code{filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")} by default.
+Currently, rcprd only deals with \code{filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")} by default.
 However, by using \code{str.match} and \code{extract.txt.func}, the user can manually search for files with any string in the file name, and read them in
 and format using a user-defined function. This means the user is not restricted to only adding the pre-defined file types to the SQLite database.
 
@@ -68,9 +68,9 @@ subset.patids (our cohort), we only need to do so for patients who were also in 
 If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 can be ignored.
 
-The function for reading in the .txt file will be chosen from a set of functions provided with rAURUM, based on  the filetype (\code{filetype}).
+The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the filetype (\code{filetype}).
 \code{extract.txt.func} does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
-change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM and rAURUM has not been updated.
+change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM and rcprd has not been updated.
 }
 \examples{
 ## Create connection to a temporary database
@@ -78,7 +78,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
 ## Add observation data from all observation files in specified directory
 cprd_extract(db = aurum_extract,
-filepath = system.file("aurum_data", package = "rAURUM"),
+filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation")
 
 ## Query database

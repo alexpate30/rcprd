@@ -24,7 +24,7 @@ Create cohort from patient files
 \examples{
 
 ## Extract cohort data
-pat<-extract_cohort(filepath = system.file("aurum_data", package = "rAURUM"))
+pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 pat
 
 }

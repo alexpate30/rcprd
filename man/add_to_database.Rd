@@ -61,7 +61,7 @@ subset.patids (our cohort), we only need to do so for patients who were also in 
 If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 can be ignored.
 
-The function for reading in the .txt file will be chosen from a set of functions provided with rAURUM, based on  the fletype (\code{filetype}).
+The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the fletype (\code{filetype}).
 \code{extract.txt.func} does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
 change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM.
 }
@@ -71,7 +71,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
 ## Add observation data
 add_to_database(filepath = system.file("aurum_data",
-"aurum_allpatid_set1_extract_observation_001.txt", package = "rAURUM"),
+"aurum_allpatid_set1_extract_observation_001.txt", package = "rcprd"),
 filetype = "observation", db = aurum_extract, overwrite = TRUE)
 
 ## Query database

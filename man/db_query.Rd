@@ -52,7 +52,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
 ## Add observation data from all observation files in specified directory
 cprd_extract(db = aurum_extract,
-filepath = system.file("aurum_data", package = "rAURUM"),
+filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation")
 
 ## Query database for a specific medcode

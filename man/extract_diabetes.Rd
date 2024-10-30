@@ -65,7 +65,7 @@ Extract diabetes status prior to an index date.
 \details{
 If an individual is found to have medical codes for both type 1 and type 2 diabetes, the returned value of diabetes status will be type 1 diabetes.
 Full details on the algorithm for extracting diabetes status are given in the vignette: Details-on-algorithms-for-extracting-specific-variables.
-This vignette can be viewed by running \code{vignette("help", package = "rAURUM")}.
+This vignette can be viewed by running \code{vignette("help", package = "rcprd")}.
 
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
@@ -89,11 +89,11 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
-filepath = system.file("aurum_data", package = "rAURUM"),
+filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation", use.set = FALSE)
 
 ## Define cohort and add index date
-pat<-extract_cohort(system.file("aurum_data", package = "rAURUM"))
+pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
 pat$indexdt <- as.Date("01/01/1955", format = "\%d/\%m/\%Y")
 
 ## Extract diabetes prior to index date

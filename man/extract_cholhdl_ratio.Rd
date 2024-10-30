@@ -83,7 +83,7 @@ Extract most recent total cholesterol/high-density lipoprotein ratio score relat
 \details{
 Cholesterol/HDL ratio can either be identified through a directly recorded cholesterol/hdl ratio score, or calculated via total cholesterol and HDL scores.
 Full details on the algorithm for extracting cholesterol/hdl ratio are given in the vignette: Details-on-algorithms-for-extracting-specific-variables.
-This vignette can be viewed by running \code{vignette("help", package = "rAURUM")}.
+This vignette can be viewed by running \code{vignette("help", package = "rcprd")}.
 
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
@@ -107,11 +107,11 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
-filepath = system.file("aurum_data", package = "rAURUM"),
+filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation", use.set = FALSE)
 
 ## Define cohort and add index date
-pat<-extract_cohort(system.file("aurum_data", package = "rAURUM"))
+pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
 pat$indexdt <- as.Date("01/01/1955", format = "\%d/\%m/\%Y")
 
 ## Extract most recent cholhdl_ratio prior to index date

@@ -1,5 +1,5 @@
 Package: rcprd
-Title: Extract and Manage CPRD Aurum Data and Create Analysis-Ready Datasets
+Title: Extraction and management of Clinical Practice Research Datalink (CPRD) AURUM and GOLD data and creation of datasets for statistical analysis
 Version: 0.0.0.9000
 Authors@R: 
   c(person(given = "Alexander", family = "Pate", email = "alexander.pate@manchester.ac.uk", role = c("aut", "cre", "cph"),
