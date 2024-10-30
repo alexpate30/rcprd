@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Details-on-algorithms-for-extracting-specific-variables • rAURUM</title>
+<title>Details-on-algorithms-for-extracting-specific-variables • rcprd</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">rAURUM</a>
+    <a class="navbar-brand me-2" href="../index.html">rcprd</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
 
@@ -29,7 +29,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../articles/rAURUM.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/rcprd.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -66,12 +66,12 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alexpate30.github.io/rAURUM/">rAURUM</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alexpate30.github.io/rcprd/">rcprd</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: data.table</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p><strong>rAURUM</strong> contains a number of functions which extract
+<p><strong>rcprd</strong> contains a number of functions which extract
 specific variables, namely:</p>
 <ul>
 <li>BMI: <code>extract_BMI</code>
@@ -258,9 +258,9 @@ measurement is denoted with the <em>numunitid</em> variable in the
 observation file, which has a corresponding lookup file in the CPRD
 data. We queried the observation data for a large cohort of individuals
 aged 18 - 85 between 2005 - 2020 using the code lists provided within
-<em>inst/codelists</em> directory of <strong>rAURUM</strong>.</p>
+<em>inst/codelists</em> directory of <strong>rcprd</strong>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"codelists"</span>, package <span class="op">=</span> <span class="st">"rAURUM"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"codelists"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "edh_bmi_medcodeid.csv"           "edh_chol_medcodeid.csv"         </span></span>
 <span><span class="co">#&gt; [3] "edh_cholhdl_ratio_medcodeid.csv" "edh_hdl_medcodeid.csv"          </span></span>
 <span><span class="co">#&gt; [5] "edh_sbp_medcodeid.csv"           "height_medcodeid.csv"           </span></span>
@@ -614,7 +614,7 @@ in mm/Hg.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
