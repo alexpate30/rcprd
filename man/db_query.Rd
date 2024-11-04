@@ -6,29 +6,29 @@
 \usage{
 db_query(
   codelist,
-  db.open = NULL,
+  db_open = NULL,
   db = NULL,
-  db.filepath = NULL,
-  db.cprd = c("aurum", "gold"),
+  db_filepath = NULL,
+  db_cprd = c("aurum", "gold"),
   tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy",
     "hes_primary", "death"),
-  codelist.vector = NULL
+  codelist_vector = NULL
 )
 }
 \arguments{
 \item{codelist}{Name of codelist to query the database with.}
 
-\item{db.open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
+\item{db_open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
 
 \item{db}{Name of SQLITE database on hard disk, to be queried.}
 
-\item{db.filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
+\item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
-\item{db.cprd}{CPRD Aurum ('aurum') or gold ('gold').}
+\item{db_cprd}{CPRD Aurum ('aurum') or gold ('gold').}
 
 \item{tab}{Name of table in SQLite database that is to be queried.}
 
-\item{codelist.vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
+\item{codelist_vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
 }
 \value{
 A data.table with observations contained in the specified codelist.
@@ -39,12 +39,12 @@ Query an RSQLite database stored on the hard disk for observations with specific
 \details{
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through \code{db.filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
-using the object as input to parameter \code{db.open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db.open} is specified, this will take precedence over \code{db} or \code{db.filepath}.
+the database is accessed through \code{db_filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
+using the object as input to parameter \code{db_open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db_open} is specified, this will take precedence over \code{db} or \code{db_filepath}.
 
 Specifying \code{codelist} requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen \code{tab}. The codelist can
-also be read in manually, and supplied as a character vector to \code{codelist.vector}. If \code{codelist.vector} is defined, this will take precedence over \code{codelist}.
+also be read in manually, and supplied as a character vector to \code{codelist_vector}. If \code{codelist_vector} is defined, this will take precedence over \code{codelist}.
 }
 \examples{
 ## Create connection to a temporary database
@@ -56,8 +56,8 @@ filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation")
 
 ## Query database for a specific medcode
-db_query(db.open = aurum_extract,
+db_query(db_open = aurum_extract,
 tab ="observation",
-codelist.vector = "187341000000114")
+codelist_vector = "187341000000114")
 
 }

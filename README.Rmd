@@ -73,9 +73,9 @@ Query the database for specific codes and store in an R object using the `db_que
 codelist <- "187341000000114"
 
 ### Query for observations with this code
-db_query(db.open = aurum_extract,
+db_query(db_open = aurum_extract,
          tab ="observation",
-         codelist.vector = codelist)
+         codelist_vector = codelist)
 ```
 
 Add an index date to the patient file, which we will extract variables relative to:
@@ -88,11 +88,11 @@ Extract a 'history of' type variable, which will be equal to 1 if an individual 
 
 ```{r}
 ho <- extract_ho(pat, 
-                 codelist.vector = codelist, 
+                 codelist_vector = codelist, 
                  indexdt = "fup_start", 
-                 db.open = aurum_extract, 
+                 db_open = aurum_extract, 
                  tab = "observation",
-                 return.output = TRUE)
+                 return_output = TRUE)
 str(ho)
 ```
 
@@ -108,7 +108,7 @@ Currently functionality exists in rcprd to extract medical data from the observa
 
 ## Package maintainence
 
-This parts of this package which create the SQLite database are somewhat dependent on the structure of the raw CPRD Aurum data. For example, the functions to read in the raw text files (e.g. `extract_txt_obs`) are hard coded to format variables with specific names in a certain way (e.g. convert `obsdate` from a character variable to a date variable). Over time, the structure of the CPRD Aurum data may change, which could impact the utility of this package. We will endeavor to keep rcprd updated with new releases of CPRD Aurum. However, where possible, we have tried to protect against this by giving the user flexible options as well as the defaults. For example, `add_to_database` defaults to using `extract_txt_obs` to read in the raw text data when `filetype = "observation"` is specified. However, there is also an option `extract.txt.func`, which allows the users to specify their own function to read in the text data, and will override the use of `extract_txt_obs`.
+This parts of this package which create the SQLite database are somewhat dependent on the structure of the raw CPRD Aurum data. For example, the functions to read in the raw text files (e.g. `extract_txt_obs`) are hard coded to format variables with specific names in a certain way (e.g. convert `obsdate` from a character variable to a date variable). Over time, the structure of the CPRD Aurum data may change, which could impact the utility of this package. We will endeavor to keep rcprd updated with new releases of CPRD Aurum. However, where possible, we have tried to protect against this by giving the user flexible options as well as the defaults. For example, `add_to_database` defaults to using `extract_txt_obs` to read in the raw text data when `filetype = "observation"` is specified. However, there is also an option `extract_txt_func`, which allows the users to specify their own function to read in the text data, and will override the use of `extract_txt_obs`.
 
 Despite this, there may have been breaking points we haven't thought of, in which case please let us know.
 

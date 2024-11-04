@@ -99,9 +99,9 @@ Query the database for specific codes and store in an R object using the
 codelist <- "187341000000114"
 
 ### Query for observations with this code
-db_query(db.open = aurum_extract,
+db_query(db_open = aurum_extract,
          tab ="observation",
-         codelist.vector = codelist)
+         codelist_vector = codelist)
 #>     patid consid pracid  obsid obsdate enterdate staffid parentobsid
 #>    <char> <char>  <int> <char>   <num>     <num>  <char>      <char>
 #> 1:      1     42      1     81   -5373      4302      85          35
@@ -127,11 +127,11 @@ index date, and equal 0 otherwise.
 
 ``` r
 ho <- extract_ho(pat, 
-                 codelist.vector = codelist, 
+                 codelist_vector = codelist, 
                  indexdt = "fup_start", 
-                 db.open = aurum_extract, 
+                 db_open = aurum_extract, 
                  tab = "observation",
-                 return.output = TRUE)
+                 return_output = TRUE)
 str(ho)
 #> 'data.frame':    12 obs. of  2 variables:
 #>  $ patid: chr  "1" "2" "3" "4" ...
@@ -191,7 +191,7 @@ have tried to protect against this by giving the user flexible options
 as well as the defaults. For example, `add_to_database` defaults to
 using `extract_txt_obs` to read in the raw text data when
 `filetype = "observation"` is specified. However, there is also an
-option `extract.txt.func`, which allows the users to specify their own
+option `extract_txt_func`, which allows the users to specify their own
 function to read in the text data, and will override the use of
 `extract_txt_obs`.
 

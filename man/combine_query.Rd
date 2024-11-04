@@ -5,53 +5,53 @@
 \title{Combine a database query with a cohort.}
 \usage{
 combine_query(
-  db.query,
+  db_query,
   cohort,
-  query.type = c("med", "drug", "test", "hes_primary", "death"),
-  time.prev = Inf,
-  time.post = Inf,
-  lower.bound = -Inf,
-  upper.bound = Inf,
+  query_type = c("med", "drug", "test", "hes_primary", "death"),
+  time_prev = Inf,
+  time_post = Inf,
+  lower_bound = -Inf,
+  upper_bound = Inf,
   numobs = 1,
-  value.na.rm = TRUE,
-  earliest.values = FALSE,
-  reduce.output = TRUE
+  value_na_rm = TRUE,
+  earliest_values = FALSE,
+  reduce_output = TRUE
 )
 }
 \arguments{
-\item{db.query}{Output from database query (ideally obtained through \code{\link{db_query}}).}
+\item{db_query}{Output from database query (ideally obtained through \code{\link{db_query}}).}
 
 \item{cohort}{Cohort to combine with the database query.}
 
-\item{query.type}{Type of query}
+\item{query_type}{Type of query}
 
-\item{time.prev}{Number of days prior to index date to look for codes.}
+\item{time_prev}{Number of days prior to index date to look for codes.}
 
-\item{time.post}{Number of days after index date to look for codes.}
+\item{time_post}{Number of days after index date to look for codes.}
 
-\item{lower.bound}{Lower bound for returned values when \code{query.type = "test"}.}
+\item{lower_bound}{Lower bound for returned values when \code{query_type = "test"}.}
 
-\item{upper.bound}{Upper bound for returned values when \code{query.type = "test"}.}
+\item{upper_bound}{Upper bound for returned values when \code{query_type = "test"}.}
 
 \item{numobs}{Number of observations to be returned.}
 
-\item{value.na.rm}{If TRUE will remove data with NA in the \code{value} column of the queried data and remove values outside of \code{lower.bound} and \code{upper.bound} when \code{query.type = "test"}.}
+\item{value_na_rm}{If TRUE will remove data with NA in the \code{value} column of the queried data and remove values outside of \code{lower_bound} and \code{upper_bound} when \code{query_type = "test"}.}
 
-\item{earliest.values}{If TRUE will return the earliest values as opposed to most recent.}
+\item{earliest_values}{If TRUE will return the earliest values as opposed to most recent.}
 
-\item{reduce.output}{If TRUE will reduce output to just \code{patid}, event date, medical/product code, and test \code{value}.}
+\item{reduce_output}{If TRUE will reduce output to just \code{patid}, event date, medical/product code, and test \code{value}.}
 }
 \value{
 A data.table with observations that meet specified criteria.
 }
 \description{
 An S3 generic function that can be used on database queries from Aurum or GOLD extracts.
-Combine a database query with a cohort, only retaining observations between \code{time.prev} days prior to \code{indexdt}, and \code{time.post} days after
-\code{indexdt}, and for test data with values between \code{lower.bound} and \code{upper.bound}. The most recent \code{numobs} observations will be returned.
+Combine a database query with a cohort, only retaining observations between \code{time_prev} days prior to \code{indexdt}, and \code{time_post} days after
+\code{indexdt}, and for test data with values between \code{lower_bound} and \code{upper_bound}. The most recent \code{numobs} observations will be returned.
 \code{cohort} must contain variables \code{patid} and \code{indexdt}. The \code{type} of query must be specified for appropriate data manipulation. Input \code{type = med} if
 interested in medical diagnoses from the observation file, and \code{type = test} if interseted in test data from the observation file.
 }
 \details{
-\code{value.na.rm = FALSE} may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
+\code{value_na_rm = FALSE} may be of use when extracting variables like smoking status, where we want test data for number of cigarettes per day,
 but do not want to remove all observations with NA in the \code{value} column, because the medcodeid itself may indicate smoking status.
 }

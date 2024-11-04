@@ -8,21 +8,21 @@ extract_ho(
   cohort,
   varname = NULL,
   codelist = NULL,
-  codelist.vector = NULL,
+  codelist_vector = NULL,
   indexdt,
   t = NULL,
-  t.varname = TRUE,
-  time.prev = Inf,
-  time.post = 0,
+  t_varname = TRUE,
+  time_prev = Inf,
+  time_post = 0,
   numobs = 1,
-  db.open = NULL,
+  db_open = NULL,
   db = NULL,
-  db.filepath = NULL,
+  db_filepath = NULL,
   tab = c("observation", "drugissue", "hes_primary", "death"),
-  out.save.disk = FALSE,
-  out.subdir = NULL,
-  out.filepath = NULL,
-  return.output = TRUE
+  out_save_disk = FALSE,
+  out_subdir = NULL,
+  out_filepath = NULL,
+  return_output = TRUE
 )
 }
 \arguments{
@@ -32,35 +32,35 @@ extract_ho(
 
 \item{codelist}{Name of codelist (stored on hard disk) to query the database with.}
 
-\item{codelist.vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
+\item{codelist_vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
 
 \item{indexdt}{Name of variable in \code{cohort} which specifies the index date. The extracted variable will be calculated relative to this.}
 
 \item{t}{Number of days after \code{indexdt} at which to extract the variable.}
 
-\item{t.varname}{Whether to alter the variable name in the outputted data frame to reflect \code{t}.}
+\item{t_varname}{Whether to alter the variable name in the outputted data frame to reflect \code{t}.}
 
-\item{time.prev}{Number of days prior to index date to look for codes.}
+\item{time_prev}{Number of days prior to index date to look for codes.}
 
-\item{time.post}{Number of days after index date to look for codes.}
+\item{time_post}{Number of days after index date to look for codes.}
 
 \item{numobs}{Number of obesrvations required to return a value of 1.}
 
-\item{db.open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
+\item{db_open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
 
 \item{db}{Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.}
 
-\item{db.filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
+\item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
 \item{tab}{Table name to query in SQLite database.}
 
-\item{out.save.disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
+\item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
-\item{out.subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
+\item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
 
-\item{out.filepath}{Full filepath and filename to save outputted data frame into.}
+\item{out_filepath}{Full filepath and filename to save outputted data frame into.}
 
-\item{return.output}{If \code{TRUE} will return outputted data frame into R workspace.}
+\item{return_output}{If \code{TRUE} will return outputted data frame into R workspace.}
 }
 \value{
 A data frame with a 0/1 vector and patid. 1 = presence of code within the specified time period.
@@ -72,19 +72,19 @@ a specified time period.
 \details{
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through \code{db.filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
-using the object as input to parameter \code{db.open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db.open} is specified, this will take precedence over \code{db} or \code{db.filepath}.
+the database is accessed through \code{db_filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
+using the object as input to parameter \code{db_open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db_open} is specified, this will take precedence over \code{db} or \code{db_filepath}.
 
-If \code{out.save.disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-This directory structure must be created in advance. \code{out.subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convention. This can be overwritten
-using \code{out.filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return.output = TRUE}
+If \code{out_save_disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+This directory structure must be created in advance. \code{out_subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convention. This can be overwritten
+using \code{out_filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return_output = TRUE}
 and then save onto the hard disk manually.
 
 Codelists can be specified in two ways. The first is to read the codelist into R as a character vector and then specify through the argument
-\code{codelist.vector}. Codelists stored on the hard disk can also be referred to from the \code{codelist} argument, but require a specific underlying directory structure.
+\code{codelist_vector}. Codelists stored on the hard disk can also be referred to from the \code{codelist} argument, but require a specific underlying directory structure.
 The codelist on the hard disk must be stored in a directory called "codelists/analysis/" relative to the working directory. The codelist must be a .csv file, and
 contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for argument \code{tab}. The input to argument \code{codelist} should just be a character string of
-the name of the files (excluding the suffix '.csv'). The \code{codelist.vector} option will take precedence over the \code{codelist} argument if both are specified.
+the name of the files (excluding the suffix '.csv'). The \code{codelist_vector} option will take precedence over the \code{codelist} argument if both are specified.
 }
 \examples{
 
@@ -94,7 +94,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
 filepath = system.file("aurum_data", package = "rcprd"),
-filetype = "observation", use.set = FALSE)
+filetype = "observation", use_set = FALSE)
 
 ## Define cohort and add index date
 pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
@@ -102,10 +102,10 @@ pat$indexdt <- as.Date("01/01/1955", format = "\%d/\%m/\%Y")
 
 ## Extract a history of type variable prior to index date
 extract_ho(pat,
-codelist.vector = "187341000000114",
+codelist_vector = "187341000000114",
 indexdt = "fup_start",
-db.open = aurum_extract,
+db_open = aurum_extract,
 tab = "observation",
-return.output = TRUE)
+return_output = TRUE)
 
 }

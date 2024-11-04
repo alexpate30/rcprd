@@ -5,26 +5,26 @@
 #'
 #' @param cohort Cohort to extract age for.
 #' @param varname Optional name for variable in output dataset.
-#' @param codelist.non Name of codelist (stored on hard disk in "codelists/analysis/") for non-smoker to query the database with.
-#' @param codelist.ex Name of codelist (stored on hard disk in "codelists/analysis/") for ex-smoker to query the database with.
-#' @param codelist.light Name of codelist (stored on hard disk in "codelists/analysis/") for light smoker to query the database with.
-#' @param codelist.mod Name of codelist (stored on hard disk in "codelists/analysis/") for moderate smoker to query the database with.
-#' @param codelist.heavy Name of codelist (stored on hard disk in "codelists/analysis/") for heavy smoker to query the database with.
-#' @param codelist.non.vector Vector of codes for non-smoker to query the database with.
-#' @param codelist.ex.vector Vector of codes for ex-smoker to query the database with.
-#' @param codelist.light.vector Vector of codes for light smoker to query the database with.
-#' @param codelist.mod.vector Vector of codes for moderate smoker to query the database with.
-#' @param codelist.heavy.vector Vector of codes for heavy smoker to query the database with.
+#' @param codelist_non Name of codelist (stored on hard disk in "codelists/analysis/") for non-smoker to query the database with.
+#' @param codelist_ex Name of codelist (stored on hard disk in "codelists/analysis/") for ex-smoker to query the database with.
+#' @param codelist_light Name of codelist (stored on hard disk in "codelists/analysis/") for light smoker to query the database with.
+#' @param codelist_mod Name of codelist (stored on hard disk in "codelists/analysis/") for moderate smoker to query the database with.
+#' @param codelist_heavy Name of codelist (stored on hard disk in "codelists/analysis/") for heavy smoker to query the database with.
+#' @param codelist_non_vector Vector of codes for non-smoker to query the database with.
+#' @param codelist_ex_vector Vector of codes for ex-smoker to query the database with.
+#' @param codelist_light_vector Vector of codes for light smoker to query the database with.
+#' @param codelist_mod_vector Vector of codes for moderate smoker to query the database with.
+#' @param codelist_heavy_vector Vector of codes for heavy smoker to query the database with.
 #' @param indexdt Name of variable which defines index date in `cohort`.
 #' @param t Number of days after index date at which to calculate variable.
-#' @param t.varname Whether to add `t` to `varname`.
-#' @param db.open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
+#' @param t_varname Whether to add `t` to `varname`.
+#' @param db_open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
 #' @param db Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.
-#' @param db.filepath Full filepath to SQLITE database on hard disk, to be queried.
-#' @param out.save.disk If `TRUE` will attempt to save outputted data frame to directory "data/extraction/".
-#' @param out.subdir Sub-directory of "data/extraction/" to save outputted data frame into.
-#' @param out.filepath Full filepath and filename to save outputted data frame into.
-#' @param return.output If `TRUE` will return outputted data frame into R workspace.
+#' @param db_filepath Full filepath to SQLITE database on hard disk, to be queried.
+#' @param out_save_disk If `TRUE` will attempt to save outputted data frame to directory "data/extraction/".
+#' @param out_subdir Sub-directory of "data/extraction/" to save outputted data frame into.
+#' @param out_filepath Full filepath and filename to save outputted data frame into.
+#' @param return_output If `TRUE` will return outputted data frame into R workspace.
 #'
 #' @details Returns the most recent value of smoking status. If the most recently recorded observation of smoking status is non-smoker, but the individual
 #' has a history of smoking identified through the medical record, the outputted value of smoking status will be ex-smoker.
@@ -33,12 +33,12 @@
 #'
 #' Specifying `db` requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 #' If the SQLite database is accessed through `db`, the connection will be opened and then closed after the query is complete. The same is true if
-#' the database is accessed through `db.filepath`. A connection to the SQLite database can also be opened manually using `RSQLite::dbConnect`, and then
-#' using the object as input to parameter `db.open`. After wards, the connection must be closed manually using `RSQLite::dbDisconnect`. If `db.open` is specified, this will take precedence over `db` or `db.filepath`.
+#' the database is accessed through `db_filepath`. A connection to the SQLite database can also be opened manually using `RSQLite::dbConnect`, and then
+#' using the object as input to parameter `db_open`. After wards, the connection must be closed manually using `RSQLite::dbDisconnect`. If `db_open` is specified, this will take precedence over `db` or `db_filepath`.
 #'
-#' If `out.save.disk = TRUE`, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-#' This directory structure must be created in advance. `out.subdir` can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
-#' using `out.filepath` to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using `return.output = TRUE`
+#' If `out_save_disk = TRUE`, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+#' This directory structure must be created in advance. `out_subdir` can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
+#' using `out_filepath` to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using `return_output = TRUE`
 #' and then save onto the hard disk manually.
 #'
 #' Specifying the non-vector type codelists requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
@@ -59,7 +59,7 @@
 #' ## Create SQLite database using cprd_extract
 #' cprd_extract(aurum_extract,
 #' filepath = system.file("aurum_data", package = "rcprd"),
-#' filetype = "observation", use.set = FALSE)
+#' filetype = "observation", use_set = FALSE)
 #'
 #' ## Define cohort and add index date
 #' pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
@@ -67,53 +67,53 @@
 #'
 #' ## Extract smoking status prior to index date
 #' extract_smoking(cohort = pat,
-#' codelist.non.vector = "498521000006119",
-#' codelist.ex.vector = "401539014",
-#' codelist.light.vector = "128011000000115",
-#' codelist.mod.vector = "380389013",
-#' codelist.heavy.vector = "13483031000006114",
+#' codelist_non_vector = "498521000006119",
+#' codelist_ex_vector = "401539014",
+#' codelist_light_vector = "128011000000115",
+#' codelist_mod_vector = "380389013",
+#' codelist_heavy_vector = "13483031000006114",
 #' indexdt = "indexdt",
-#' db.open = aurum_extract)
+#' db_open = aurum_extract)
 #' @export
 #'
 extract_smoking <- function(cohort,
                             varname = NULL,
-                            codelist.non = NULL,
-                            codelist.ex = NULL,
-                            codelist.light = NULL,
-                            codelist.mod = NULL,
-                            codelist.heavy = NULL,
-                            codelist.non.vector = NULL,
-                            codelist.ex.vector = NULL,
-                            codelist.light.vector = NULL,
-                            codelist.mod.vector = NULL,
-                            codelist.heavy.vector = NULL,
+                            codelist_non = NULL,
+                            codelist_ex = NULL,
+                            codelist_light = NULL,
+                            codelist_mod = NULL,
+                            codelist_heavy = NULL,
+                            codelist_non_vector = NULL,
+                            codelist_ex_vector = NULL,
+                            codelist_light_vector = NULL,
+                            codelist_mod_vector = NULL,
+                            codelist_heavy_vector = NULL,
                             indexdt,
                             t = NULL,
-                            t.varname = TRUE,
-                            db.open = NULL,
+                            t_varname = TRUE,
+                            db_open = NULL,
                             db = NULL,
-                            db.filepath = NULL,
-                            out.save.disk = FALSE,
-                            out.subdir = NULL,
-                            out.filepath = NULL,
-                            return.output = TRUE){
+                            db_filepath = NULL,
+                            out_save_disk = FALSE,
+                            out_subdir = NULL,
+                            out_filepath = NULL,
+                            return_output = TRUE){
 
   #   varname = NULL
-  #   codelist.non = "edh_smoking_non_medcodeid"
-  #   codelist.ex = "edh_smoking_ex_medcodeid"
-  #   codelist.light = "edh_smoking_light_medcodeid"
-  #   codelist.mod = "edh_smoking_mod_medcodeid"
-  #   codelist.heavy = "edh_smoking_heavy_medcodeid"
+  #   codelist_non = "edh_smoking_non_medcodeid"
+  #   codelist_ex = "edh_smoking_ex_medcodeid"
+  #   codelist_light = "edh_smoking_light_medcodeid"
+  #   codelist_mod = "edh_smoking_mod_medcodeid"
+  #   codelist_heavy = "edh_smoking_heavy_medcodeid"
   #   cohort = cohortZ
   #   indexdt = "fup_start"
   #   t = NULL
   #   db = "aurum_small"
-  #   db.filepath = NULL
-  #   out.save.disk = TRUE
-  #   out.filepath = NULL
-  #   out.subdir = NULL
-  #   return.output = TRUE
+  #   db_filepath = NULL
+  #   out_save_disk = TRUE
+  #   out_filepath = NULL
+  #   out_subdir = NULL
+  #   return_output = TRUE
 
   ### Preparation
   ## Add index date variable to cohort and change indexdt based on t
@@ -123,79 +123,79 @@ extract_smoking <- function(cohort,
     varname <- "smoking"
   }
   ## Change variable name based off time point specified for extraction
-  varname <- prep_varname(varname, t, t.varname)
+  varname <- prep_varname(varname, t, t_varname)
   ## Create named subdirectory if it doesn't exist
-  prep_subdir(out.subdir)
+  prep_subdir(out_subdir)
 
   ### Run a database query for type 1 and type 2
-  db.qry.non <- db_query(codelist.non,
-                         db.open = db.open,
+  db.qry.non <- db_query(codelist_non,
+                         db_open = db_open,
                          db = db,
-                         db.filepath = db.filepath,
+                         db_filepath = db_filepath,
                          tab = "observation",
-                         codelist.vector = codelist.non.vector)
+                         codelist_vector = codelist_non_vector)
 
-  db.qry.ex <- db_query(codelist.ex,
-                        db.open = db.open,
+  db.qry.ex <- db_query(codelist_ex,
+                        db_open = db_open,
                         db = db,
-                        db.filepath = db.filepath,
+                        db_filepath = db_filepath,
                         tab = "observation",
-                        codelist.vector = codelist.ex.vector)
+                        codelist_vector = codelist_ex_vector)
 
-  db.qry.light <- db_query(codelist.light,
-                           db.open = db.open,
+  db.qry.light <- db_query(codelist_light,
+                           db_open = db_open,
                            db = db,
-                           db.filepath = db.filepath,
+                           db_filepath = db_filepath,
                            tab = "observation",
-                           codelist.vector = codelist.light.vector)
+                           codelist_vector = codelist_light_vector)
 
-  db.qry.mod <- db_query(codelist.mod,
-                         db.open = db.open,
+  db.qry.mod <- db_query(codelist_mod,
+                         db_open = db_open,
                          db = db,
-                         db.filepath = db.filepath,
+                         db_filepath = db_filepath,
                          tab = "observation",
-                         codelist.vector = codelist.mod.vector)
+                         codelist_vector = codelist_mod_vector)
 
-  db.qry.heavy <- db_query(codelist.heavy,
-                           db.open = db.open,
+  db.qry.heavy <- db_query(codelist_heavy,
+                           db_open = db_open,
                            db = db,
-                           db.filepath = db.filepath,
+                           db_filepath = db_filepath,
                            tab = "observation",
-                           codelist.vector = codelist.heavy.vector)
+                           codelist_vector = codelist_heavy_vector)
 
   ### Combine queries with cohort, retaining all smoking records prior to the index date
   ### We treat this as test data, because smoking status may be identified through number of cigarettes smoked per day
-  ### We specify value.na.rm = FALSE, as we want to keep the NA values, because smoking status can also be identified through
+  ### We specify value_na_rm = FALSE, as we want to keep the NA values, because smoking status can also be identified through
   ### the medcodeid itself.
-  smoking.non <- combine_query(db.query = db.qry.non,
+  smoking.non <- combine_query(db_query = db.qry.non,
                                cohort= cohort,
-                               query.type = "test",
+                               query_type = "test",
                                numobs = Inf,
-                               value.na.rm = FALSE)
+                               value_na_rm = FALSE)
 
-  smoking.ex <- combine_query(db.query = db.qry.ex,
+  smoking.ex <- combine_query(db_query = db.qry.ex,
                               cohort = cohort,
-                              query.type = "test",
+                              query_type = "test",
                               numobs = Inf,
-                              value.na.rm = FALSE)
+                              value_na_rm = FALSE)
 
-  smoking.light <- combine_query(db.query = db.qry.light,
+  smoking.light <- combine_query(db_query = db.qry.light,
                                  cohort = cohort,
-                                 query.type = "test",
+                                 query_type = "test",
                                  numobs = Inf,
-                                 value.na.rm = FALSE)
+                                 value_na_rm = FALSE)
 
-  smoking.mod <- combine_query(db.query = db.qry.mod,
+  smoking.mod <- combine_query(db_query = db.qry.mod,
                                cohort = cohort,
-                               query.type = "test",
+                               query_type = "test",
                                numobs = Inf,
-                               value.na.rm = FALSE)
+                               value_na_rm = FALSE)
 
-  smoking.heavy <- combine_query(db.query = db.qry.heavy,
+  smoking.heavy <- combine_query(db_query = db.qry.heavy,
                                  cohort = cohort,
-                                 query.type = "test",
+                                 query_type = "test",
                                  numobs = Inf,
-                                 value.na.rm = FALSE)
+                                 value_na_rm = FALSE)
 
   ### Currently heavy and moderate have no number of cigarettes smoked per day data
   ### Light smoker has lots of data on this, as the codes actually include "light or not stated"
@@ -273,45 +273,45 @@ extract_smoking <- function(cohort,
     dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
 
   ### Concatenate
-  variable.dat <- rbind(smoking.non, smoking.ex, smoking.light, smoking.mod, smoking.heavy)
+  variable_dat <- rbind(smoking.non, smoking.ex, smoking.light, smoking.mod, smoking.heavy)
 
   ### Arrange so that the first observation is the most recent
   ### If there are multiple on the same day, we take the most severe smoking status
-  variable.dat <-variable.dat |>
+  variable_dat <-variable_dat |>
     dplyr::arrange(patid, dplyr::desc(obsdate), dplyr::desc(smoking)) |>
     dplyr::group_by(patid)
 
   ### Identify those with a smoking history. Given we have only retained one observations from each category,
   ### this means this individual with > 1 observation must have some sort of smoking history.
-  smoking.history <- variable.dat |>
+  smoking.history <- variable_dat |>
     dplyr::summarise(count = dplyr::n()) |>
     dplyr::filter(count > 1) |>
     dplyr::select(patid) |>
     dplyr::mutate(smoking.history = 1)
 
-  ### Reduce variable.dat to most recent observation only
-  variable.dat <- dplyr::slice(variable.dat, 1)
+  ### Reduce variable_dat to most recent observation only
+  variable_dat <- dplyr::slice(variable_dat, 1)
 
   ### If their most recent value is non-smoker and they have a smoking history, we must change non-smoker to ex-smoker.
-  variable.dat <- merge(variable.dat, smoking.history, all.x = TRUE)
-  variable.dat <- dplyr::mutate(variable.dat,
+  variable_dat <- merge(variable_dat, smoking.history, all.x = TRUE)
+  variable_dat <- dplyr::mutate(variable_dat,
                                 smoking = dplyr::case_when(smoking == 0 & !is.na(smoking.history) ~ 1,
                                                            TRUE ~ smoking))
   ### Turn into factor variable
-  variable.dat$smoking <- factor(variable.dat$smoking,
+  variable_dat$smoking <- factor(variable_dat$smoking,
                                  levels = c(0,1,2,3,4),
                                  labels = c("Non-smoker", "Ex-smoker", "Light", "Moderate", "Heavy"))
 
   ### Create dataframe of cohort and the variable of interest
-  variable.dat <- merge(dplyr::select(cohort, patid), variable.dat, by.x = "patid", by.y = "patid", all.x = TRUE)
+  variable_dat <- merge(dplyr::select(cohort, patid), variable_dat, by.x = "patid", by.y = "patid", all.x = TRUE)
 
   ### Reduce to variables of interest
-  variable.dat <- variable.dat[,c("patid", "smoking")]
+  variable_dat <- variable_dat[,c("patid", "smoking")]
 
   ### Change name of variable to varname
-  colnames(variable.dat)[colnames(variable.dat) == "smoking"] <- varname
+  colnames(variable_dat)[colnames(variable_dat) == "smoking"] <- varname
 
   ### Implement output
-  implement_output(variable.dat, varname, out.save.disk, out.subdir, out.filepath, return.output)
+  implement_output(variable_dat, varname, out_save_disk, out_subdir, out_filepath, return_output)
 
 }

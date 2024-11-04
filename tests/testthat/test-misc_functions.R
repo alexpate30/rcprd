@@ -9,18 +9,18 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Add observation and drugissue to database manually
   ## Obs
   add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rcprd"),
-                  filetype = "observation", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, db = aurum_extract, overwrite = TRUE)
+                  filetype = "observation", nrows = -1, select = NULL, subset_patids = c(1,3,4,6), use_set = FALSE, db = aurum_extract, overwrite = TRUE)
   add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_002.txt", package = "rcprd"),
-                  filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
+                  filetype = "observation", subset_patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
   add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_003.txt", package = "rcprd"),
-                  filetype = "observation", subset.patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
+                  filetype = "observation", subset_patids = c(1,3,4,6), db = aurum_extract, append = TRUE)
   ## Drugissue
   add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rcprd"),
-                  filetype = "drugissue", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, aurum_extract, overwrite = TRUE)
+                  filetype = "drugissue", nrows = -1, select = NULL, subset_patids = c(1,3,4,6), use_set = FALSE, aurum_extract, overwrite = TRUE)
   add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_002.txt", package = "rcprd"),
-                  filetype = "drugissue", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, aurum_extract, append = TRUE)
+                  filetype = "drugissue", nrows = -1, select = NULL, subset_patids = c(1,3,4,6), use_set = FALSE, aurum_extract, append = TRUE)
   add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_003.txt", package = "rcprd"),
-                  filetype = "drugissue", nrows = -1, select = NULL, subset.patids = c(1,3,4,6), use.set = FALSE, aurum_extract, append = TRUE)
+                  filetype = "drugissue", nrows = -1, select = NULL, subset_patids = c(1,3,4,6), use_set = FALSE, aurum_extract, append = TRUE)
 
   ### Save output
   obs1 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation')
@@ -39,11 +39,11 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", subset.patids = c(1,3,4,6), use.set = FALSE)
+               filetype = "observation", subset_patids = c(1,3,4,6), use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", subset.patids = c(1,3,4,6), use.set = FALSE)
+               filetype = "drugissue", subset_patids = c(1,3,4,6), use_set = FALSE)
 
   ### Save output
   obs2 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation')
@@ -66,12 +66,12 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Add observation files
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", nrows = -1, select = NULL, subset.patids = pat, use.set = TRUE)
+               filetype = "observation", nrows = -1, select = NULL, subset_patids = pat, use_set = TRUE)
 
   ### Add drugissue files
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", nrows = -1, select = NULL, subset.patids = pat, use.set = TRUE)
+               filetype = "drugissue", nrows = -1, select = NULL, subset_patids = pat, use_set = TRUE)
 
   ### Save output
   obs3 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation')
@@ -82,7 +82,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   RSQLite::dbDisconnect(aurum_extract)
 
   ###
-  ### Attempt 4 (manually define str.match and extract.txt.func)
+  ### Attempt 4 (manually define str_match and extract_txt_func)
 
   ### Reconnect
   aurum_extract <- connect_database(tempfile("temp.sqlite"))
@@ -90,13 +90,13 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", subset.patids = c(1,3,4,6),
-               extract.txt.func = extract_txt_obs, str.match = "observation", use.set = FALSE)
+               filetype = "observation", subset_patids = c(1,3,4,6),
+               extract_txt_func = extract_txt_obs, str_match = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", subset.patids = c(1,3,4,6),
-               extract.txt.func = extract_txt_drug, str.match = "drugissue", use.set = FALSE)
+               filetype = "drugissue", subset_patids = c(1,3,4,6),
+               extract_txt_func = extract_txt_drug, str_match = "drugissue", use_set = FALSE)
 
   ### Save output
   obs4 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation')
@@ -107,7 +107,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   RSQLite::dbDisconnect(aurum_extract)
 
   ###
-  ### Attempt 5 (manually define str.match and tablename)
+  ### Attempt 5 (manually define str_match and tablename)
 
   ### Reconnect
   aurum_extract <- connect_database(tempfile("temp.sqlite"))
@@ -115,13 +115,13 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", subset.patids = c(1,3,4,6),
-               str.match = "observation", tablename = "scrambled", use.set = FALSE)
+               filetype = "observation", subset_patids = c(1,3,4,6),
+               str_match = "observation", tablename = "scrambled", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", subset.patids = c(1,3,4,6),
-               str.match = "drugissue", tablename = "eggs", use.set = FALSE)
+               filetype = "drugissue", subset_patids = c(1,3,4,6),
+               str_match = "drugissue", tablename = "eggs", use_set = FALSE)
 
   ### Save output
   obs5 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM scrambled')
@@ -151,8 +151,8 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   testthat::expect_error(
     cprd_extract(aurum_extract,
                  filepath = system.file("aurum_data", package = "rcprd"),
-                 filetype = "observation", subset.patids = c(1,3,4,6),
-                 str.match = "eggs", use.set = FALSE))
+                 filetype = "observation", subset_patids = c(1,3,4,6),
+                 str_match = "eggs", use_set = FALSE))
 
   ### Disconnect
   RSQLite::dbDisconnect(aurum_extract)

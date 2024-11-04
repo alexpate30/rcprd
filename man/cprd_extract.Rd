@@ -11,10 +11,10 @@ cprd_extract(
     "hes_primary", "death"),
   nrows = -1,
   select = NULL,
-  subset.patids = NULL,
-  use.set = FALSE,
-  extract.txt.func = NULL,
-  str.match = NULL,
+  subset_patids = NULL,
+  use_set = FALSE,
+  extract_txt_func = NULL,
+  str_match = NULL,
   tablename = NULL
 )
 }
@@ -29,13 +29,13 @@ cprd_extract(
 
 \item{select}{Vector of column names to select before adding to the SQLite database.}
 
-\item{subset.patids}{Patient id's to subset the .txt file on before adding to the SQLite database.}
+\item{subset_patids}{Patient id's to subset the .txt file on before adding to the SQLite database.}
 
-\item{use.set}{Reduce subset.patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset.patids is large. See vignette XXXX for more details.}
+\item{use_set}{Reduce subset_patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset_patids is large. See vignette XXXX for more details.}
 
-\item{extract.txt.func}{User-defined function to read the .txt file into R.}
+\item{extract_txt_func}{User-defined function to read the .txt file into R.}
 
-\item{str.match}{Character vector to match on when searching for file names to add to the database.}
+\item{str_match}{Character vector to match on when searching for file names to add to the database.}
 
 \item{tablename}{Name of table in SQLite database that the data will be added to.}
 }
@@ -47,29 +47,29 @@ Add the raw data from more than one of the CPRD flatfiles to an SQLite database.
 }
 \details{
 By default, will add files that contain \code{filetype} in the file name to a table named \code{filetype} in the SQLite database.
-If \code{str.match} is specified, will add files that contain \code{str.match} in the file name to a table named \code{str.match} in the SQLite database.
+If \code{str_match} is specified, will add files that contain \code{str_match} in the file name to a table named \code{str_match} in the SQLite database.
 In this case, \code{filetype} will still be used to choose which function reads in and formats the raw data, although this can be overwritten with
-\code{extract.txt.func}. If argument \code{tablename} is specified, data will be added to a table called \code{tablename} in the SQLite database.
+\code{extract_txt_func}. If argument \code{tablename} is specified, data will be added to a table called \code{tablename} in the SQLite database.
 
 Currently, rcprd only deals with \code{filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")} by default.
-However, by using \code{str.match} and \code{extract.txt.func}, the user can manually search for files with any string in the file name, and read them in
+However, by using \code{str_match} and \code{extract_txt_func}, the user can manually search for files with any string in the file name, and read them in
 and format using a user-defined function. This means the user is not restricted to only adding the pre-defined file types to the SQLite database.
 
-If \code{use.set = FALSE}, then \code{subset.patids} should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
-If \code{use.set = TRUE}, then \code{subset.patids} should be a dataframe with two columns, \code{patid} and \code{set}, where \code{set} corresponds to the number in the file name
+If \code{use_set = FALSE}, then \code{subset_patids} should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
+If \code{use_set = TRUE}, then \code{subset_patids} should be a dataframe with two columns, \code{patid} and \code{set}, where \code{set} corresponds to the number in the file name
 following the word 'set'. This functionality is provided to increase computational efficiency when subsetting to a cohort of patients which is very large (millions).
 This can be a computationally expensive process as each flatfile being read in, must be cross matched with a large vector .
 The CPRD flatfiles are split up into groups which can be identified from their naming convention. Patients from set 1, will have their data
 in DrugIssue, Observation, etc, all with the same "set" suffix in the flatfile name. We can utilise this to speed up the process of subsetting
-the data from the flatfiles to only those with patids in subset.patid. Instead we subset to those with patids in subset.patids, and with the
+the data from the flatfiles to only those with patids in subset.patid. Instead we subset to those with patids in subset_patids, and with the
 corresponding value of "set", which matches the suffix "set" in the CPRD flatfile file name. For example, patients in the Patient file which had
 suffix "set1", will have their medical data in the Observation file with suffix "set1". When subsetting the Observation file to those in
-subset.patids (our cohort), we only need to do so for patients who were also in the patient file with suffix "set1".
+subset_patids (our cohort), we only need to do so for patients who were also in the patient file with suffix "set1".
 If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 can be ignored.
 
 The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the filetype (\code{filetype}).
-\code{extract.txt.func} does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
+\code{extract_txt_func} does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
 change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM and rcprd has not been updated.
 }
 \examples{

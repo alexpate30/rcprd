@@ -9,11 +9,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
   ### Define pat and add index date and censoring date
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
@@ -26,11 +26,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract a history of type variable using extract_ho
   ho <- extract_ho(pat,
-                   codelist.vector = codelist,
+                   codelist_vector = codelist,
                    indexdt = "fup_start",
-                   db.open = aurum_extract,
+                   db_open = aurum_extract,
                    tab = "observation",
-                   return.output = TRUE)
+                   return_output = TRUE)
 
   testthat::expect_equal(nrow(ho), 6)
   testthat::expect_equal(colnames(ho), c("patid", "ho"))
@@ -39,11 +39,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract a medication history of type variable using extract_ho
   ho.drug <- extract_ho(pat,
-                        codelist.vector = "3092241000033113",
+                        codelist_vector = "3092241000033113",
                         indexdt = "fup_start",
-                        db.open = aurum_extract,
+                        db_open = aurum_extract,
                         tab = "drugissue",
-                        return.output = TRUE)
+                        return_output = TRUE)
 
   testthat::expect_equal(nrow(ho.drug), 6)
   testthat::expect_equal(colnames(ho.drug), c("patid", "ho"))
@@ -52,12 +52,12 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract a time until variable using extract_time_until
   time_until <- extract_time_until(pat,
-                                   codelist.vector = codelist,
+                                   codelist_vector = codelist,
                                    indexdt = "fup_start",
                                    censdt = "fup_end",
-                                   db.open = aurum_extract,
+                                   db_open = aurum_extract,
                                    tab = "observation",
-                                   return.output = TRUE)
+                                   return_output = TRUE)
 
   testthat::expect_equal(nrow(time_until), 6)
   testthat::expect_equal(colnames(time_until), c("patid", "var_time", "var_indicator"))
@@ -70,11 +70,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract most recent test result using extract_test_data
   test_data <- extract_test_data(pat,
-                                 codelist.vector = codelist,
+                                 codelist_vector = codelist,
                                  indexdt = "fup_start",
-                                 db.open = aurum_extract,
-                                 time.prev = Inf,
-                                 return.output = TRUE)
+                                 db_open = aurum_extract,
+                                 time_prev = Inf,
+                                 return_output = TRUE)
 
   testthat::expect_equal(nrow(test_data), 6)
   testthat::expect_equal(colnames(test_data), c("patid", "value"))
@@ -83,13 +83,13 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract all test results using extract_test_data
   test_data <- extract_test_data(pat,
-                                 codelist.vector = codelist,
+                                 codelist_vector = codelist,
                                  indexdt = "fup_start",
-                                 time.post = Inf,
+                                 time_post = Inf,
                                  numobs = Inf,
-                                 keep.numunit = TRUE,
-                                 db.open = aurum_extract,
-                                 return.output = TRUE)
+                                 keep_numunit = TRUE,
+                                 db_open = aurum_extract,
+                                 return_output = TRUE)
 
   testthat::expect_equal(nrow(test_data), 10)
   testthat::expect_equal(colnames(test_data), c("patid", "value", "numunitid", "medcodeid", "obsdate"))
@@ -98,12 +98,12 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract standard deviation of all test results using extract_test_var
   test_data <- extract_test_data_var(pat,
-                                     codelist.vector = codelist,
+                                     codelist_vector = codelist,
                                      indexdt = "fup_start",
-                                     db.open = aurum_extract,
-                                     time.prev = Inf,
-                                     time.post = Inf,
-                                     return.output = TRUE)
+                                     db_open = aurum_extract,
+                                     time_prev = Inf,
+                                     time_post = Inf,
+                                     return_output = TRUE)
 
   testthat::expect_equal(nrow(test_data), 6)
   testthat::expect_equal(colnames(test_data), c("patid", "value_var"))
@@ -133,11 +133,11 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ### Extract data using cprd_extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
 
   ### Define codelist
@@ -152,7 +152,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
              indexdt = "fup_start",
              db = "temp",
              tab = "observation",
-             out.save.disk = TRUE)
+             out_save_disk = TRUE)
 
   ### Read from disk
   ho.disk <- readRDS("data/extraction/var_ho.rds")
@@ -164,20 +164,20 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
              indexdt = "fup_start",
              db = "temp",
              tab = "drugissue",
-             out.save.disk = TRUE)
+             out_save_disk = TRUE)
 
   ### Read from disk
   ho.disk.drug <- readRDS("data/extraction/var_ho.rds")
   testthat::expect_equal(ho.drug, ho.disk.drug)
 
-  ### Extract a history of type variable and save to disk using out.subdir
+  ### Extract a history of type variable and save to disk using out_subdir
   extract_ho(pat,
              codelist = "mylist.med",
              indexdt = "fup_start",
              db = "temp",
              tab = "observation",
-             out.subdir = "cohort",
-             out.save.disk = TRUE)
+             out_subdir = "cohort",
+             out_save_disk = TRUE)
 
   ### Read from disk
   ho.disk <- readRDS("data/extraction/cohort/var_ho.rds")
@@ -187,10 +187,10 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   extract_ho(pat,
              codelist = "mylist.med",
              indexdt = "fup_start",
-             db.filepath = "data/sql/temp.sqlite",
+             db_filepath = "data/sql/temp.sqlite",
              tab = "observation",
-             out.filepath = "data/extraction/eggs.rds",
-             out.save.disk = TRUE)
+             out_filepath = "data/extraction/eggs.rds",
+             out_save_disk = TRUE)
 
   ### Read from disk
   ho.disk <- readRDS("data/extraction/eggs.rds")
@@ -213,11 +213,11 @@ testthat::test_that("BMI", {
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
   ### Define pat and add index date and censoring date
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
@@ -226,14 +226,14 @@ testthat::test_that("BMI", {
 
   ### Extract BMI
   var <- extract_bmi(cohort = pat,
-                     codelist.bmi.vector = 498521000006119,
-                     codelist.weight.vector = 401539014,
-                     codelist.height.vector = 13483031000006114,
+                     codelist_bmi_vector = 498521000006119,
+                     codelist_weight_vector = 401539014,
+                     codelist_height_vector = 13483031000006114,
                      indexdt = "indexdt",
-                     time.prev = Inf,
-                     time.post = Inf,
-                     db.open = aurum_extract,
-                     return.output = TRUE)
+                     time_prev = Inf,
+                     time_post = Inf,
+                     db_open = aurum_extract,
+                     return_output = TRUE)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "bmi"))
@@ -252,11 +252,11 @@ testthat::test_that("Cholhdl ratio", {
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
   ### Define pat and add index date and censoring date
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
@@ -265,14 +265,14 @@ testthat::test_that("Cholhdl ratio", {
 
   ### Extract cholhdl_ratio
   var <- extract_cholhdl_ratio(cohort = pat,
-                               codelist.ratio.vector = 498521000006119,
-                               codelist.chol.vector = 401539014,
-                               codelist.hdl.vector = 13483031000006114,
+                               codelist_ratio_vector = 498521000006119,
+                               codelist_chol_vector = 401539014,
+                               codelist_hdl_vector = 13483031000006114,
                                indexdt = "indexdt",
-                               time.prev = Inf,
-                               time.post = Inf,
-                               db.open = aurum_extract,
-                               return.output = TRUE)
+                               time_prev = Inf,
+                               time_post = Inf,
+                               db_open = aurum_extract,
+                               return_output = TRUE)
 
   ## NB: Value for cholhdl_ratio test are same as BMI test, because its the "ratio" medcode id that is finding the values,
   ## As opposed to finding them seperately and calculating the value from the components, which would be different
@@ -293,11 +293,11 @@ testthat::test_that("Diabetes", {
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
   ### Define pat and add index date and censoring date
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
@@ -306,10 +306,10 @@ testthat::test_that("Diabetes", {
 
   ### Extract diabetes
   var <- extract_diabetes(cohort = pat,
-                          codelist.type1.vector = 498521000006119,
-                          codelist.type2.vector = 401539014,
+                          codelist_type1_vector = 498521000006119,
+                          codelist_type2_vector = 401539014,
                           indexdt = "indexdt",
-                          db.open = aurum_extract)
+                          db_open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "diabetes"))
@@ -328,11 +328,11 @@ testthat::test_that("Smoking", {
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
   ### Define pat and add index date and censoring date
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
@@ -341,13 +341,13 @@ testthat::test_that("Smoking", {
 
   ### Extract smoking
   var <- extract_smoking(cohort = pat,
-                         codelist.non.vector = 498521000006119,
-                         codelist.ex.vector = 401539014,
-                         codelist.light.vector = 128011000000115,
-                         codelist.mod.vector = 380389013,
-                         codelist.heavy.vector = 13483031000006114,
+                         codelist_non_vector = 498521000006119,
+                         codelist_ex_vector = 401539014,
+                         codelist_light_vector = 128011000000115,
+                         codelist_mod_vector = 380389013,
+                         codelist_heavy_vector = 13483031000006114,
                          indexdt = "indexdt",
-                         db.open = aurum_extract)
+                         db_open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "smoking"))
@@ -366,11 +366,11 @@ testthat::test_that("Impotence", {
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "observation", use.set = FALSE)
+               filetype = "observation", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
-               filetype = "drugissue", use.set = FALSE)
+               filetype = "drugissue", use_set = FALSE)
 
   ### Define pat and add index date and censoring date
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"))
@@ -379,10 +379,10 @@ testthat::test_that("Impotence", {
 
   ### Extract impotence
   var <- extract_impotence(cohort = pat,
-                           codelist.med.vector = 498521000006119,
-                           codelist.drug.vector = 3092241000033113,
+                           codelist_med_vector = 498521000006119,
+                           codelist_drug_vector = 3092241000033113,
                            indexdt = "indexdt",
-                           db.open = aurum_extract)
+                           db_open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "impotence"))

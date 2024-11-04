@@ -5,28 +5,28 @@
 \title{Internal function to implement saving extracted variable to disk or returning into R workspace.}
 \usage{
 implement_output(
-  variable.dat,
+  variable_dat,
   varname,
-  out.save.disk,
-  out.subdir,
-  out.filepath,
-  return.output
+  out_save_disk,
+  out_subdir,
+  out_filepath,
+  return_output
 )
 }
 \arguments{
-\item{variable.dat}{Dataset containing variable}
+\item{variable_dat}{Dataset containing variable}
 
 \item{varname}{Name of variable to use in filename}
 
-\item{out.save.disk}{If TRUE will save output to disk}
+\item{out_save_disk}{If TRUE will save output to disk}
 
-\item{out.subdir}{Sub-directory of data/ to save output into}
+\item{out_subdir}{Sub-directory of data/ to save output into}
 
-\item{out.filepath}{Full fiilepath to save dat onto}
+\item{out_filepath}{Full fiilepath to save dat onto}
 
-\item{return.output}{If TRUE returns output into R workspace}
+\item{return_output}{If TRUE returns output into R workspace}
 }
 \description{
-Will save extracted variable to disk if \code{out.save.disk = TRUE}. Note it relies on correct underlying structure
-of directories. Will output extracted variable into R workspace if \code{return.output = TRUE}.
+Will save extracted variable to disk if \code{out_save_disk = TRUE}. Note it relies on correct underlying structure
+of directories. Will output extracted variable into R workspace if \code{return_output = TRUE}.
 }

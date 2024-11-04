@@ -7,26 +7,26 @@
 extract_smoking(
   cohort,
   varname = NULL,
-  codelist.non = NULL,
-  codelist.ex = NULL,
-  codelist.light = NULL,
-  codelist.mod = NULL,
-  codelist.heavy = NULL,
-  codelist.non.vector = NULL,
-  codelist.ex.vector = NULL,
-  codelist.light.vector = NULL,
-  codelist.mod.vector = NULL,
-  codelist.heavy.vector = NULL,
+  codelist_non = NULL,
+  codelist_ex = NULL,
+  codelist_light = NULL,
+  codelist_mod = NULL,
+  codelist_heavy = NULL,
+  codelist_non_vector = NULL,
+  codelist_ex_vector = NULL,
+  codelist_light_vector = NULL,
+  codelist_mod_vector = NULL,
+  codelist_heavy_vector = NULL,
   indexdt,
   t = NULL,
-  t.varname = TRUE,
-  db.open = NULL,
+  t_varname = TRUE,
+  db_open = NULL,
   db = NULL,
-  db.filepath = NULL,
-  out.save.disk = FALSE,
-  out.subdir = NULL,
-  out.filepath = NULL,
-  return.output = TRUE
+  db_filepath = NULL,
+  out_save_disk = FALSE,
+  out_subdir = NULL,
+  out_filepath = NULL,
+  return_output = TRUE
 )
 }
 \arguments{
@@ -34,45 +34,45 @@ extract_smoking(
 
 \item{varname}{Optional name for variable in output dataset.}
 
-\item{codelist.non}{Name of codelist (stored on hard disk in "codelists/analysis/") for non-smoker to query the database with.}
+\item{codelist_non}{Name of codelist (stored on hard disk in "codelists/analysis/") for non-smoker to query the database with.}
 
-\item{codelist.ex}{Name of codelist (stored on hard disk in "codelists/analysis/") for ex-smoker to query the database with.}
+\item{codelist_ex}{Name of codelist (stored on hard disk in "codelists/analysis/") for ex-smoker to query the database with.}
 
-\item{codelist.light}{Name of codelist (stored on hard disk in "codelists/analysis/") for light smoker to query the database with.}
+\item{codelist_light}{Name of codelist (stored on hard disk in "codelists/analysis/") for light smoker to query the database with.}
 
-\item{codelist.mod}{Name of codelist (stored on hard disk in "codelists/analysis/") for moderate smoker to query the database with.}
+\item{codelist_mod}{Name of codelist (stored on hard disk in "codelists/analysis/") for moderate smoker to query the database with.}
 
-\item{codelist.heavy}{Name of codelist (stored on hard disk in "codelists/analysis/") for heavy smoker to query the database with.}
+\item{codelist_heavy}{Name of codelist (stored on hard disk in "codelists/analysis/") for heavy smoker to query the database with.}
 
-\item{codelist.non.vector}{Vector of codes for non-smoker to query the database with.}
+\item{codelist_non_vector}{Vector of codes for non-smoker to query the database with.}
 
-\item{codelist.ex.vector}{Vector of codes for ex-smoker to query the database with.}
+\item{codelist_ex_vector}{Vector of codes for ex-smoker to query the database with.}
 
-\item{codelist.light.vector}{Vector of codes for light smoker to query the database with.}
+\item{codelist_light_vector}{Vector of codes for light smoker to query the database with.}
 
-\item{codelist.mod.vector}{Vector of codes for moderate smoker to query the database with.}
+\item{codelist_mod_vector}{Vector of codes for moderate smoker to query the database with.}
 
-\item{codelist.heavy.vector}{Vector of codes for heavy smoker to query the database with.}
+\item{codelist_heavy_vector}{Vector of codes for heavy smoker to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 
 \item{t}{Number of days after index date at which to calculate variable.}
 
-\item{t.varname}{Whether to add \code{t} to \code{varname}.}
+\item{t_varname}{Whether to add \code{t} to \code{varname}.}
 
-\item{db.open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
+\item{db_open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
 
 \item{db}{Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.}
 
-\item{db.filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
+\item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
-\item{out.save.disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
+\item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
-\item{out.subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
+\item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
 
-\item{out.filepath}{Full filepath and filename to save outputted data frame into.}
+\item{out_filepath}{Full filepath and filename to save outputted data frame into.}
 
-\item{return.output}{If \code{TRUE} will return outputted data frame into R workspace.}
+\item{return_output}{If \code{TRUE} will return outputted data frame into R workspace.}
 }
 \value{
 A data frame with variable smoking status.
@@ -88,12 +88,12 @@ This vignette can be viewed by running \code{vignette("help", package = "rcprd")
 
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through \code{db.filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
-using the object as input to parameter \code{db.open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db.open} is specified, this will take precedence over \code{db} or \code{db.filepath}.
+the database is accessed through \code{db_filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
+using the object as input to parameter \code{db_open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db_open} is specified, this will take precedence over \code{db} or \code{db_filepath}.
 
-If \code{out.save.disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-This directory structure must be created in advance. \code{out.subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
-using \code{out.filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return.output = TRUE}
+If \code{out_save_disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+This directory structure must be created in advance. \code{out_subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
+using \code{out_filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return_output = TRUE}
 and then save onto the hard disk manually.
 
 Specifying the non-vector type codelists requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
@@ -112,7 +112,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
 filepath = system.file("aurum_data", package = "rcprd"),
-filetype = "observation", use.set = FALSE)
+filetype = "observation", use_set = FALSE)
 
 ## Define cohort and add index date
 pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
@@ -120,11 +120,11 @@ pat$indexdt <- as.Date("01/01/1955", format = "\%d/\%m/\%Y")
 
 ## Extract smoking status prior to index date
 extract_smoking(cohort = pat,
-codelist.non.vector = "498521000006119",
-codelist.ex.vector = "401539014",
-codelist.light.vector = "128011000000115",
-codelist.mod.vector = "380389013",
-codelist.heavy.vector = "13483031000006114",
+codelist_non_vector = "498521000006119",
+codelist_ex_vector = "401539014",
+codelist_light_vector = "128011000000115",
+codelist_mod_vector = "380389013",
+codelist_heavy_vector = "13483031000006114",
 indexdt = "indexdt",
-db.open = aurum_extract)
+db_open = aurum_extract)
 }

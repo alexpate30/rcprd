@@ -7,22 +7,22 @@
 extract_impotence(
   cohort,
   varname = NULL,
-  codelist.med = NULL,
-  codelist.drug = NULL,
-  codelist.med.vector = NULL,
-  codelist.drug.vector = NULL,
+  codelist_med = NULL,
+  codelist_drug = NULL,
+  codelist_med_vector = NULL,
+  codelist_drug_vector = NULL,
   indexdt,
   t = NULL,
-  t.varname = TRUE,
-  drug.time.prev = Inf,
-  drug.numobs = 1,
-  db.open = NULL,
+  t_varname = TRUE,
+  drug_time_prev = Inf,
+  drug_numobs = 1,
+  db_open = NULL,
   db = NULL,
-  db.filepath = NULL,
-  out.save.disk = FALSE,
-  out.subdir = NULL,
-  out.filepath = NULL,
-  return.output = TRUE
+  db_filepath = NULL,
+  out_save_disk = FALSE,
+  out_subdir = NULL,
+  out_filepath = NULL,
+  return_output = TRUE
 )
 }
 \arguments{
@@ -30,54 +30,54 @@ extract_impotence(
 
 \item{varname}{Optional name for variable in output dataset.}
 
-\item{codelist.med}{Name of codelist (stored on hard disk in "codelists/analysis/") for medical diagnoses to query the database with.}
+\item{codelist_med}{Name of codelist (stored on hard disk in "codelists/analysis/") for medical diagnoses to query the database with.}
 
-\item{codelist.drug}{Name of codelist (stored on hard disk in "codelists/analysis/") for prescriptions to query the database with.}
+\item{codelist_drug}{Name of codelist (stored on hard disk in "codelists/analysis/") for prescriptions to query the database with.}
 
-\item{codelist.med.vector}{Vector of codes for medical diagnoses to query the database with.}
+\item{codelist_med_vector}{Vector of codes for medical diagnoses to query the database with.}
 
-\item{codelist.drug.vector}{Vector of codes for prescriptions to query the database with.}
+\item{codelist_drug_vector}{Vector of codes for prescriptions to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 
 \item{t}{Number of days after index date at which to calculate variable.}
 
-\item{t.varname}{Whether to add \code{t} to \code{varname}.}
+\item{t_varname}{Whether to add \code{t} to \code{varname}.}
 
-\item{drug.time.prev}{Number of days prior to index date in which to look for prescriptions.}
+\item{drug_time_prev}{Number of days prior to index date in which to look for prescriptions.}
 
-\item{drug.numobs}{Numbre of prescriptions required in time period to indicate impotence.}
+\item{drug_numobs}{Numbre of prescriptions required in time period to indicate impotence.}
 
-\item{db.open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
+\item{db_open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
 
 \item{db}{Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.}
 
-\item{db.filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
+\item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
-\item{out.save.disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
+\item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
-\item{out.subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
+\item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
 
-\item{out.filepath}{Full filepath and filename to save outputted data frame into.}
+\item{out_filepath}{Full filepath and filename to save outputted data frame into.}
 
-\item{return.output}{If \code{TRUE} will return outputted data frame into R workspace.}
+\item{return_output}{If \code{TRUE} will return outputted data frame into R workspace.}
 }
 \value{
 A data frame with variable impotence status.
 }
 \description{
-Extract impotence status. This requires either a medical diagnosis, or \code{drug.numobs} number of prescriptions in \code{drug.time.prev} number of days
+Extract impotence status. This requires either a medical diagnosis, or \code{drug_numobs} number of prescriptions in \code{drug_time_prev} number of days
 prior to the index date.
 }
 \details{
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through \code{db.filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
-using the object as input to parameter \code{db.open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db.open} is specified, this will take precedence over \code{db} or \code{db.filepath}.
+the database is accessed through \code{db_filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
+using the object as input to parameter \code{db_open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db_open} is specified, this will take precedence over \code{db} or \code{db_filepath}.
 
-If \code{out.save.disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-This directory structure must be created in advance. \code{out.subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
-using \code{out.filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return.output = TRUE}
+If \code{out_save_disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+This directory structure must be created in advance. \code{out_subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
+using \code{out_filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return_output = TRUE}
 and then save onto the hard disk manually.
 
 Specifying the non-vector type codelists requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative

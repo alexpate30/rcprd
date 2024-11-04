@@ -21,7 +21,7 @@
 #' ## Create SQLite database using cprd_extract
 #' cprd_extract(aurum_extract,
 #' filepath = system.file("aurum_data", package = "rcprd"),
-#' filetype = "observation", use.set = FALSE)
+#' filetype = "observation", use_set = FALSE)
 #'
 #' ## Define cohort and add index date
 #' pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
@@ -30,11 +30,11 @@
 #' ## Extract a history of type variable and save to disc automatically,
 #' ## by just specifying name of database
 #' extract_ho(pat,
-#' codelist.vector = "187341000000114",
+#' codelist_vector = "187341000000114",
 #' indexdt = "fup_start",
 #' db = "temp",
 #' tab = "observation",
-#' out.save.disk = TRUE)
+#' out_save_disk = TRUE)
 #'
 #' ## Read file from disk into R workspace
 #' readRDS("data/extraction/var_ho.rds")

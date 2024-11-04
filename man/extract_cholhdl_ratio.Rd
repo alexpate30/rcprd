@@ -7,26 +7,26 @@
 extract_cholhdl_ratio(
   cohort,
   varname = NULL,
-  codelist.ratio = NULL,
-  codelist.chol = NULL,
-  codelist.hdl = NULL,
-  codelist.ratio.vector = NULL,
-  codelist.chol.vector = NULL,
-  codelist.hdl.vector = NULL,
+  codelist_ratio = NULL,
+  codelist_chol = NULL,
+  codelist_hdl = NULL,
+  codelist_ratio_vector = NULL,
+  codelist_chol_vector = NULL,
+  codelist_hdl_vector = NULL,
   indexdt,
   t = NULL,
-  t.varname = TRUE,
-  time.prev = 365.25 * 5,
-  time.post = 0,
-  lower.bound = -Inf,
-  upper.bound = Inf,
-  db.open = NULL,
+  t_varname = TRUE,
+  time_prev = 365.25 * 5,
+  time_post = 0,
+  lower_bound = -Inf,
+  upper_bound = Inf,
+  db_open = NULL,
   db = NULL,
-  db.filepath = NULL,
-  out.save.disk = FALSE,
-  out.subdir = NULL,
-  out.filepath = NULL,
-  return.output = TRUE
+  db_filepath = NULL,
+  out_save_disk = FALSE,
+  out_subdir = NULL,
+  out_filepath = NULL,
+  return_output = TRUE
 )
 }
 \arguments{
@@ -34,45 +34,45 @@ extract_cholhdl_ratio(
 
 \item{varname}{Optional name for variable in output dataset.}
 
-\item{codelist.ratio}{Name of codelist (stored on hard disk in "codelists/analysis/") for ratio to query the database with.}
+\item{codelist_ratio}{Name of codelist (stored on hard disk in "codelists/analysis/") for ratio to query the database with.}
 
-\item{codelist.chol}{Name of codelist (stored on hard disk in "codelists/analysis/") for total cholesterol to query the database with.}
+\item{codelist_chol}{Name of codelist (stored on hard disk in "codelists/analysis/") for total cholesterol to query the database with.}
 
-\item{codelist.hdl}{Name of codelist (stored on hard disk in "codelists/analysis/") for high-density lipoprotein to query the database with.}
+\item{codelist_hdl}{Name of codelist (stored on hard disk in "codelists/analysis/") for high-density lipoprotein to query the database with.}
 
-\item{codelist.ratio.vector}{Vector of codes for ratio to query the database with.}
+\item{codelist_ratio_vector}{Vector of codes for ratio to query the database with.}
 
-\item{codelist.chol.vector}{Vector of codes for total cholesterol to query the database with.}
+\item{codelist_chol_vector}{Vector of codes for total cholesterol to query the database with.}
 
-\item{codelist.hdl.vector}{Vector of codes for high-density lipoprotein to query the database with.}
+\item{codelist_hdl_vector}{Vector of codes for high-density lipoprotein to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 
 \item{t}{Number of days after index date at which to calculate variable.}
 
-\item{t.varname}{Whether to add \code{t} to \code{varname}.}
+\item{t_varname}{Whether to add \code{t} to \code{varname}.}
 
-\item{time.prev}{Number of days prior to index date to look for codes.}
+\item{time_prev}{Number of days prior to index date to look for codes.}
 
-\item{time.post}{Number of days after index date to look for codes.}
+\item{time_post}{Number of days after index date to look for codes.}
 
-\item{lower.bound}{Lower bound for returned values.}
+\item{lower_bound}{Lower bound for returned values.}
 
-\item{upper.bound}{Upper bound for returned values.}
+\item{upper_bound}{Upper bound for returned values.}
 
-\item{db.open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
+\item{db_open}{An open SQLite database connection created using RSQLite::dbConnect, to be queried.}
 
 \item{db}{Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.}
 
-\item{db.filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
+\item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
-\item{out.save.disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
+\item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
-\item{out.subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
+\item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
 
-\item{out.filepath}{Full filepath and filename to save outputted data frame into.}
+\item{out_filepath}{Full filepath and filename to save outputted data frame into.}
 
-\item{return.output}{If \code{TRUE} will return outputted data frame into R workspace.}
+\item{return_output}{If \code{TRUE} will return outputted data frame into R workspace.}
 }
 \value{
 A data frame with variable total cholesterol/high-density lipoprotein ratio.
@@ -87,12 +87,12 @@ This vignette can be viewed by running \code{vignette("help", package = "rcprd")
 
 Specifying \code{db} requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through \code{db}, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through \code{db.filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
-using the object as input to parameter \code{db.open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db.open} is specified, this will take precedence over \code{db} or \code{db.filepath}.
+the database is accessed through \code{db_filepath}. A connection to the SQLite database can also be opened manually using \code{RSQLite::dbConnect}, and then
+using the object as input to parameter \code{db_open}. After wards, the connection must be closed manually using \code{RSQLite::dbDisconnect}. If \code{db_open} is specified, this will take precedence over \code{db} or \code{db_filepath}.
 
-If \code{out.save.disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-This directory structure must be created in advance. \code{out.subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
-using \code{out.filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return.output = TRUE}
+If \code{out_save_disk = TRUE}, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+This directory structure must be created in advance. \code{out_subdir} can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
+using \code{out_filepath} to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using \code{return_output = TRUE}
 and then save onto the hard disk manually.
 
 Specifying the non-vector type codelists requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
@@ -108,7 +108,7 @@ aurum_extract <- connect_database(tempfile("temp.sqlite"))
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
 filepath = system.file("aurum_data", package = "rcprd"),
-filetype = "observation", use.set = FALSE)
+filetype = "observation", use_set = FALSE)
 
 ## Define cohort and add index date
 pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
@@ -116,12 +116,12 @@ pat$indexdt <- as.Date("01/01/1955", format = "\%d/\%m/\%Y")
 
 ## Extract most recent cholhdl_ratio prior to index date
 extract_cholhdl_ratio(cohort = pat,
-codelist.ratio.vector = "498521000006119",
-codelist.chol.vector = "401539014",
-codelist.hdl.vector = "13483031000006114",
+codelist_ratio_vector = "498521000006119",
+codelist_chol_vector = "401539014",
+codelist_hdl_vector = "13483031000006114",
 indexdt = "indexdt",
-time.prev = Inf,
-db.open = aurum_extract,
-return.output = TRUE)
+time_prev = Inf,
+db_open = aurum_extract,
+return_output = TRUE)
 
 }
