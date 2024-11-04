@@ -47,21 +47,21 @@
 <span>  <span class="va">cohort</span>,</span>
 <span>  varname <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  codelist <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  codelist.vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">indexdt</span>,</span>
 <span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  t.varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  time.prev <span class="op">=</span> <span class="fl">365.25</span> <span class="op">*</span> <span class="fl">5</span>,</span>
-<span>  time.post <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  lower.bound <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>,</span>
-<span>  upper.bound <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  db.open <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  t_varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  time_prev <span class="op">=</span> <span class="fl">365.25</span> <span class="op">*</span> <span class="fl">5</span>,</span>
+<span>  time_post <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  lower_bound <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>,</span>
+<span>  upper_bound <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  db_open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  db.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out.save.disk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  out.subdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  return.output <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  db_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  out_save_disk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  out_subdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  out_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  return_output <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -81,7 +81,7 @@
 <dd><p>Name of codelist (stored on hard disk) to query the database with.</p></dd>
 
 
-<dt id="arg-codelist-vector">codelist.vector<a class="anchor" aria-label="anchor" href="#arg-codelist-vector"></a></dt>
+<dt id="arg-codelist-vector">codelist_vector<a class="anchor" aria-label="anchor" href="#arg-codelist-vector"></a></dt>
 <dd><p>Vector of codes to query the database with. This takes precedent over <code>codelist</code> if both are specified.</p></dd>
 
 
@@ -93,27 +93,27 @@
 <dd><p>Number of days after <code>indexdt</code> at which to extract the variable.</p></dd>
 
 
-<dt id="arg-t-varname">t.varname<a class="anchor" aria-label="anchor" href="#arg-t-varname"></a></dt>
+<dt id="arg-t-varname">t_varname<a class="anchor" aria-label="anchor" href="#arg-t-varname"></a></dt>
 <dd><p>Whether to alter the variable name in the outputted data frame to reflect <code>t</code>.</p></dd>
 
 
-<dt id="arg-time-prev">time.prev<a class="anchor" aria-label="anchor" href="#arg-time-prev"></a></dt>
+<dt id="arg-time-prev">time_prev<a class="anchor" aria-label="anchor" href="#arg-time-prev"></a></dt>
 <dd><p>Number of days prior to index date to look for codes.</p></dd>
 
 
-<dt id="arg-time-post">time.post<a class="anchor" aria-label="anchor" href="#arg-time-post"></a></dt>
+<dt id="arg-time-post">time_post<a class="anchor" aria-label="anchor" href="#arg-time-post"></a></dt>
 <dd><p>Number of days after index date to look for codes.</p></dd>
 
 
-<dt id="arg-lower-bound">lower.bound<a class="anchor" aria-label="anchor" href="#arg-lower-bound"></a></dt>
+<dt id="arg-lower-bound">lower_bound<a class="anchor" aria-label="anchor" href="#arg-lower-bound"></a></dt>
 <dd><p>Lower bound for returned values.</p></dd>
 
 
-<dt id="arg-upper-bound">upper.bound<a class="anchor" aria-label="anchor" href="#arg-upper-bound"></a></dt>
+<dt id="arg-upper-bound">upper_bound<a class="anchor" aria-label="anchor" href="#arg-upper-bound"></a></dt>
 <dd><p>Upper bound for returned values.</p></dd>
 
 
-<dt id="arg-db-open">db.open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
+<dt id="arg-db-open">db_open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
 <dd><p>An open SQLite database connection created using RSQLite::dbConnect, to be queried.</p></dd>
 
 
@@ -121,23 +121,23 @@
 <dd><p>Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.</p></dd>
 
 
-<dt id="arg-db-filepath">db.filepath<a class="anchor" aria-label="anchor" href="#arg-db-filepath"></a></dt>
+<dt id="arg-db-filepath">db_filepath<a class="anchor" aria-label="anchor" href="#arg-db-filepath"></a></dt>
 <dd><p>Full filepath to SQLITE database on hard disk, to be queried.</p></dd>
 
 
-<dt id="arg-out-save-disk">out.save.disk<a class="anchor" aria-label="anchor" href="#arg-out-save-disk"></a></dt>
+<dt id="arg-out-save-disk">out_save_disk<a class="anchor" aria-label="anchor" href="#arg-out-save-disk"></a></dt>
 <dd><p>If <code>TRUE</code> will attempt to save outputted data frame to directory "data/extraction/".</p></dd>
 
 
-<dt id="arg-out-subdir">out.subdir<a class="anchor" aria-label="anchor" href="#arg-out-subdir"></a></dt>
+<dt id="arg-out-subdir">out_subdir<a class="anchor" aria-label="anchor" href="#arg-out-subdir"></a></dt>
 <dd><p>Sub-directory of "data/extraction/" to save outputted data frame into.</p></dd>
 
 
-<dt id="arg-out-filepath">out.filepath<a class="anchor" aria-label="anchor" href="#arg-out-filepath"></a></dt>
+<dt id="arg-out-filepath">out_filepath<a class="anchor" aria-label="anchor" href="#arg-out-filepath"></a></dt>
 <dd><p>Full filepath and filename to save outputted data frame into.</p></dd>
 
 
-<dt id="arg-return-output">return.output<a class="anchor" aria-label="anchor" href="#arg-return-output"></a></dt>
+<dt id="arg-return-output">return_output<a class="anchor" aria-label="anchor" href="#arg-return-output"></a></dt>
 <dd><p>If <code>TRUE</code> will return outputted data frame into R workspace.</p></dd>
 
 </dl></div>
@@ -149,17 +149,17 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Specifying <code>db</code> requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through <code>db</code>, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through <code>db.filepath</code>. A connection to the SQLite database can also be opened manually using <code>RSQLite::dbConnect</code>, and then
-using the object as input to parameter <code>db.open</code>. After wards, the connection must be closed manually using <code>RSQLite::dbDisconnect</code>. If <code>db.open</code> is specified, this will take precedence over <code>db</code> or <code>db.filepath</code>.</p>
-<p>If <code>out.save.disk = TRUE</code>, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-This directory structure must be created in advance. <code>out.subdir</code> can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
-using <code>out.filepath</code> to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using <code>return.output = TRUE</code>
+the database is accessed through <code>db_filepath</code>. A connection to the SQLite database can also be opened manually using <code>RSQLite::dbConnect</code>, and then
+using the object as input to parameter <code>db_open</code>. After wards, the connection must be closed manually using <code>RSQLite::dbDisconnect</code>. If <code>db_open</code> is specified, this will take precedence over <code>db</code> or <code>db_filepath</code>.</p>
+<p>If <code>out_save_disk = TRUE</code>, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+This directory structure must be created in advance. <code>out_subdir</code> can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
+using <code>out_filepath</code> to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using <code>return_output = TRUE</code>
 and then save onto the hard disk manually.</p>
 <p>Codelists can be specified in two ways. The first is to read the codelist into R as a character vector and then specify through the argument
-<code>codelist.vector</code>. Codelists stored on the hard disk can also be referred to from the <code>codelist</code> argument, but require a specific underlying directory structure.
+<code>codelist_vector</code>. Codelists stored on the hard disk can also be referred to from the <code>codelist</code> argument, but require a specific underlying directory structure.
 The codelist on the hard disk must be stored in a directory called "codelists/analysis/" relative to the working directory. The codelist must be a .csv file, and
 contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for argument <code>tab</code>. The input to argument <code>codelist</code> should just be a character string of
-the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</code> option will take precedence over the <code>codelist</code> argument if both are specified.</p>
+the name of the files (excluding the suffix '.csv'). The <code>codelist_vector</code> option will take precedence over the <code>codelist</code> argument if both are specified.</p>
 <p>Currently only returns most recent test result. This will be updated to return more than one most recent test result if specified.</p>
     </div>
 
@@ -172,10 +172,10 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</
 <span class="r-in"><span><span class="co">## Create SQLite database using cprd_extract</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="cprd_extract.html">cprd_extract</a></span><span class="op">(</span><span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use.set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-10-30 18:00:13.353731"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-10-30 18:00:13.367325"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-10-30 18:00:13.378819"</span>
+<span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-04 15:01:14.23215"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-04 15:01:14.244494"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-04 15:01:14.255325"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
@@ -184,11 +184,11 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist.vector</
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Extract most recent test value prior to index date</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="extract_test_data.html">extract_test_data</a></span><span class="op">(</span><span class="va">pat</span>,</span></span>
-<span class="r-in"><span>codelist.vector <span class="op">=</span> <span class="st">"187341000000114"</span>,</span></span>
+<span class="r-in"><span>codelist_vector <span class="op">=</span> <span class="st">"187341000000114"</span>,</span></span>
 <span class="r-in"><span>indexdt <span class="op">=</span> <span class="st">"fup_start"</span>,</span></span>
-<span class="r-in"><span>db.open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
-<span class="r-in"><span>time.prev <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
-<span class="r-in"><span>return.output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
+<span class="r-in"><span>time_prev <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
+<span class="r-in"><span>return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    patid value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     10    NA</span>

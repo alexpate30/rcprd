@@ -50,10 +50,10 @@
 <span>    <span class="st">"hes_primary"</span>, <span class="st">"death"</span><span class="op">)</span>,</span>
 <span>  nrows <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
 <span>  select <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  subset.patids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  use.set <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  extract.txt.func <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  str.match <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subset_patids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_set <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  extract_txt_func <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  str_match <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tablename <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -82,19 +82,19 @@
 <dd><p>Vector of column names to select before adding to the SQLite database.</p></dd>
 
 
-<dt id="arg-subset-patids">subset.patids<a class="anchor" aria-label="anchor" href="#arg-subset-patids"></a></dt>
+<dt id="arg-subset-patids">subset_patids<a class="anchor" aria-label="anchor" href="#arg-subset-patids"></a></dt>
 <dd><p>Patient id's to subset the .txt file on before adding to the SQLite database.</p></dd>
 
 
-<dt id="arg-use-set">use.set<a class="anchor" aria-label="anchor" href="#arg-use-set"></a></dt>
-<dd><p>Reduce subset.patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset.patids is large. See vignette XXXX for more details.</p></dd>
+<dt id="arg-use-set">use_set<a class="anchor" aria-label="anchor" href="#arg-use-set"></a></dt>
+<dd><p>Reduce subset_patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset_patids is large. See vignette XXXX for more details.</p></dd>
 
 
-<dt id="arg-extract-txt-func">extract.txt.func<a class="anchor" aria-label="anchor" href="#arg-extract-txt-func"></a></dt>
+<dt id="arg-extract-txt-func">extract_txt_func<a class="anchor" aria-label="anchor" href="#arg-extract-txt-func"></a></dt>
 <dd><p>User-defined function to read the .txt file into R.</p></dd>
 
 
-<dt id="arg-str-match">str.match<a class="anchor" aria-label="anchor" href="#arg-str-match"></a></dt>
+<dt id="arg-str-match">str_match<a class="anchor" aria-label="anchor" href="#arg-str-match"></a></dt>
 <dd><p>Character vector to match on when searching for file names to add to the database.</p></dd>
 
 
@@ -109,26 +109,26 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>By default, will add files that contain <code>filetype</code> in the file name to a table named <code>filetype</code> in the SQLite database.
-If <code>str.match</code> is specified, will add files that contain <code>str.match</code> in the file name to a table named <code>str.match</code> in the SQLite database.
+If <code>str_match</code> is specified, will add files that contain <code>str_match</code> in the file name to a table named <code>str_match</code> in the SQLite database.
 In this case, <code>filetype</code> will still be used to choose which function reads in and formats the raw data, although this can be overwritten with
-<code>extract.txt.func</code>. If argument <code>tablename</code> is specified, data will be added to a table called <code>tablename</code> in the SQLite database.</p>
+<code>extract_txt_func</code>. If argument <code>tablename</code> is specified, data will be added to a table called <code>tablename</code> in the SQLite database.</p>
 <p>Currently, rcprd only deals with <code>filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")</code> by default.
-However, by using <code>str.match</code> and <code>extract.txt.func</code>, the user can manually search for files with any string in the file name, and read them in
+However, by using <code>str_match</code> and <code>extract_txt_func</code>, the user can manually search for files with any string in the file name, and read them in
 and format using a user-defined function. This means the user is not restricted to only adding the pre-defined file types to the SQLite database.</p>
-<p>If <code>use.set = FALSE</code>, then <code>subset.patids</code> should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
-If <code>use.set = TRUE</code>, then <code>subset.patids</code> should be a dataframe with two columns, <code>patid</code> and <code>set</code>, where <code>set</code> corresponds to the number in the file name
+<p>If <code>use_set = FALSE</code>, then <code>subset_patids</code> should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
+If <code>use_set = TRUE</code>, then <code>subset_patids</code> should be a dataframe with two columns, <code>patid</code> and <code>set</code>, where <code>set</code> corresponds to the number in the file name
 following the word 'set'. This functionality is provided to increase computational efficiency when subsetting to a cohort of patients which is very large (millions).
 This can be a computationally expensive process as each flatfile being read in, must be cross matched with a large vector .
 The CPRD flatfiles are split up into groups which can be identified from their naming convention. Patients from set 1, will have their data
 in DrugIssue, Observation, etc, all with the same "set" suffix in the flatfile name. We can utilise this to speed up the process of subsetting
-the data from the flatfiles to only those with patids in subset.patid. Instead we subset to those with patids in subset.patids, and with the
+the data from the flatfiles to only those with patids in subset.patid. Instead we subset to those with patids in subset_patids, and with the
 corresponding value of "set", which matches the suffix "set" in the CPRD flatfile file name. For example, patients in the Patient file which had
 suffix "set1", will have their medical data in the Observation file with suffix "set1". When subsetting the Observation file to those in
-subset.patids (our cohort), we only need to do so for patients who were also in the patient file with suffix "set1".
+subset_patids (our cohort), we only need to do so for patients who were also in the patient file with suffix "set1".
 If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 can be ignored.</p>
 <p>The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the filetype (<code>filetype</code>).
-<code>extract.txt.func</code> does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
+<code>extract_txt_func</code> does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
 change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM and rcprd has not been updated.</p>
     </div>
 
@@ -141,9 +141,9 @@ change variable formats, or if the variables in the .txt files change in future 
 <span class="r-in"><span><span class="fu">cprd_extract</span><span class="op">(</span>db <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-10-30 18:00:10.425327"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-10-30 18:00:10.438181"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-10-30 18:00:10.453525"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-04 15:01:11.468147"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-04 15:01:11.484294"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-04 15:01:11.495222"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Query database</span></span></span>

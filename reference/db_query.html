@@ -45,13 +45,13 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">db_query</span><span class="op">(</span></span>
 <span>  <span class="va">codelist</span>,</span>
-<span>  db.open <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  db_open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  db.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  db.cprd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aurum"</span>, <span class="st">"gold"</span><span class="op">)</span>,</span>
+<span>  db_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  db_cprd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aurum"</span>, <span class="st">"gold"</span><span class="op">)</span>,</span>
 <span>  tab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"observation"</span>, <span class="st">"drugissue"</span>, <span class="st">"clinical"</span>, <span class="st">"immunisation"</span>, <span class="st">"test"</span>, <span class="st">"therapy"</span>,</span>
 <span>    <span class="st">"hes_primary"</span>, <span class="st">"death"</span><span class="op">)</span>,</span>
-<span>  codelist.vector <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  codelist_vector <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -63,7 +63,7 @@
 <dd><p>Name of codelist to query the database with.</p></dd>
 
 
-<dt id="arg-db-open">db.open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
+<dt id="arg-db-open">db_open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
 <dd><p>An open SQLite database connection created using RSQLite::dbConnect, to be queried.</p></dd>
 
 
@@ -71,11 +71,11 @@
 <dd><p>Name of SQLITE database on hard disk, to be queried.</p></dd>
 
 
-<dt id="arg-db-filepath">db.filepath<a class="anchor" aria-label="anchor" href="#arg-db-filepath"></a></dt>
+<dt id="arg-db-filepath">db_filepath<a class="anchor" aria-label="anchor" href="#arg-db-filepath"></a></dt>
 <dd><p>Full filepath to SQLITE database on hard disk, to be queried.</p></dd>
 
 
-<dt id="arg-db-cprd">db.cprd<a class="anchor" aria-label="anchor" href="#arg-db-cprd"></a></dt>
+<dt id="arg-db-cprd">db_cprd<a class="anchor" aria-label="anchor" href="#arg-db-cprd"></a></dt>
 <dd><p>CPRD Aurum ('aurum') or gold ('gold').</p></dd>
 
 
@@ -83,7 +83,7 @@
 <dd><p>Name of table in SQLite database that is to be queried.</p></dd>
 
 
-<dt id="arg-codelist-vector">codelist.vector<a class="anchor" aria-label="anchor" href="#arg-codelist-vector"></a></dt>
+<dt id="arg-codelist-vector">codelist_vector<a class="anchor" aria-label="anchor" href="#arg-codelist-vector"></a></dt>
 <dd><p>Vector of codes to query the database with. This takes precedent over <code>codelist</code> if both are specified.</p></dd>
 
 </dl></div>
@@ -95,11 +95,11 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Specifying <code>db</code> requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through <code>db</code>, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through <code>db.filepath</code>. A connection to the SQLite database can also be opened manually using <code>RSQLite::dbConnect</code>, and then
-using the object as input to parameter <code>db.open</code>. After wards, the connection must be closed manually using <code>RSQLite::dbDisconnect</code>. If <code>db.open</code> is specified, this will take precedence over <code>db</code> or <code>db.filepath</code>.</p>
+the database is accessed through <code>db_filepath</code>. A connection to the SQLite database can also be opened manually using <code>RSQLite::dbConnect</code>, and then
+using the object as input to parameter <code>db_open</code>. After wards, the connection must be closed manually using <code>RSQLite::dbDisconnect</code>. If <code>db_open</code> is specified, this will take precedence over <code>db</code> or <code>db_filepath</code>.</p>
 <p>Specifying <code>codelist</code> requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen <code>tab</code>. The codelist can
-also be read in manually, and supplied as a character vector to <code>codelist.vector</code>. If <code>codelist.vector</code> is defined, this will take precedence over <code>codelist</code>.</p>
+also be read in manually, and supplied as a character vector to <code>codelist_vector</code>. If <code>codelist_vector</code> is defined, this will take precedence over <code>codelist</code>.</p>
     </div>
 
     <div class="section level2">
@@ -111,15 +111,15 @@ also be read in manually, and supplied as a character vector to <code>codelist.v
 <span class="r-in"><span><span class="fu"><a href="cprd_extract.html">cprd_extract</a></span><span class="op">(</span>db <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-10-30 18:00:10.770957"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-10-30 18:00:10.78337"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-10-30 18:00:10.798424"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-04 15:01:11.797733"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-04 15:01:11.80997"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-04 15:01:11.824466"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Query database for a specific medcode</span></span></span>
-<span class="r-in"><span><span class="fu">db_query</span><span class="op">(</span>db.open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
+<span class="r-in"><span><span class="fu">db_query</span><span class="op">(</span>db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>tab <span class="op">=</span><span class="st">"observation"</span>,</span></span>
-<span class="r-in"><span>codelist.vector <span class="op">=</span> <span class="st">"187341000000114"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>codelist_vector <span class="op">=</span> <span class="st">"187341000000114"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     patid consid pracid  obsid obsdate enterdate staffid parentobsid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt; &lt;char&gt;  &lt;int&gt; &lt;char&gt;   &lt;num&gt;     &lt;num&gt;  &lt;char&gt;      &lt;char&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:      1     42      1     81   -5373      4302      85          35</span>

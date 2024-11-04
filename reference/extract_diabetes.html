@@ -46,20 +46,20 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extract_diabetes</span><span class="op">(</span></span>
 <span>  <span class="va">cohort</span>,</span>
 <span>  varname <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  codelist.type1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  codelist.type2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  codelist.type1.vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  codelist.type2.vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_type1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_type2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_type1_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_type2_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">indexdt</span>,</span>
 <span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  t.varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  db.open <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  t_varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  db_open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  db.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out.save.disk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  out.subdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out.filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  return.output <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  db_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  out_save_disk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  out_subdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  out_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  return_output <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -75,19 +75,19 @@
 <dd><p>Optional name for variable in output dataset.</p></dd>
 
 
-<dt id="arg-codelist-type-">codelist.type1<a class="anchor" aria-label="anchor" href="#arg-codelist-type-"></a></dt>
+<dt id="arg-codelist-type-">codelist_type1<a class="anchor" aria-label="anchor" href="#arg-codelist-type-"></a></dt>
 <dd><p>Name of codelist (stored on hard disk in "codelists/analysis/") for type 1 diabetes to query the database with.</p></dd>
 
 
-<dt id="arg-codelist-type-">codelist.type2<a class="anchor" aria-label="anchor" href="#arg-codelist-type-"></a></dt>
+<dt id="arg-codelist-type-">codelist_type2<a class="anchor" aria-label="anchor" href="#arg-codelist-type-"></a></dt>
 <dd><p>Name of codelist (stored on hard disk in "codelists/analysis/") for type 2 diabetes to query the database with.</p></dd>
 
 
-<dt id="arg-codelist-type-vector">codelist.type1.vector<a class="anchor" aria-label="anchor" href="#arg-codelist-type-vector"></a></dt>
+<dt id="arg-codelist-type-vector">codelist_type1_vector<a class="anchor" aria-label="anchor" href="#arg-codelist-type-vector"></a></dt>
 <dd><p>Vector of codes for type 1 diabetes to query the database with.</p></dd>
 
 
-<dt id="arg-codelist-type-vector">codelist.type2.vector<a class="anchor" aria-label="anchor" href="#arg-codelist-type-vector"></a></dt>
+<dt id="arg-codelist-type-vector">codelist_type2_vector<a class="anchor" aria-label="anchor" href="#arg-codelist-type-vector"></a></dt>
 <dd><p>Vector of codes for type 2 diabetes to query the database with.</p></dd>
 
 
@@ -99,11 +99,11 @@
 <dd><p>Number of days after index date at which to calculate variable.</p></dd>
 
 
-<dt id="arg-t-varname">t.varname<a class="anchor" aria-label="anchor" href="#arg-t-varname"></a></dt>
+<dt id="arg-t-varname">t_varname<a class="anchor" aria-label="anchor" href="#arg-t-varname"></a></dt>
 <dd><p>Whether to add <code>t</code> to <code>varname</code>.</p></dd>
 
 
-<dt id="arg-db-open">db.open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
+<dt id="arg-db-open">db_open<a class="anchor" aria-label="anchor" href="#arg-db-open"></a></dt>
 <dd><p>An open SQLite database connection created using RSQLite::dbConnect, to be queried.</p></dd>
 
 
@@ -111,23 +111,23 @@
 <dd><p>Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.</p></dd>
 
 
-<dt id="arg-db-filepath">db.filepath<a class="anchor" aria-label="anchor" href="#arg-db-filepath"></a></dt>
+<dt id="arg-db-filepath">db_filepath<a class="anchor" aria-label="anchor" href="#arg-db-filepath"></a></dt>
 <dd><p>Full filepath to SQLITE database on hard disk, to be queried.</p></dd>
 
 
-<dt id="arg-out-save-disk">out.save.disk<a class="anchor" aria-label="anchor" href="#arg-out-save-disk"></a></dt>
+<dt id="arg-out-save-disk">out_save_disk<a class="anchor" aria-label="anchor" href="#arg-out-save-disk"></a></dt>
 <dd><p>If <code>TRUE</code> will attempt to save outputted data frame to directory "data/extraction/".</p></dd>
 
 
-<dt id="arg-out-subdir">out.subdir<a class="anchor" aria-label="anchor" href="#arg-out-subdir"></a></dt>
+<dt id="arg-out-subdir">out_subdir<a class="anchor" aria-label="anchor" href="#arg-out-subdir"></a></dt>
 <dd><p>Sub-directory of "data/extraction/" to save outputted data frame into.</p></dd>
 
 
-<dt id="arg-out-filepath">out.filepath<a class="anchor" aria-label="anchor" href="#arg-out-filepath"></a></dt>
+<dt id="arg-out-filepath">out_filepath<a class="anchor" aria-label="anchor" href="#arg-out-filepath"></a></dt>
 <dd><p>Full filepath and filename to save outputted data frame into.</p></dd>
 
 
-<dt id="arg-return-output">return.output<a class="anchor" aria-label="anchor" href="#arg-return-output"></a></dt>
+<dt id="arg-return-output">return_output<a class="anchor" aria-label="anchor" href="#arg-return-output"></a></dt>
 <dd><p>If <code>TRUE</code> will return outputted data frame into R workspace.</p></dd>
 
 </dl></div>
@@ -142,11 +142,11 @@ Full details on the algorithm for extracting diabetes status are given in the vi
 This vignette can be viewed by running <code>vignette("help", package = "rcprd")</code>.</p>
 <p>Specifying <code>db</code> requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
 If the SQLite database is accessed through <code>db</code>, the connection will be opened and then closed after the query is complete. The same is true if
-the database is accessed through <code>db.filepath</code>. A connection to the SQLite database can also be opened manually using <code>RSQLite::dbConnect</code>, and then
-using the object as input to parameter <code>db.open</code>. After wards, the connection must be closed manually using <code>RSQLite::dbDisconnect</code>. If <code>db.open</code> is specified, this will take precedence over <code>db</code> or <code>db.filepath</code>.</p>
-<p>If <code>out.save.disk = TRUE</code>, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
-This directory structure must be created in advance. <code>out.subdir</code> can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
-using <code>out.filepath</code> to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using <code>return.output = TRUE</code>
+the database is accessed through <code>db_filepath</code>. A connection to the SQLite database can also be opened manually using <code>RSQLite::dbConnect</code>, and then
+using the object as input to parameter <code>db_open</code>. After wards, the connection must be closed manually using <code>RSQLite::dbDisconnect</code>. If <code>db_open</code> is specified, this will take precedence over <code>db</code> or <code>db_filepath</code>.</p>
+<p>If <code>out_save_disk = TRUE</code>, the data frame will automatically be written to an .rds file in a subdirectory "data/extraction/" of the working directory.
+This directory structure must be created in advance. <code>out_subdir</code> can be used to specify subdirectories within "data/extraction/". These options will use a default naming convetion. This can be overwritten
+using <code>out_filepath</code> to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using <code>return_output = TRUE</code>
 and then save onto the hard disk manually.</p>
 <p>Specifying the non-vector type codelists requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen <code>tab</code>. The input
@@ -163,10 +163,10 @@ character vector. This option will take precedence over the codelists stored on 
 <span class="r-in"><span><span class="co">## Create SQLite database using cprd_extract</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="cprd_extract.html">cprd_extract</a></span><span class="op">(</span><span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use.set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-10-30 18:00:11.891628"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-10-30 18:00:11.905706"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-10-30 18:00:11.918452"</span>
+<span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-04 15:01:12.867068"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-04 15:01:12.879898"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%[1] "Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-04 15:01:12.890968"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
@@ -175,10 +175,10 @@ character vector. This option will take precedence over the codelists stored on 
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Extract diabetes prior to index date</span></span></span>
 <span class="r-in"><span><span class="fu">extract_diabetes</span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span></span>
-<span class="r-in"><span>codelist.type1.vector <span class="op">=</span> <span class="st">"498521000006119"</span>,</span></span>
-<span class="r-in"><span>codelist.type2.vector <span class="op">=</span> <span class="st">"401539014"</span>,</span></span>
+<span class="r-in"><span>codelist_type1_vector <span class="op">=</span> <span class="st">"498521000006119"</span>,</span></span>
+<span class="r-in"><span>codelist_type2_vector <span class="op">=</span> <span class="st">"401539014"</span>,</span></span>
 <span class="r-in"><span>indexdt <span class="op">=</span> <span class="st">"indexdt"</span>,</span></span>
-<span class="r-in"><span>db.open <span class="op">=</span> <span class="va">aurum_extract</span><span class="op">)</span></span></span>
+<span class="r-in"><span>db_open <span class="op">=</span> <span class="va">aurum_extract</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    patid diabetes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    Type1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2   Absent</span>

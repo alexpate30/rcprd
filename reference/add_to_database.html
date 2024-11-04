@@ -49,10 +49,10 @@
 <span>    <span class="st">"hes_primary"</span>, <span class="st">"death"</span><span class="op">)</span>,</span>
 <span>  nrows <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
 <span>  select <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  subset.patids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  use.set <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  subset_patids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_set <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">db</span>,</span>
-<span>  extract.txt.func <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extract_txt_func <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tablename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -78,19 +78,19 @@
 <dd><p>Character vector of column names to select before adding to the SQLite database.</p></dd>
 
 
-<dt id="arg-subset-patids">subset.patids<a class="anchor" aria-label="anchor" href="#arg-subset-patids"></a></dt>
+<dt id="arg-subset-patids">subset_patids<a class="anchor" aria-label="anchor" href="#arg-subset-patids"></a></dt>
 <dd><p>Patient id's to subset the .txt file on before adding to the SQLite database.</p></dd>
 
 
-<dt id="arg-use-set">use.set<a class="anchor" aria-label="anchor" href="#arg-use-set"></a></dt>
-<dd><p>Reduce subset.patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset.patids is large. See vignette XXXX for more details.</p></dd>
+<dt id="arg-use-set">use_set<a class="anchor" aria-label="anchor" href="#arg-use-set"></a></dt>
+<dd><p>Reduce subset_patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset_patids is large. See vignette XXXX for more details.</p></dd>
 
 
 <dt id="arg-db">db<a class="anchor" aria-label="anchor" href="#arg-db"></a></dt>
 <dd><p>An open SQLite database connection created using RSQLite::dbConnect.</p></dd>
 
 
-<dt id="arg-extract-txt-func">extract.txt.func<a class="anchor" aria-label="anchor" href="#arg-extract-txt-func"></a></dt>
+<dt id="arg-extract-txt-func">extract_txt_func<a class="anchor" aria-label="anchor" href="#arg-extract-txt-func"></a></dt>
 <dd><p>User-defined function to read the .txt file into R.</p></dd>
 
 
@@ -99,7 +99,7 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Extract arguments passed to read.table (or extract.txt.func) when reading in .txt files.</p></dd>
+<dd><p>Extract arguments passed to read.table (or extract_txt_func) when reading in .txt files.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -109,20 +109,20 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Will add the file to a table named <code>filetype</code> in the SQLite database, unless <code>tablename</code> is specified.</p>
-<p>If <code>use.set = FALSE</code>, then <code>subset.patids</code> should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
-If <code>use.set = TRUE</code>, then <code>subset.patids</code> should be a dataframe with two columns, <code>patid</code> and <code>set</code>, where <code>set</code> corresponds to the number in the file name
+<p>If <code>use_set = FALSE</code>, then <code>subset_patids</code> should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
+If <code>use_set = TRUE</code>, then <code>subset_patids</code> should be a dataframe with two columns, <code>patid</code> and <code>set</code>, where <code>set</code> corresponds to the number in the file name
 following the word 'set'. This functionality is provided to increase computational efficiency when subsetting to a cohort of patients which is very large (millions).
 This can be a computationally expensive process as each flatfile being read in, must be cross matched with a large vector .
 The CPRD flatfiles are split up into groups which can be identified from their naming convention. Patients from set 1, will have their data
 in DrugIssue, Observation, etc, all with the same "set" suffix in the flatfile name. We can utilise this to speed up the process of subsetting
-the data from the flatfiles to only those with patids in subset.patid. Instead we subset to those with patids in subset.patids, and with the
+the data from the flatfiles to only those with patids in subset.patid. Instead we subset to those with patids in subset_patids, and with the
 corresponding value of "set", which matches the suffix "set" in the CPRD flatfile filename. For example, patients in the Patient file which had
 suffix "set1", will have their medical data in the Observation file with suffix "set1". When subsetting the Observation file to those in
-subset.patids (our cohort), we only need to do so for patients who were also in the patient file with suffix "set1".
+subset_patids (our cohort), we only need to do so for patients who were also in the patient file with suffix "set1".
 If the cohort of patients for which you want to subset the data to is very small, the computational gains from this argument are minor and it
 can be ignored.</p>
 <p>The function for reading in the .txt file will be chosen from a set of functions provided with rcprd, based on  the fletype (<code>filetype</code>).
-<code>extract.txt.func</code> does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
+<code>extract_txt_func</code> does not need to be specified unless wanting to manually define the function for doing this. This may be beneficial if wanting to
 change variable formats, or if the variables in the .txt files change in future releases of CPRD AURUM.</p>
     </div>
 

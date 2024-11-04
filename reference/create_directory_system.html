@@ -72,7 +72,7 @@
 <span class="r-in"><span><span class="co">## Create SQLite database using cprd_extract</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="cprd_extract.html">cprd_extract</a></span><span class="op">(</span><span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use.set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
 <span class="r-in"><span><span class="va">pat</span><span class="op">&lt;-</span><span class="fu"><a href="extract_cohort.html">extract_cohort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -81,11 +81,11 @@
 <span class="r-in"><span><span class="co">## Extract a history of type variable and save to disc automatically,</span></span></span>
 <span class="r-in"><span><span class="co">## by just specifying name of database</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="extract_ho.html">extract_ho</a></span><span class="op">(</span><span class="va">pat</span>,</span></span>
-<span class="r-in"><span>codelist.vector <span class="op">=</span> <span class="st">"187341000000114"</span>,</span></span>
+<span class="r-in"><span>codelist_vector <span class="op">=</span> <span class="st">"187341000000114"</span>,</span></span>
 <span class="r-in"><span>indexdt <span class="op">=</span> <span class="st">"fup_start"</span>,</span></span>
 <span class="r-in"><span>db <span class="op">=</span> <span class="st">"temp"</span>,</span></span>
 <span class="r-in"><span>tab <span class="op">=</span> <span class="st">"observation"</span>,</span></span>
-<span class="r-in"><span>out.save.disk <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>out_save_disk <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Read file from disk into R workspace</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/extraction/var_ho.rds"</span><span class="op">)</span></span></span>

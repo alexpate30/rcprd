@@ -111,9 +111,9 @@
 <span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="st">"187341000000114"</span></span>
 <span></span>
 <span><span class="co">### Query for observations with this code</span></span>
-<span><span class="fu"><a href="reference/db_query.html">db_query</a></span><span class="op">(</span>db.open <span class="op">=</span> <span class="va">aurum_extract</span>,</span>
+<span><span class="fu"><a href="reference/db_query.html">db_query</a></span><span class="op">(</span>db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span>
 <span>         tab <span class="op">=</span><span class="st">"observation"</span>,</span>
-<span>         codelist.vector <span class="op">=</span> <span class="va">codelist</span><span class="op">)</span></span>
+<span>         codelist_vector <span class="op">=</span> <span class="va">codelist</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     patid consid pracid  obsid obsdate enterdate staffid parentobsid</span></span>
 <span><span class="co">#&gt;    &lt;char&gt; &lt;char&gt;  &lt;int&gt; &lt;char&gt;   &lt;num&gt;     &lt;num&gt;  &lt;char&gt;      &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1:      1     42      1     81   -5373      4302      85          35</span></span>
@@ -130,11 +130,11 @@
 <p>Extract a ‘history of’ type variable, which will be equal to 1 if an individual has a record with the specified <em>medcodeid</em> prior to the index date, and equal 0 otherwise.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ho</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_ho.html">extract_ho</a></span><span class="op">(</span><span class="va">pat</span>, </span>
-<span>                 codelist.vector <span class="op">=</span> <span class="va">codelist</span>, </span>
+<span>                 codelist_vector <span class="op">=</span> <span class="va">codelist</span>, </span>
 <span>                 indexdt <span class="op">=</span> <span class="st">"fup_start"</span>, </span>
-<span>                 db.open <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
+<span>                 db_open <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
 <span>                 tab <span class="op">=</span> <span class="st">"observation"</span>,</span>
-<span>                 return.output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                 return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ho</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    12 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;  $ patid: chr  "1" "2" "3" "4" ...</span></span>
@@ -162,7 +162,7 @@
 <div class="section level2">
 <h2 id="package-maintainence">Package maintainence<a class="anchor" aria-label="anchor" href="#package-maintainence"></a>
 </h2>
-<p>This parts of this package which create the SQLite database are somewhat dependent on the structure of the raw CPRD Aurum data. For example, the functions to read in the raw text files (e.g. <code>extract_txt_obs</code>) are hard coded to format variables with specific names in a certain way (e.g. convert <code>obsdate</code> from a character variable to a date variable). Over time, the structure of the CPRD Aurum data may change, which could impact the utility of this package. We will endeavor to keep rcprd updated with new releases of CPRD Aurum. However, where possible, we have tried to protect against this by giving the user flexible options as well as the defaults. For example, <code>add_to_database</code> defaults to using <code>extract_txt_obs</code> to read in the raw text data when <code>filetype = "observation"</code> is specified. However, there is also an option <code>extract.txt.func</code>, which allows the users to specify their own function to read in the text data, and will override the use of <code>extract_txt_obs</code>.</p>
+<p>This parts of this package which create the SQLite database are somewhat dependent on the structure of the raw CPRD Aurum data. For example, the functions to read in the raw text files (e.g. <code>extract_txt_obs</code>) are hard coded to format variables with specific names in a certain way (e.g. convert <code>obsdate</code> from a character variable to a date variable). Over time, the structure of the CPRD Aurum data may change, which could impact the utility of this package. We will endeavor to keep rcprd updated with new releases of CPRD Aurum. However, where possible, we have tried to protect against this by giving the user flexible options as well as the defaults. For example, <code>add_to_database</code> defaults to using <code>extract_txt_obs</code> to read in the raw text data when <code>filetype = "observation"</code> is specified. However, there is also an option <code>extract_txt_func</code>, which allows the users to specify their own function to read in the text data, and will override the use of <code>extract_txt_obs</code>.</p>
 <p>Despite this, there may have been breaking points we haven’t thought of, in which case please let us know.</p>
 </div>
 <div class="section level2">

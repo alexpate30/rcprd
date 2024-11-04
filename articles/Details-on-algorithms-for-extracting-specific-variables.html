@@ -95,9 +95,9 @@ these variables is given in section 3.</p>
 <h3 id="bmi-extract_bmi">BMI (<code>extract_BMI</code>)<a class="anchor" aria-label="anchor" href="#bmi-extract_bmi"></a>
 </h3>
 <p>Extraction of BMI requires the user to specify three codelists. One
-for BMI scores (<code>codelist.BMI</code>), one for height measurements
-(<code>codelist.height</code>) and one for weight measurements
-(<code>codelist.weight</code>). All the BMI, height and weight
+for BMI scores (<code>codelist_bmi</code>), one for height measurements
+(<code>codelist_height</code>) and one for weight measurements
+(<code>codelist_weight</code>). All the BMI, height and weight
 measurements for each patient in the cohort of interest are then
 extracted. The algorithm is as follows:</p>
 <ul>
@@ -141,9 +141,9 @@ BMI score takes preference.</li>
 </h3>
 <p>Extraction of cholesterol/HDL ratio requires the user to specify
 three codelists. One for cholesterol/HDL ratio measurements
-(<code>codelist.ratio</code>), one for total cholesterol measurements
-(<code>codelist.chol</code>) and one for HDL measurements
-(<code>codelist.hdl</code>). All the cholesterol/HDL, total cholesterol
+(<code>codelist_ratio</code>), one for total cholesterol measurements
+(<code>codelist_chol</code>) and one for HDL measurements
+(<code>codelist_hdl</code>). All the cholesterol/HDL, total cholesterol
 and cholesterol/HDL measurements for each patient in the cohort of
 interest are then extracted. The algorithm is as follows:</p>
 <ul>
@@ -183,8 +183,8 @@ preference.</li>
 <h3 id="diabetes-status-extract_diabetes">Diabetes status (<code>extract_diabetes</code>)<a class="anchor" aria-label="anchor" href="#diabetes-status-extract_diabetes"></a>
 </h3>
 <p>Extraction of diabetes status requires the user to specify two
-codelists. One for type 1 diabetes (<code>codelist.type1</code>), and
-another for type 2 diabetes (<code>codelist.type2</code>). The reason
+codelists. One for type 1 diabetes (<code>codelist_type1</code>), and
+another for type 2 diabetes (<code>codelist_type2</code>). The reason
 this variable is not treated as a <code>history of</code> type variable
 and extracted using <code>extract_ho</code> is because often individuals
 will have a generic code such as <em>diabetes mellitus</em>, which would
@@ -209,11 +209,11 @@ assign diabetes type 1.</li>
 <h3 id="smoking-status-extract_smoking">Smoking status (<code>extract_smoking</code>)<a class="anchor" aria-label="anchor" href="#smoking-status-extract_smoking"></a>
 </h3>
 <p>Extraction of smoking status requires the user to specify five
-codelists. One for non-smoker (<code>codelist.non</code>), one for
-ex-smoker (<code>codelist.ex</code>), one for light smoker
-(<code>codelist.light</code>), one for moderate smoker
+codelists. One for non-smoker (<code>codelist_non</code>), one for
+ex-smoker (<code>codelist_ex</code>), one for light smoker
+(<code>codelist_light</code>), one for moderate smoker
 (<code>codelist.moderate</code>) and one for heavy smoker
-(<code>codelist.heavy</code>). For records identified using the light,
+(<code>codelist_heavy</code>). For records identified using the light,
 moderate or heavy smoker code lists, the <em>value</em> variable, which
 represents number of cigarettes smoker per day, is used to modify the
 outputted smoking status variable. This is to maximise the number of
