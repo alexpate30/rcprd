@@ -4,7 +4,7 @@
 \name{rcprd-package}
 \alias{rcprd}
 \alias{rcprd-package}
-\title{rcprd: Extraction and management of Clinical Practice Research Datalink (CPRD) AURUM and GOLD data and creation of datasets for statistical analysis}
+\title{rcprd: Extraction and management of Clinical Practice Research Datalink Data}
 \description{
 Simplify the process of converting raw CPRD Aurum data, stored in large text files, into an 'analysis-ready' dataset which can be used for statistical analyses. This process is somewhat difficult in R, as the raw data is very large and cannot be read into the R workspace. rcprd utilises RSQLite to create SQLite databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest. The processes follow closely that from the rEHR package, see Springate et al., (2017) \doi{10.1371/journal.pone.0171784}.
 }
