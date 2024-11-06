@@ -1,4 +1,4 @@
-# rcprd (development version)
+# rcprd 0.0.1
 
 * Created NEWS.md file.
 
