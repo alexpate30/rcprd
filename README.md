@@ -19,9 +19,9 @@ which cannot all be read into the R workspace. rcprd utilises
 databases which are stored on the hard disk. These are then queried to
 extract the required information for a cohort of interest. The processes
 follow closely that from the
-[rEHR](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323003/) package,
-which was designed for extractin CPRD GOLD data, and is no longer
-available on CRAN.
+[rEHR](https://pmc.ncbi.nlm.nih.gov/articles/PMC5323003/) package, which
+was designed for extractin CPRD GOLD data, and is no longer available on
+CRAN.
 
 For a detailed guide on how to use **rcprd** please see the [user-guide
 vignette](https://alexpate30.github.io/rcprd/articles/rcprd.html).
@@ -85,9 +85,9 @@ database.
 cprd_extract(db = aurum_extract, 
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
-#>   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.0/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-10-30 17:36:17.811075"
-#>   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.0/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-10-30 17:36:17.936362"
-#>   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.0/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-10-30 17:36:18.054836"
+#>   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-06 11:15:44.684029"
+#>   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-06 11:15:44.8362"
+#>   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-06 11:15:44.944039"
 #>   |                                                                              |======================================================================| 100%
 ```
 
