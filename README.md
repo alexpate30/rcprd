@@ -8,6 +8,11 @@
 [![R-CMD-check](https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/alexpate30/rcprd/branch/main/graph/badge.svg)](https://app.codecov.io/gh/alexpate30/rcprd?branch=main)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/rcprd)](https://CRAN.R-project.org/package=rcprd)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/rcprd)](https://cran.r-project.org/package=rcprd)
+
 <!-- badges: end -->
 
 The goal of rcprd is to simplify the process of extracting and
@@ -85,9 +90,9 @@ database.
 cprd_extract(db = aurum_extract, 
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
-#>   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-06 11:15:44.684029"
-#>   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-06 11:15:44.8362"
-#>   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-06 11:15:44.944039"
+#>   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-08 09:50:54.729701"
+#>   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-08 09:50:54.896232"
+#>   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-08 09:50:55.041703"
 #>   |                                                                              |======================================================================| 100%
 ```
 

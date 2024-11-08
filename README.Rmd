@@ -18,6 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/alexpate30/rcprd/branch/main/graph/badge.svg)](https://app.codecov.io/gh/alexpate30/rcprd?branch=main)
+[![CRAN status](https://www.r-pkg.org/badges/version/rcprd)](https://CRAN.R-project.org/package=rcprd)
+[![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/rcprd)](https://cran.r-project.org/package=rcprd)
+
 <!-- badges: end -->
 
 The goal of rcprd is to simplify the process of extracting and processing CPRD Aurum data into an 'analysis-ready' dataset which can be used for statistical analyses. This process is somewhat difficult in R, as the raw data is very large, provided in a large number of .txt files, which cannot all be read into the R workspace. rcprd utilises [RSQLite](https://CRAN.R-project.org/package=RSQLite) to create SQLite databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest. The processes follow closely that from the [rEHR](https://pmc.ncbi.nlm.nih.gov/articles/PMC5323003/) package, which was designed for extractin CPRD GOLD data, and is no longer available on CRAN.
