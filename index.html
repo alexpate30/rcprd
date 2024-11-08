@@ -57,6 +57,7 @@
 </h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>The goal of rcprd is to simplify the process of extracting and processing CPRD Aurum data into an ‘analysis-ready’ dataset which can be used for statistical analyses. This process is somewhat difficult in R, as the raw data is very large, provided in a large number of .txt files, which cannot all be read into the R workspace. rcprd utilises <a href="https://CRAN.R-project.org/package=RSQLite" class="external-link">RSQLite</a> to create SQLite databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest. The processes follow closely that from the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5323003/" class="external-link">rEHR</a> package, which was designed for extractin CPRD GOLD data, and is no longer available on CRAN.</p>
 <p>For a detailed guide on how to use <strong>rcprd</strong> please see the <a href="https://alexpate30.github.io/rcprd/articles/rcprd.html">user-guide vignette</a>.</p>
 <div class="section level2">
@@ -101,9 +102,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cprd_extract.html">cprd_extract</a></span><span class="op">(</span>db <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-06 11:15:44.684029"</span></span>
-<span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-06 11:15:44.8362"</span></span>
-<span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-06 11:15:44.944039"</span></span>
+<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-08 09:50:54.729701"</span></span>
+<span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-08 09:50:54.896232"</span></span>
+<span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-08 09:50:55.041703"</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span></code></pre></div>
 <p>Query the database for specific codes and store in an R object using the <code>db_query</code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -199,6 +200,8 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/alexpate30/rcprd/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/alexpate30/rcprd?branch=main" class="external-link"><img src="https://codecov.io/gh/alexpate30/rcprd/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://CRAN.R-project.org/package=rcprd" class="external-link"><img src="https://www.r-pkg.org/badges/version/rcprd" alt="CRAN status"></a></li>
+<li><a href="https://cran.r-project.org/package=rcprd" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/rcprd" alt="metacran downloads"></a></li>
 </ul>
 </div>
 
