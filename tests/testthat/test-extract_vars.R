@@ -4,7 +4,7 @@
 testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, and specification of underlying directory systems", {
 
   ### Connect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -109,16 +109,20 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   testthat::expect_equal(colnames(test_data), c("patid", "value_var"))
   testthat::expect_equal(sum(is.na(test_data$value_var)), 3)
 
-  ### Disconnect
+  ## clean up
   RSQLite::dbDisconnect(aurum_extract)
-
+  unlink(file.path(tempdir(), "temp.sqlite"))
 
   ###
   ### Create a temporary directory to re-run these functions and save to disk automatically, and automatically look for SQLite database in data/sql
   ### Will recreate variables for ho and compare with ho created for previous test
   ###
 
-  ### Create tempdir and setwd
+  ### Sset on.exit to restore working directory after tests are run
+  oldwd <- getwd()
+  on.exit(setwd(oldwd))
+
+  ### set working directory to tempdir
   tempdir <- tempdir()
   setwd(tempdir)
 
@@ -196,10 +200,13 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ho.disk <- readRDS("data/extraction/eggs.rds")
   testthat::expect_equal(ho, ho.disk)
 
-  ### Disconnect
+  ## clean up
   RSQLite::dbDisconnect(aurum_extract)
+  delete_directory_system()
+  testthat::expect_false(file.exists("data/sql/temp.sqlite"))
+  testthat::expect_false(file.exists("data/extraction/eggs.rds"))
+  testthat::expect_false(file.exists("codelists/analysis/mylist.med.csv"))
 
-  ### REMAINING TEST IS TO DO THE AUTOMATIC CODELIST STUFF
 })
 
 
@@ -208,7 +215,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 testthat::test_that("BMI", {
 
   ### Connect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -239,6 +246,10 @@ testthat::test_that("BMI", {
   testthat::expect_equal(colnames(var), c("patid", "bmi"))
   testthat::expect_equal(var$bmi, c(48, 41, NA, NA, 32, NA))
 
+  ## clean up
+  RSQLite::dbDisconnect(aurum_extract)
+  unlink(file.path(tempdir(), "temp.sqlite"))
+
 })
 
 
@@ -247,7 +258,7 @@ testthat::test_that("BMI", {
 testthat::test_that("Cholhdl ratio", {
 
   ### Connect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -280,6 +291,10 @@ testthat::test_that("Cholhdl ratio", {
   testthat::expect_equal(colnames(var), c("patid", "cholhdl_ratio"))
   testthat::expect_equal(var$cholhdl_ratio, c(48, 41, NA, NA, 32, NA))
 
+  ## clean up
+  RSQLite::dbDisconnect(aurum_extract)
+  unlink(file.path(tempdir(), "temp.sqlite"))
+
 })
 
 
@@ -288,7 +303,7 @@ testthat::test_that("Cholhdl ratio", {
 testthat::test_that("Diabetes", {
 
   ### Connect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -315,6 +330,10 @@ testthat::test_that("Diabetes", {
   testthat::expect_equal(colnames(var), c("patid", "diabetes"))
   testthat::expect_equal(as.character(var$diabetes), c("Type1", "Absent", "Absent", "Absent", "Type1", "Absent"))
 
+  ## clean up
+  RSQLite::dbDisconnect(aurum_extract)
+  unlink(file.path(tempdir(), "temp.sqlite"))
+
 })
 
 
@@ -323,7 +342,7 @@ testthat::test_that("Diabetes", {
 testthat::test_that("Smoking", {
 
   ### Connect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -353,6 +372,10 @@ testthat::test_that("Smoking", {
   testthat::expect_equal(colnames(var), c("patid", "smoking"))
   testthat::expect_equal(as.character(var$smoking), c("Heavy", "Non-smoker", NA, "Moderate", "Ex-smoker", "Moderate"))
 
+  ## clean up
+  RSQLite::dbDisconnect(aurum_extract)
+  unlink(file.path(tempdir(), "temp.sqlite"))
+
 })
 
 
@@ -361,7 +384,7 @@ testthat::test_that("Smoking", {
 testthat::test_that("Impotence", {
 
   ### Connect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -387,5 +410,9 @@ testthat::test_that("Impotence", {
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "impotence"))
   testthat::expect_equal(var$impotence, c(1, 0, 0, 0, 1, 0))
+
+  ## clean up
+  RSQLite::dbDisconnect(aurum_extract)
+  unlink(file.path(tempdir(), "temp.sqlite"))
 
 })

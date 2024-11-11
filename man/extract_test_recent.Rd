@@ -90,7 +90,7 @@ Currently only returns most recent test result. This will be updated to return m
 \examples{
 
 ## Connect
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
@@ -108,5 +108,9 @@ indexdt = "fup_start",
 db_open = aurum_extract,
 time_prev = Inf,
 return_output = TRUE)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }

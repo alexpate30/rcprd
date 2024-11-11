@@ -115,10 +115,10 @@ Data for individuals in the cohort of interest is extracted from the .txt files 
 
 ### Add individual files to SQLite database using `add_to_database`
 
-The function `add_to_database` can be used to add individual files to the SQLite database. Start by defining and connecting to your SQLite database. In this article we create a temporary database, but in practice this would be a permanent storage location. Specifically, `tempfile("temp.sqlite")` would be replaced by the desired file path and SQLite database name.
+The function `add_to_database` can be used to add individual files to the SQLite database. Start by defining and connecting to your SQLite database. In this article we create a temporary database, but in practice this would be a permanent storage location. Specifically, `file.path(tempdir(), "temp.sqlite")` would be replaced by the desired file path and SQLite database name.
 
 ```{r}
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
 Next, we add medical diagnoses data from the observation files to this database using the `add_to_database` function. The simulated raw data provided with **rcprd** can be accessed using the `system.file` function. The vector of patient id's that defines the cohort is defined through the `subset_patids` argument. Only data with patid's matching this argument will be added to the SQLite database. The `filetype` argument will select an appropriate function for reading in the .txt files, and also defines the name of the table in the SQLite database that the files are added to. Note that for the first file, `overwrite = TRUE` is specified to create a new table. For the second and third file, `append = TRUE` is specified to append to an existing table.
@@ -174,7 +174,7 @@ RSQLite::dbDisconnect(aurum_extract)
 In practice, there will be a high number of files to add to the SQLite database and adding each one using `add_to_database` would be cumbersome. We now repeat the extraction but using the `cprd_extract` function, which is a wrapper for `add_to_database`, and will add all the files in a specified directory that contain a string matching the specified file type. Start by creating a connection to a new database:
 
 ```{r}
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
 We then use `cprd_extract` to add all the observation files into the SQLite database. The directory containing the files should be specified using `filepath`. It will only read in and add files with the text string specified in `filetype`, which takes values in `c("observation", "drugissue", "referral", "problem", "consultation")`. We then query the first three rows of this database, and note they are the same as previously.
@@ -224,7 +224,7 @@ The patient file read in is the same as previously, with the addition of the `se
 
 ```{r}
 ### Create connection to SQLite database
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ### Add observation files
 cprd_extract(db = aurum_extract, 
@@ -387,6 +387,11 @@ RSQLite::dbDisconnect(aurum_extract)
 
 If the query was from the `drugissue` table, then `query_type = "drug"` should be specified, and the date of the observations and the *prodcodeid* will be returned. The functions in this section do little processing of the extracted data, and further manipulation is required in order to define most variables.
 
+```{r, include = FALSE}
+### Hide clean up of filespaces prior to moving onto next session (clean up required by CRAN)
+unlink(file.path(tempdir(), "temp.sqlite"))
+```
+
 ### Saving extracted variables directly to a disk drive, and utilising rAURUMs suggested directory system
 
 So far all extracted variables (using functions from section 3.3.1 and 3.3.2) have been read into the R workspace by specifying `return_output = TRUE`. When working with large cohorts it may be preferable to save the output directly onto a disk drive, by specifying `out_save_disk = TRUE`. The file path to save the output can be specified manually through the `out_filepath` argument. However, if this argument is left as `NULL`, **rcprd** will attempt to save the extracted variable into a directory "data/extraction/" relative to the working directory. The name of the file itself will be dependent on the variable name specified through argument `varname`. This can be a very convenient way to save the output directly to disk without having to repeatedly specify file paths and file names.
@@ -397,7 +402,7 @@ Finally, there is similar functionality for accessing the SQLite database intern
 
 This workflow is advantageous as it avoids hard file paths which beneficial if wanting to move your code onto another computer system. Furthermore, once codelists and the SQLite database have been created and stored in the appropriate folders, they can simply be referred to by name, resulting in an easier workflow. The function `create_directory_system()` will create the directory system required to use **rcprd** in this way. To avoid repetition of the previous section, this is showcased just once using the `extract_ho` function. For the sake of this example, we start by setting the working directory to a directory called *inst/example* within **rcprd**. To maintain the new working directory across multiple  R markdown code chunks, we use `knitr::opts_knit$set`. To follow this section, the user should simply set their working directory as usual using `setwd()`.
 
-```{r, setup, include = FALSE}
+```{r}
 ## Set working directory
 knitr::opts_knit$set(root.dir = tempdir())
 ```
@@ -451,6 +456,13 @@ Note that in order to run `extract_ho` here, a connection to the SQLite database
 
 ```{r}
 readRDS("data/extraction/var_ho.rds")
+```
+
+This setup can be used in conjunction with any of the functions from step 3 (i.e. `extract_test_var`, `extract_time_until` or `db_query`).
+
+```{include = FALSE}
+### Return filespace to how it was prior to example
+delete_directory_system()
 ```
 
 ### Extracting longitudinal data/time varying covariates

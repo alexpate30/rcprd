@@ -107,7 +107,7 @@ but they have a history of smoking prior to this, these individuals will be clas
 \examples{
 
 ## Connect
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
@@ -127,4 +127,9 @@ codelist_mod_vector = "380389013",
 codelist_heavy_vector = "13483031000006114",
 indexdt = "indexdt",
 db_open = aurum_extract)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
+
 }

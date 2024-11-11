@@ -4,7 +4,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Attempt 1
 
   ### Open connection
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Add observation and drugissue to database manually
   ## Obs
@@ -34,7 +34,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Attempt 2
 
   ### Reconnect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -57,7 +57,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Attempt 3
 
   ### Reconnect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Define pat
   pat <- extract_txt_pat(system.file("aurum_data", "aurum_allpatid_set1_extract_patient_001.txt", package = "rcprd"), set = TRUE)
@@ -85,7 +85,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Attempt 4 (manually define str_match and extract_txt_func)
 
   ### Reconnect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -110,7 +110,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Attempt 5 (manually define str_match and tablename)
 
   ### Reconnect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   cprd_extract(aurum_extract,
@@ -145,7 +145,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Attempt 6 (expect an error due to no filenames)
 
   ### Reconnect
-  aurum_extract <- connect_database(tempfile("temp.sqlite"))
+  aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
   ### Extract data using cprd_Extract
   testthat::expect_error(
@@ -154,8 +154,9 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
                  filetype = "observation", subset_patids = c(1,3,4,6),
                  str_match = "eggs", use_set = FALSE))
 
-  ### Disconnect
+  ## clean up
   RSQLite::dbDisconnect(aurum_extract)
+  unlink(file.path(tempdir(), "temp.sqlite"))
 
 })
 

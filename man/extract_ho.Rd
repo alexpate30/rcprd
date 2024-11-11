@@ -89,7 +89,7 @@ the name of the files (excluding the suffix '.csv'). The \code{codelist_vector} 
 \examples{
 
 ## Connect
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
@@ -107,5 +107,9 @@ indexdt = "fup_start",
 db_open = aurum_extract,
 tab = "observation",
 return_output = TRUE)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }

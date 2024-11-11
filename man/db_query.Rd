@@ -48,7 +48,7 @@ also be read in manually, and supplied as a character vector to \code{codelist_v
 }
 \examples{
 ## Create connection to a temporary database
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Add observation data from all observation files in specified directory
 cprd_extract(db = aurum_extract,
@@ -59,5 +59,9 @@ filetype = "observation")
 db_query(db_open = aurum_extract,
 tab ="observation",
 codelist_vector = "187341000000114")
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }

@@ -44,7 +44,7 @@
 #' @examples
 #'
 #' ## Connect
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Create SQLite database using cprd_extract
 #' cprd_extract(aurum_extract,
@@ -62,6 +62,10 @@
 #' db_open = aurum_extract,
 #' tab = "observation",
 #' return_output = TRUE)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 extract_ho <- function(cohort,
@@ -83,26 +87,6 @@ extract_ho <- function(cohort,
                        out_filepath = NULL,
                        return_output = TRUE){
 
-  #       varname = "ho_ra_test10"
-  #       codelist = "edh_ra_medcodeid"
-  #       cohort = cohortA
-  #       indexdt = "fup_start"
-  #       t = NULL
-  #       db = "aurum_nosubset_randset"
-  #       db_filepath = NULL
-  #       out_save_disk = TRUE
-  #       out_filepath = NULL
-  #       out_subdir = NULL
-  #       return_output = TRUE
-  # cohort <- pat
-  # codelist = NULL
-  # codelist_vector = "187341000000114"
-  # indexdt = "fup_start"
-  # db_open = aurum_extract
-  # db = NULL
-  # db_filepath = NULL
-  # tab = "observation"
-  # t <- NULL
   ### Preparation
   ## Add index date variable to cohort and change indexdt based on t
   cohort <- prep_cohort(cohort, indexdt, t)

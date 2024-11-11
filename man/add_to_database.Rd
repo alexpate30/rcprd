@@ -67,7 +67,7 @@ change variable formats, or if the variables in the .txt files change in future 
 }
 \examples{
 ## Create connection to a temporary database
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Add observation data
 add_to_database(filepath = system.file("aurum_data",
@@ -76,5 +76,9 @@ filetype = "observation", db = aurum_extract, overwrite = TRUE)
 
 ## Query database
 RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation', n = 3)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }

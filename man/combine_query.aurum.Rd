@@ -57,7 +57,7 @@ but do not want to remove all observations with NA in the \code{value} column, b
 }
 \examples{
 ## Create connection to a temporary database
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Add observation data from all observation files in specified directory
 cprd_extract(db = aurum_extract,
@@ -80,5 +80,9 @@ combine_query(cohort = pat,
 db_query = db_query,
 query_type = "med",
 numobs = 3)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }

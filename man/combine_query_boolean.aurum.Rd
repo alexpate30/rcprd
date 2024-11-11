@@ -35,3 +35,34 @@ An S3 method that can be used on database queries from Aurum extracts. Combine a
 If an individual has at least \code{numobs} observations between \code{time_prev} days prior to \code{indexdt}, and \code{time_post} days after
 \code{indexdt}, a 1 will be returned, 0 otherwise. The \code{type} of query must be specified for appropriate data manipulation.
 }
+\examples{
+## Create connection to a temporary database
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
+
+## Add observation data from all observation files in specified directory
+cprd_extract(db = aurum_extract,
+filepath = system.file("aurum_data", package = "rcprd"),
+filetype = "observation")
+
+## Query database for a specific medcode
+db_query <- db_query(db_open = aurum_extract,
+tab ="observation",
+codelist_vector = "187341000000114")
+
+## Define cohort
+pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
+
+### Add an index date to pat
+pat$indexdt <- as.Date("01/01/2020", format = "\%d/\%m/\%Y")
+
+## Combine query with cohort retaining most recent three records
+combine_query_boolean(cohort = pat,
+db_query = db_query,
+query_type = "med",
+numobs = 3)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
+
+}

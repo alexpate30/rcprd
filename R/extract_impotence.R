@@ -40,6 +40,7 @@
 #'
 #' @returns A data frame with variable impotence status.
 #'
+#' @noRd
 extract_impotence <- function(cohort,
                               varname = NULL,
                               codelist_med = NULL,

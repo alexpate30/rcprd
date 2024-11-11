@@ -10,10 +10,14 @@
 #' @examples
 #'
 #' ## Connect to a database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Check connection is open
 #' inherits(aurum_extract, "DBIConnection")
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 connect_database <- function(dbname){

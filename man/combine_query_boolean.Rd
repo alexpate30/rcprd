@@ -26,6 +26,9 @@ combine_query_boolean(
 
 \item{numobs}{Number of observations required to be observed in specified time window to return a 1.}
 }
+\value{
+A 0/1 vector.
+}
 \description{
 An S3 generic function that can be used on database queries from Aurum or GOLD extracts.
 Combine a database query with a cohort returning a 0/1 vector depending on whether each individual has a recorded code of interest.

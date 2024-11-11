@@ -38,7 +38,7 @@
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data
 #' add_to_database(filepath = system.file("aurum_data",
@@ -47,6 +47,10 @@
 #'
 #' ## Query database
 #' RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation', n = 3)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 add_to_database <- function(filepath,
@@ -158,7 +162,7 @@ add_to_database <- function(filepath,
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
@@ -167,6 +171,10 @@ add_to_database <- function(filepath,
 #'
 #' ## Query database
 #' RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation', n = 3)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 cprd_extract <- function(db,
@@ -284,7 +292,7 @@ cprd_extract <- function(db,
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
@@ -295,6 +303,10 @@ cprd_extract <- function(db,
 #' db_query(db_open = aurum_extract,
 #' tab ="observation",
 #' codelist_vector = "187341000000114")
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 db_query <- function(codelist,
@@ -433,6 +445,36 @@ combine_query_boolean <- function(db_query,
 #'
 #' @returns A 0/1 vector.
 #'
+#' @examples
+#' ## Create connection to a temporary database
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
+#'
+#' ## Add observation data from all observation files in specified directory
+#' cprd_extract(db = aurum_extract,
+#' filepath = system.file("aurum_data", package = "rcprd"),
+#' filetype = "observation")
+#'
+#' ## Query database for a specific medcode
+#' db_query <- db_query(db_open = aurum_extract,
+#' tab ="observation",
+#' codelist_vector = "187341000000114")
+#'
+#' ## Define cohort
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
+#'
+#' ### Add an index date to pat
+#' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
+#'
+#' ## Combine query with cohort retaining most recent three records
+#' combine_query_boolean(cohort = pat,
+#' db_query = db_query,
+#' query_type = "med",
+#' numobs = 3)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
+#'
 #' @export
 combine_query_boolean.aurum <- function(db_query,
                                         cohort,
@@ -490,7 +532,7 @@ combine_query_boolean.aurum <- function(db_query,
 #'
 #' @returns A 0/1 vector.
 #'
-#' @export
+#' @noRd
 combine_query_boolean.gold <- function(db_query,
                                        cohort,
                                        query_type,
@@ -543,7 +585,7 @@ combine_query_boolean.gold <- function(db_query,
 #'
 #' @returns A 0/1 vector.
 #'
-#' @export
+#' @noRd
 combine_query_boolean.hes_primary <- function(db_query,
                                       cohort,
                                       query_type,
@@ -603,6 +645,36 @@ combine_query_boolean.hes_primary <- function(db_query,
 #'
 #' @returns A data.table with observations that meet specified criteria.
 #'
+#' @examples
+#' ## Create connection to a temporary database
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
+#'
+#' ## Add observation data from all observation files in specified directory
+#' cprd_extract(db = aurum_extract,
+#' filepath = system.file("aurum_data", package = "rcprd"),
+#' filetype = "observation")
+#'
+#' ## Query database for a specific medcode
+#' db_query <- db_query(db_open = aurum_extract,
+#' tab ="observation",
+#' codelist_vector = "187341000000114")
+#'
+#' ## Define cohort
+#' pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
+#'
+#' ### Add an index date to pat
+#' pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
+#'
+#' ## Combine query with cohort retaining most recent three records
+#' combine_query(cohort = pat,
+#' db_query = db_query,
+#' query_type = "med",
+#' numobs = 3)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
+#'
 #' @export
 combine_query <- function(db_query,
                           cohort,
@@ -646,7 +718,7 @@ combine_query <- function(db_query,
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
@@ -669,6 +741,10 @@ combine_query <- function(db_query,
 #' db_query = db_query,
 #' query_type = "med",
 #' numobs = 3)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 combine_query.aurum <- function(db_query,
@@ -766,7 +842,7 @@ combine_query.aurum <- function(db_query,
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
@@ -790,7 +866,11 @@ combine_query.aurum <- function(db_query,
 #' query_type = "med",
 #' numobs = 3)
 #'
-#' @export
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
+#'
+#' @noRd
 combine_query.gold <- function(db_query,
                                cohort,
                                query_type = c("med", "drug", "test", "hes_primary", "death"),
@@ -880,7 +960,7 @@ combine_query.gold <- function(db_query,
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
@@ -904,7 +984,11 @@ combine_query.gold <- function(db_query,
 #' query_type = "med",
 #' numobs = 3)
 #'
-#' @export
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
+#'
+#' @noRd
 combine_query.hes_primary <- function(db_query,
                                 cohort,
                                 query_type,
@@ -974,7 +1058,7 @@ combine_query.hes_primary <- function(db_query,
 #'
 #' @examples
 #' ## Create connection to a temporary database
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Add observation data from all observation files in specified directory
 #' cprd_extract(db = aurum_extract,
@@ -998,7 +1082,11 @@ combine_query.hes_primary <- function(db_query,
 #' query_type = "med",
 #' numobs = 3)
 #'
-#' @export
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
+#'
+#' @noRd
 combine_query.ons_death <- function(db_query,
                                 cohort,
                                 query_type,

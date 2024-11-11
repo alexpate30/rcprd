@@ -6,7 +6,7 @@
 \alias{rcprd-package}
 \title{rcprd: Extraction and Management of Clinical Practice Research Datalink Data}
 \description{
-Simplify the process of extracting and processing CPRD data in order to build datasets ready for statistical analysis. This process is difficult in R, as the raw data is very large and cannot be read into the R workspace. 'rcprd' utilises 'RSQLite' to create SQLite databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest, and create datasets ready for statistical analysis. The processes follow closely that from the 'rEHR' package, see Springate et al., (2017) \doi{10.1371/journal.pone.0171784}.
+Simplify the process of extracting and processing Clinical Practice Research Datalink (CPRD) data in order to build datasets ready for statistical analysis. This process is difficult in 'R', as the raw data is very large and cannot be read into the R workspace. 'rcprd' utilises 'RSQLite' to create 'SQLite' databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest, and create datasets ready for statistical analysis. The processes follow closely that from the 'rEHR' package, see Springate et al., (2017) \doi{10.1371/journal.pone.0171784}.
 }
 \seealso{
 Useful links:

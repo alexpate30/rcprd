@@ -47,7 +47,7 @@
 #' @examples
 #'
 #' ## Connect
-#' aurum_extract <- connect_database(tempfile("temp.sqlite"))
+#' aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 #'
 #' ## Create SQLite database using cprd_extract
 #' cprd_extract(aurum_extract,
@@ -67,6 +67,10 @@
 #' db_open = aurum_extract,
 #' tab = "observation",
 #' return_output = TRUE)
+#'
+#' ## clean up
+#' RSQLite::dbDisconnect(aurum_extract)
+#' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
 extract_time_until <- function(cohort,

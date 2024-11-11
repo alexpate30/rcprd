@@ -92,7 +92,7 @@ If \code{dtcens.lag > 0}, then the time until the event of interest will be the 
 \examples{
 
 ## Connect
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
@@ -112,5 +112,9 @@ censdt = "fup_end",
 db_open = aurum_extract,
 tab = "observation",
 return_output = TRUE)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }

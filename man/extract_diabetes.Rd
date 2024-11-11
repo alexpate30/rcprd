@@ -85,7 +85,7 @@ character vector. This option will take precedence over the codelists stored on 
 \examples{
 
 ## Connect
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
 ## Create SQLite database using cprd_extract
 cprd_extract(aurum_extract,
@@ -102,5 +102,9 @@ codelist_type1_vector = "498521000006119",
 codelist_type2_vector = "401539014",
 indexdt = "indexdt",
 db_open = aurum_extract)
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
 
 }
