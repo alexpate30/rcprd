@@ -126,7 +126,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   ### Save output
   obs5 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM scrambled')
   drugissue5 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM eggs')
-  testthat::expect_equal(RSQLite::dbListTables(aurum_extract), c("eggs", "scrambled"))
+  testthat::expect_equal(RSQLite::dbListTables(aurum_extract), c("drugissue", "eggs", "observation", "scrambled"))
 
   ### Disconnect
   RSQLite::dbDisconnect(aurum_extract)
