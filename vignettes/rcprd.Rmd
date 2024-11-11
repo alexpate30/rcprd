@@ -418,6 +418,10 @@ Next, the `create_directory_system()` function can be used to generate the requi
 suppressMessages(
   create_directory_system()
 )
+
+file.exists(file.path(tempdir(), "data"))
+file.exists(file.path(tempdir(), "codelists"))
+file.exists(file.path(tempdir(), "code"))
 ```
 
 An SQLite database called "mydb.sqlite" is then created in the "data/sql" directory, using the same data from the previous examples:
