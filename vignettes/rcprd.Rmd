@@ -171,13 +171,13 @@ RSQLite::dbDisconnect(aurum_extract)
 
 ### Add all relevant files to SQLite database using `cprd_extract`
 
-In practice, there will be a high number of files to add to the SQLite database and adding each one using `add_to_database` would be cumbersome. We now repeat the extraction but using the `cprd_extract` function, which is a wrapper for `add_to_database`, and will add all the files in a specified directory that contain a string matching the specified file type. Start by creating a connection to a new database:
+In practice, there will be a high number of files to add to the SQLite database and adding each one using `add_to_database` would be cumbersome. We now repeat the extraction but using the `cprd_extract` function, which is a wrapper for `add_to_database`, and will add all the files in a specified directory that contain a string matching the specified file type. Start by creating a connection to the database:
 
 ```{r}
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
-We then use `cprd_extract` to add all the observation files into the SQLite database. The directory containing the files should be specified using `filepath`. It will only read in and add files with the text string specified in `filetype`, which takes values in `c("observation", "drugissue", "referral", "problem", "consultation")`. We then query the first three rows of this database, and note they are the same as previously.
+We then use `cprd_extract` to add all the observation files into the SQLite database. If the connection (`aurum_extract`) is to an existing database, which is the case here, it will be overwritten when running `cprd_extract`. The directory containing the files should be specified using `filepath`. It will only read in and add files with the text string specified in `filetype`, which takes values in `c("observation", "drugissue", "referral", "problem", "consultation")`. We then query the first three rows of this database, and note they are the same as previously.
 
 ```{r}
 ### Extract data
