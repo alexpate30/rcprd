@@ -378,10 +378,10 @@ analysis-ready dataset.</p>
 individual files to the SQLite database. Start by defining and
 connecting to your SQLite database. In this article we create a
 temporary database, but in practice this would be a permanent storage
-location. Specifically, <code>tempfile("temp.sqlite")</code> would be
-replaced by the desired file path and SQLite database name.</p>
+location. Specifically, <code>file.path(tempdir(), "temp.sqlite")</code>
+would be replaced by the desired file path and SQLite database name.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Next, we add medical diagnoses data from the observation files to
 this database using the <code>add_to_database</code> function. The
 simulated raw data provided with <strong>rcprd</strong> can be accessed
@@ -482,7 +482,7 @@ would be cumbersome. We now repeat the extraction but using the
 directory that contain a string matching the specified file type. Start
 by creating a connection to a new database:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We then use <code>cprd_extract</code> to add all the observation
 files into the SQLite database. The directory containing the files
 should be specified using <code>filepath</code>. It will only read in
@@ -497,11 +497,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 11:06:46.445261</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 17:34:46.360733</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 11:06:46.460057</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 17:34:46.378107</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 11:06:46.477578</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 17:34:46.390337</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows</span></span>
@@ -525,11 +525,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"drugissue"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2024-11-11 11:06:46.562553</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2024-11-11 17:34:46.472639</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2024-11-11 11:06:46.576042</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2024-11-11 17:34:46.489348</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2024-11-11 11:06:46.590929</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2024-11-11 17:34:46.500995</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### List tables</span></span>
@@ -619,7 +619,7 @@ name, it will only search for patient id’s with <code>set == 1</code> in
 the data.frame provided to <code>subset_patids</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Create connection to SQLite database</span></span>
-<span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">### Add observation files</span></span>
 <span><span class="fu"><a href="../reference/cprd_extract.html">cprd_extract</a></span><span class="op">(</span>db <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
@@ -628,11 +628,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 11:06:46.759516</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 17:34:46.660598</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 11:06:46.782232</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 17:34:46.674425</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 11:06:46.797006</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 17:34:46.686405</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Add drugissue files</span></span>
@@ -642,11 +642,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2024-11-11 11:06:46.812967</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2024-11-11 17:34:46.702409</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2024-11-11 11:06:46.832595</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2024-11-11 17:34:46.71575</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2024-11-11 11:06:46.845996</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2024-11-11 17:34:46.727537</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows of each table</span></span>
@@ -1009,16 +1009,19 @@ working directory across multiple R markdown code chunks, we use
 <code>knitr::opts_knit$set</code>. To follow this section, the user
 should simply set their working directory as usual using
 <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code>.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Set working directory</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html" class="external-link">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Next, the <code><a href="../reference/create_directory_system.html">create_directory_system()</a></code> function can be used
 to generate the required directory structure.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/create_directory_system.html">create_directory_system</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>An SQLite database called “mydb.sqlite” is then created in the
 “data/sql” directory, using the same data from the previous
 examples:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Open connection</span></span>
 <span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="st">"data/sql/mydb.sqlite"</span><span class="op">)</span></span>
 <span></span>
@@ -1027,18 +1030,18 @@ examples:</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 11:06:48.054909</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 17:34:47.868357</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 11:06:48.068178</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 17:34:47.881417</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 11:06:48.080573</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 17:34:47.895339</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">## Disconnect</span></span>
 <span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, a code list called <em>mylist.csv</em> is created and saved
 into the <em>codelists/analysis/</em> directory.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Define codelist</span></span>
 <span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>medcodeid <span class="op">=</span> <span class="st">"187341000000114"</span><span class="op">)</span></span>
 <span></span>
@@ -1047,7 +1050,7 @@ into the <em>codelists/analysis/</em> directory.</p>
 <p>The <em>mydb.sqlite</em> database can now be queried to create a
 ‘history of’ type variable using the codelist <em>mylist.csv</em>, with
 the output saved directly onto the disk drive.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_ho.html">extract_ho</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span>
 <span>           codelist <span class="op">=</span> <span class="st">"mylist"</span>,</span>
 <span>           indexdt <span class="op">=</span> <span class="st">"fup_start"</span>,</span>
@@ -1060,13 +1063,18 @@ to the SQLite database did not need to be created, the codelist did not
 need to be in the R workspace, and there is no output from this
 function. Instead the extracted variable has been saved onto the disk
 drive in an .rds file, and can be read in using:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/extraction/var_ho.rds"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   patid ho</span></span>
 <span><span class="co">#&gt; 1     1  1</span></span>
 <span><span class="co">#&gt; 3     3  0</span></span>
 <span><span class="co">#&gt; 4     4  0</span></span>
 <span><span class="co">#&gt; 6     6  1</span></span></code></pre></div>
+<p>This setup can be used in conjunction with any of the functions from
+step 3 (i.e. <code>extract_test_var</code>,
+<code>extract_time_until</code> or <code>db_query</code>).</p>
+<pre class="include"><code><span><span class="co">### Return filespace to how it was prior to example</span></span>
+<span><span class="fu"><a href="../reference/delete_directory_system.html">delete_directory_system</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="extracting-longitudinal-datatime-varying-covariates">Extracting longitudinal data/time varying covariates<a class="anchor" aria-label="anchor" href="#extracting-longitudinal-datatime-varying-covariates"></a>
