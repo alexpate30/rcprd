@@ -58,7 +58,7 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p>The goal of <strong>rcprd</strong> is to simplify the process of extracting and processing CPRD Aurum data into an ‘analysis-ready’ dataset which can be used for statistical analyses. This process is somewhat difficult in R, as the raw data is very large, provided in a large number of .txt files, which cannot all be read into the R workspace. rcprd utilises <a href="https://CRAN.R-project.org/package=RSQLite" class="external-link">RSQLite</a> to create SQLite databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest. The processes follow closely that from the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5323003/" class="external-link">rEHR</a> package, which was designed for extractin CPRD GOLD data, and is no longer available on CRAN.</p>
+<p>The goal of <strong>rcprd</strong> is to simplify the process of extracting and processing CPRD Aurum data into an ‘analysis-ready’ dataset which can be used for statistical analyses. This process is somewhat difficult in R, as the raw data is very large, provided in a large number of .txt files, which cannot all be read into the R workspace. rcprd utilises <a href="https://CRAN.R-project.org/package=RSQLite" class="external-link">RSQLite</a> to create SQLite databases which are stored on the hard disk. These are then queried to extract the required information for a cohort of interest. The processes follow closely that from the <a href="https://pubmed.ncbi.nlm.nih.gov/28231289" class="external-link">rEHR</a> package.</p>
 <p>For a detailed guide on how to use <strong>rcprd</strong> please see the <a href="https://alexpate30.github.io/rcprd/articles/rcprd.html">user-guide vignette</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -103,11 +103,11 @@
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 18:54:21.240577</span></span>
+<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 19:20:40.148848</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 18:54:21.32939</span></span>
+<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 19:20:40.336719</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 18:54:21.405961</span></span>
+<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 19:20:40.432941</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span></code></pre></div>
 <p>Query the database for specific codes and store in an R object using the <code>db_query</code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
