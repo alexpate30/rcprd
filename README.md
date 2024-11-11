@@ -24,9 +24,7 @@ which cannot all be read into the R workspace. rcprd utilises
 databases which are stored on the hard disk. These are then queried to
 extract the required information for a cohort of interest. The processes
 follow closely that from the
-[rEHR](https://pmc.ncbi.nlm.nih.gov/articles/PMC5323003/) package, which
-was designed for extractin CPRD GOLD data, and is no longer available on
-CRAN.
+[rEHR](https://pubmed.ncbi.nlm.nih.gov/28231289) package.
 
 For a detailed guide on how to use **rcprd** please see the [user-guide
 vignette](https://alexpate30.github.io/rcprd/articles/rcprd.html).
@@ -91,11 +89,11 @@ cprd_extract(db = aurum_extract,
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
 #>   |                                                                              |                                                                      |   0%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 18:54:21.240577
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 19:20:40.148848
 #>   |                                                                              |=======================                                               |  33%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 18:54:21.32939
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 19:20:40.336719
 #>   |                                                                              |===============================================                       |  67%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 18:54:21.405961
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 19:20:40.432941
 #>   |                                                                              |======================================================================| 100%
 ```
 
