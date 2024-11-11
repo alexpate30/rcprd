@@ -183,11 +183,6 @@ cprd_extract <- function(db,
   ### Check filetype
   filetype <- match.arg(filetype)
 
-  # print(paste("nrows", nrows))
-  # print(paste("select", select))
-  # print(paste("subset_patids", subset_patids))
-  # print(paste("use_set", use_set))
-
   ### Spit error out if subset_patids not in correct form
   if (!is.null(subset_patids)){
     if (use_set == FALSE){
@@ -220,7 +215,7 @@ cprd_extract <- function(db,
 
   ### Apply the add_to_database function to each file
   if (length(filenames) >= 1){
-    print(paste("Adding", filenames[1], Sys.time()))
+    message(paste("Adding", filenames[1], Sys.time()))
     ### Assign counter for progress bar
     progress <- 1
     ## Overwrite for first file
@@ -239,7 +234,7 @@ cprd_extract <- function(db,
     ### Loop through all subsequent files
     if (length(filenames) > 1){
       for (filename in filenames[-1]){
-        print(paste("Adding", filename, Sys.time()))
+        message(paste("Adding", filename, Sys.time()))
         ## Append for all subsequent files
         add_to_database(filename,
                         filetype = filetype,
@@ -408,6 +403,8 @@ db_query <- function(codelist,
 #' @param time_prev Number of days prior to index date to look for codes.
 #' @param time_post Number of days after index date to look for codes.
 #' @param numobs Number of observations required to be observed in specified time window to return a 1.
+#'
+#' @returns A 0/1 vector.
 #'
 #' @export
 combine_query_boolean <- function(db_query,
@@ -1100,7 +1097,7 @@ prep_subdir <- function(out_subdir){
   if (!is.null(out_subdir)){
     if (file.exists(paste("data/extraction/", out_subdir, sep = "")) == FALSE){
       dir.create(paste("data/extraction/", out_subdir, sep = ""))
-      print(paste("Directory /data/extraction/", out_subdir, " has been created", sep = ""))
+      message(paste("Directory /data/extraction/", out_subdir, " has been created", sep = ""))
     }
   }
 }

@@ -5,6 +5,8 @@
 #'
 #' @param dbname Name of SQLite database on hard disk (including full file path relative to working directory)
 #'
+#' @returns No return value, called to open a database connection.
+#'
 #' @examples
 #'
 #' ## Connect to a database
