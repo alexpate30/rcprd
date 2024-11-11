@@ -58,7 +58,7 @@ str(pat)
 Connect to an SQLite database (in this example, we create a temporary file):
 
 ```{r}
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
 Read in medical data (from the observation files) and add to the SQLite database.
@@ -108,6 +108,12 @@ analysis.ready.pat
 ```
 
 Currently functionality exists in rcprd to extract medical data from the observation file (including specific functions for extracting test data) and medication data from the drugissue file. Low level functions exist to allow the user to query the RSQLite database and write their own functions to define variables of interest. There are mid-level functions which allow users to extract variables of certain types ('history of', 'time to event', and 'most recent test result'). There are then very high level functions which allow users to extract specific variables, such as body mass index, systolic blood pressure, smoking status, diabetes status, etc. There are all functions where decisions have been made over how to define variables. Be sure to check the code to make sure it matches with your definition. For example, `extract_diabetes` will return a categorical variable with three categories, `Absent`, `type1` and `type2`. If an individual has a record for both type 1 and type 2 diabetes (according to the users code lists), `extract_diabetes` will assign the individual to the group `type1`.
+
+```{r, include = FALSE}
+### clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
+```
 
 ## Package maintainence
 

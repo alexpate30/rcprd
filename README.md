@@ -80,7 +80,7 @@ Connect to an SQLite database (in this example, we create a temporary
 file):
 
 ``` r
-aurum_extract <- connect_database(tempfile("temp.sqlite"))
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
 Read in medical data (from the observation files) and add to the SQLite
@@ -90,9 +90,12 @@ database.
 cprd_extract(db = aurum_extract, 
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
-#>   |                                                                              |                                                                      |   0%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-08 09:50:54.729701"
-#>   |                                                                              |=======================                                               |  33%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-08 09:50:54.896232"
-#>   |                                                                              |===============================================                       |  67%[1] "Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-08 09:50:55.041703"
+#>   |                                                                              |                                                                      |   0%
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 17:55:11.016741
+#>   |                                                                              |=======================                                               |  33%
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 17:55:11.335567
+#>   |                                                                              |===============================================                       |  67%
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 17:55:11.554403
 #>   |                                                                              |======================================================================| 100%
 ```
 

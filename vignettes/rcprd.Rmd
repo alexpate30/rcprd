@@ -402,6 +402,11 @@ Finally, there is similar functionality for accessing the SQLite database intern
 
 This workflow is advantageous as it avoids hard file paths which beneficial if wanting to move your code onto another computer system. Furthermore, once codelists and the SQLite database have been created and stored in the appropriate folders, they can simply be referred to by name, resulting in an easier workflow. The function `create_directory_system()` will create the directory system required to use **rcprd** in this way. To avoid repetition of the previous section, this is showcased just once using the `extract_ho` function. For the sake of this example, we start by setting the working directory to a directory called *inst/example* within **rcprd**. To maintain the new working directory across multiple  R markdown code chunks, we use `knitr::opts_knit$set`. To follow this section, the user should simply set their working directory as usual using `setwd()`.
 
+```{r, include = FALSE}
+## Save working directory location, so can revert at end of vignette (required by CRAN)
+oldwd <- getwd()
+```
+
 ```{r}
 ## Set working directory
 knitr::opts_knit$set(root.dir = tempdir())
@@ -460,9 +465,14 @@ readRDS("data/extraction/var_ho.rds")
 
 This setup can be used in conjunction with any of the functions from step 3 (i.e. `extract_test_var`, `extract_time_until` or `db_query`).
 
-```{include = FALSE}
+```{r, include = FALSE}
 ### Return filespace to how it was prior to example
 delete_directory_system()
+```
+
+```{r, include = FALSE}
+## Return root directory to how it was prior to example
+knitr::opts_knit$set(root.dir = oldwd)
 ```
 
 ### Extracting longitudinal data/time varying covariates
