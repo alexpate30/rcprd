@@ -399,13 +399,15 @@ This workflow is advantageous as it avoids hard file paths which beneficial if w
 
 ```{r, setup, include = FALSE}
 ## Set working directory
-knitr::opts_knit$set(root.dir = system.file("example", package = "rcprd"))
+knitr::opts_knit$set(root.dir = tempdir())
 ```
 
-Next, the `create_directory_system()` function can be used to generate the required directory structure:
+Next, the `create_directory_system()` function can be used to generate the required directory structure. 
 
 ```{r}
-create_directory_system()
+suppressMessages(
+  create_directory_system()
+)
 ```
 
 An SQLite database called "mydb.sqlite" is then created in the "data/sql" directory, using the same data from the previous examples:
