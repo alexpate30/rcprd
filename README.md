@@ -15,7 +15,7 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/rcprd)](https://cran.r-
 
 <!-- badges: end -->
 
-The goal of rcprd is to simplify the process of extracting and
+The goal of **rcprd** is to simplify the process of extracting and
 processing CPRD Aurum data into an ‘analysis-ready’ dataset which can be
 used for statistical analyses. This process is somewhat difficult in R,
 as the raw data is very large, provided in a large number of .txt files,
@@ -91,11 +91,11 @@ cprd_extract(db = aurum_extract,
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
 #>   |                                                                              |                                                                      |   0%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 17:55:11.016741
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 18:54:21.240577
 #>   |                                                                              |=======================                                               |  33%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 17:55:11.335567
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 18:54:21.32939
 #>   |                                                                              |===============================================                       |  67%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 17:55:11.554403
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 18:54:21.405961
 #>   |                                                                              |======================================================================| 100%
 ```
 
