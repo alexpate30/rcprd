@@ -29,14 +29,18 @@ For a detailed guide on how to use **rcprd** please see the [user-guide vignette
 
 ## Installation
 
+The package can be installed from CRAN as follows:
+
+```{r, eval = FALSE}
+# install.packages("rcprd")
+```
+
 You can install the development version of rcprd from [GitHub](https://github.com/alexpate30/rcprd) with:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("alexpate30/rcprd")
+# devtools::install_github("alexpate30/rcprd")
 ```
-
-The package is not yet available on CRAN.
 
 ## Example
 

@@ -31,15 +31,19 @@ vignette](https://alexpate30.github.io/rcprd/articles/rcprd.html).
 
 ## Installation
 
+The package can be installed from CRAN as follows:
+
+``` r
+# install.packages("rcprd")
+```
+
 You can install the development version of rcprd from
 [GitHub](https://github.com/alexpate30/rcprd) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("alexpate30/rcprd")
+# devtools::install_github("alexpate30/rcprd")
 ```
-
-The package is not yet available on CRAN.
 
 ## Example
 
@@ -89,11 +93,11 @@ cprd_extract(db = aurum_extract,
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
 #>   |                                                                              |                                                                      |   0%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 19:20:40.148848
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-14 15:20:22.632475
 #>   |                                                                              |=======================                                               |  33%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 19:20:40.336719
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-14 15:20:22.746196
 #>   |                                                                              |===============================================                       |  67%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 19:20:40.432941
+#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-14 15:20:22.83656
 #>   |                                                                              |======================================================================| 100%
 ```
 
