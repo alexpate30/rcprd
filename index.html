@@ -63,22 +63,24 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of rcprd from <a href="https://github.com/alexpate30/rcprd" class="external-link">GitHub</a> with:</p>
+<p>The package can be installed from CRAN as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("rcprd")</span></span></code></pre></div>
+<p>You can install the development version of rcprd from <a href="https://github.com/alexpate30/rcprd" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"alexpate30/rcprd"</span><span class="op">)</span></span></code></pre></div>
-<p>The package is not yet available on CRAN.</p>
+<span><span class="co"># devtools::install_github("alexpate30/rcprd")</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This is a basic example which shows you how to create a dataset containing age. All data provided with package and utilised in this example is simulated.</p>
 <p>Load rcprd:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alexpate30.github.io/rcprd/">rcprd</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: data.table</span></span></code></pre></div>
 <p>Create cohort based on patient files:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_cohort.html">extract_cohort</a></span><span class="op">(</span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">pat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    12 obs. of  12 variables:</span></span>
@@ -95,22 +97,22 @@
 <span><span class="co">#&gt;  $ acceptable    : int  1 0 1 0 0 1 1 0 1 0 ...</span></span>
 <span><span class="co">#&gt;  $ cprd_ddate    : Date, format: "1935-03-17" "1932-02-05" ...</span></span></code></pre></div>
 <p>Connect to an SQLite database (in this example, we create a temporary file):</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"temp.sqlite"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Read in medical data (from the observation files) and add to the SQLite database.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cprd_extract.html">cprd_extract</a></span><span class="op">(</span>db <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-11 19:20:40.148848</span></span>
+<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-14 15:20:22.632475</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-11 19:20:40.336719</span></span>
+<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-14 15:20:22.746196</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-11 19:20:40.432941</span></span>
+<span><span class="co">#&gt; Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-14 15:20:22.83656</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span></code></pre></div>
 <p>Query the database for specific codes and store in an R object using the <code>db_query</code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Create codelist</span></span>
 <span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="st">"187341000000114"</span></span>
 <span></span>
@@ -129,10 +131,10 @@
 <span><span class="co">#&gt; 2: 187341000000114    46        92        81          56           30        18</span></span>
 <span><span class="co">#&gt; 3: 187341000000114    28        20         5          41           97        92</span></span></code></pre></div>
 <p>Add an index date to the patient file, which we will extract variables relative to:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat</span><span class="op">$</span><span class="va">fup_start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"01/01/2020"</span>, format <span class="op">=</span> <span class="st">"%d/%m/%Y"</span><span class="op">)</span></span></code></pre></div>
 <p>Extract a ‘history of’ type variable, which will be equal to 1 if an individual has a record with the specified <em>medcodeid</em> prior to the index date, and equal 0 otherwise.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ho</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_ho.html">extract_ho</a></span><span class="op">(</span><span class="va">pat</span>, </span>
 <span>                 codelist_vector <span class="op">=</span> <span class="va">codelist</span>, </span>
 <span>                 indexdt <span class="op">=</span> <span class="st">"fup_start"</span>, </span>
@@ -144,7 +146,7 @@
 <span><span class="co">#&gt;  $ patid: chr  "1" "2" "3" "4" ...</span></span>
 <span><span class="co">#&gt;  $ ho   : int  1 1 0 0 0 1 0 0 0 0 ...</span></span></code></pre></div>
 <p>Merge the patient file with the ‘history of’ variable to create an analysis-ready dataset:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Recursive merge</span></span>
 <span><span class="va">analysis.ready.pat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">pat</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"fup_start"</span>, <span class="st">"gender"</span><span class="op">)</span><span class="op">]</span>, <span class="va">ho</span>, by.x <span class="op">=</span> <span class="st">"patid"</span>, by.y <span class="op">=</span> <span class="st">"patid"</span>, all.x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="va">analysis.ready.pat</span></span>
@@ -175,7 +177,14 @@
 <p>If you encounter a bug, please file an issue with a minimal reproducible example on <a href="https://github.com/alexpate30/rcprd" class="external-link">GitHub</a>.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=rcprd" class="external-link">View on CRAN</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
