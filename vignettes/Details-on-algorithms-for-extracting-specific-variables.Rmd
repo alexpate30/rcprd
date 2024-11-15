@@ -66,7 +66,7 @@ Extraction of cholesterol/HDL ratio requires the user to specify three codelists
 
 ## Diabetes status (`extract_diabetes`)
 
-Extraction of diabetes status requires the user to specify two codelists. One for type 1 diabetes (`codelist_type1`), and another for type 2 diabetes (`codelist_type2`). The reason this variable is not treated as a `history of` type variable and extracted using `extract_ho` is because often individuals will have a generic code such as *diabetes mellitus*, which would be used to identify type 2 diabetes, but will also have a specific code such as *type 1 diabetes mellitus*. This algorithm treats the two as mutually exclusive, and assigns individuals with a code for both type 1 and type 1 diabetes, as having type 1 diabetes. The algorithm is as follows:
+Extraction of diabetes status requires the user to specify two codelists. One for type 1 diabetes (`codelist_type1`), and another for type 2 diabetes (`codelist_type2`). The reason this variable is not treated as a `history of` type variable and extracted using `extract_ho` is because often individuals will have a generic code such as *diabetes mellitus*, which would be used to identify type 2 diabetes, but will also have a specific code such as *type 1 diabetes mellitus*. This algorithm treats the two as mutually exclusive, and assigns individuals with a code for both type 1 and type 2 diabetes, as having type 1 diabetes. The algorithm is as follows:
 
 * Extract type 1 diabetes and type 2 diabetes observations that occurred prior to the index date. Observation dates identified using variable *obsdate*.
 * Assign diabetes status.
