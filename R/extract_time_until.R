@@ -17,6 +17,7 @@
 #' @param db Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.
 #' @param db_filepath Full filepath to SQLITE database on hard disk, to be queried.
 #' @param tab Table name to query in SQLite database.
+#' @param table_name Specify name of table in the SQLite database to be queried, if this is different from `tab`.
 #' @param out_save_disk If `TRUE` will attempt to save outputted data frame to directory "data/extraction/".
 #' @param out_subdir Sub-directory of "data/extraction/" to save outputted data frame into.
 #' @param out_filepath Full filepath and filename to save outputted data frame into.
@@ -41,6 +42,9 @@
 #' If the time until event is the same as time until censored, this will be considered an event (var_indicator = 1)
 #'
 #' If `dtcens.lag > 0`, then the time until the event of interest will be the time until the minimum of the event of interest, and date of censoring.
+#'
+#' The argument `table_name` is only necessary if the name of the table being queried does not match the CPRD filetype specified in `tab`. This will occur when
+#' `str_match` is used in `cprd_extract` or `add_to_database` to create the .sqlite database.
 #'
 #' @returns A data frame with variable patid, a variable containing the time until event/censoring, and a variable containing event/censoring indicator.
 #'
@@ -87,6 +91,7 @@ extract_time_until <- function(cohort,
                                db = NULL,
                                db_filepath = NULL,
                                tab = c("observation", "drugissue", "hes_primary", "death"),
+                               table_name = NULL,
                                out_save_disk = FALSE,
                                out_subdir = NULL,
                                out_filepath = NULL,
@@ -149,6 +154,7 @@ extract_time_until <- function(cohort,
                      db = db,
                      db_filepath = db_filepath,
                      tab = tab,
+                     table_name = table_name,
                      codelist_vector = codelist_vector)
 
   ### Identify the first CVD event happening after the indexdt

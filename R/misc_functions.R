@@ -275,7 +275,8 @@ cprd_extract <- function(db,
 #' @param db Name of SQLITE database on hard disk, to be queried.
 #' @param db_filepath Full filepath to SQLITE database on hard disk, to be queried.
 #' @param db_cprd CPRD Aurum ('aurum') or gold ('gold').
-#' @param tab Name of table in SQLite database that is to be queried.
+#' @param tab CPRD filetype
+#' @param table_name Specify name of table in the SQLite database to be queried, if this is different from `tab`.
 #' @param codelist_vector Vector of codes to query the database with. This takes precedent over `codelist` if both are specified.
 #'
 #' @details
@@ -287,6 +288,9 @@ cprd_extract <- function(db,
 #' Specifying `codelist` requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 #' to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen `tab`. The codelist can
 #' also be read in manually, and supplied as a character vector to `codelist_vector`. If `codelist_vector` is defined, this will take precedence over `codelist`.
+#'
+#' The argument `table_name` is only necessary if the name of the table being queried does not match the CPRD filetype specified in `tab`. This will occur when
+#' `str_match` is used in `cprd_extract` or `add_to_database` to create the .sqlite database.
 #'
 #' @returns A data.table with observations contained in the specified codelist.
 #'
@@ -315,6 +319,7 @@ db_query <- function(codelist,
                      db_filepath = NULL,
                      db_cprd = c("aurum", "gold"),
                      tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary", "death"),
+                     table_name = NULL,
                      codelist_vector = NULL){
 
   ### Match args
@@ -354,28 +359,34 @@ db_query <- function(codelist,
     mydb <- db_open
   }
 
+  ###
   ### Create the query
+  ###
+
+  ### If the table has been created using str_match, then we need to search the table called table_name
+  ### However, if created as normal, then the table_name will be equal to tab
+  if (is.null(table_name)){table_name <- tab}
   if (tab == "hes_primary"){
     where_clause <- paste0("`ICD_PRIMARY` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-    qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+    qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
   } else if (tab == "death"){
     where_clause <- paste0("`cause` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-    qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+    qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
   } else if (db_cprd == "aurum"){
     if (tab == "observation"){
       where_clause <- paste0("`medcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
     } else if (tab == "drugissue"){
       where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
     }
   } else if (db_cprd == "gold"){
     if (tab %in% c("clinical", "immunisation", "test")){
       where_clause <- paste0("`medcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
     } else if (tab == "therapy"){
       where_clause <- paste0("`prodcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", tab, "WHERE", where_clause)
+      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
     }
   }
 

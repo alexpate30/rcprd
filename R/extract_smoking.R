@@ -21,6 +21,7 @@
 #' @param db_open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
 #' @param db Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.
 #' @param db_filepath Full filepath to SQLITE database on hard disk, to be queried.
+#' @param table_name Specify name of table in the SQLite database to be queried, if this is different from 'observation'.
 #' @param out_save_disk If `TRUE` will attempt to save outputted data frame to directory "data/extraction/".
 #' @param out_subdir Sub-directory of "data/extraction/" to save outputted data frame into.
 #' @param out_filepath Full filepath and filename to save outputted data frame into.
@@ -48,6 +49,9 @@
 #'
 #' We take the most recent smoking status record. If an individuals most recent smoking status is a non-smoker,
 #' but they have a history of smoking prior to this, these individuals will be classed as ex-smokers.
+#'
+#' The argument `table_name` is only necessary if the name of the table being queried does not match 'observation'. This will occur when
+#' `str_match` is used in `cprd_extract` or `add_to_database` to create the .sqlite database.
 #'
 #' @returns A data frame with variable smoking status.
 #'
@@ -99,6 +103,7 @@ extract_smoking <- function(cohort,
                             db_open = NULL,
                             db = NULL,
                             db_filepath = NULL,
+                            table_name = NULL,
                             out_save_disk = FALSE,
                             out_subdir = NULL,
                             out_filepath = NULL,
@@ -138,6 +143,7 @@ extract_smoking <- function(cohort,
                          db = db,
                          db_filepath = db_filepath,
                          tab = "observation",
+                         table_name = table_name,
                          codelist_vector = codelist_non_vector)
 
   db.qry.ex <- db_query(codelist_ex,
@@ -145,6 +151,7 @@ extract_smoking <- function(cohort,
                         db = db,
                         db_filepath = db_filepath,
                         tab = "observation",
+                        table_name = table_name,
                         codelist_vector = codelist_ex_vector)
 
   db.qry.light <- db_query(codelist_light,
@@ -152,6 +159,7 @@ extract_smoking <- function(cohort,
                            db = db,
                            db_filepath = db_filepath,
                            tab = "observation",
+                           table_name = table_name,
                            codelist_vector = codelist_light_vector)
 
   db.qry.mod <- db_query(codelist_mod,
@@ -159,6 +167,7 @@ extract_smoking <- function(cohort,
                          db = db,
                          db_filepath = db_filepath,
                          tab = "observation",
+                         table_name = table_name,
                          codelist_vector = codelist_mod_vector)
 
   db.qry.heavy <- db_query(codelist_heavy,
@@ -166,6 +175,7 @@ extract_smoking <- function(cohort,
                            db = db,
                            db_filepath = db_filepath,
                            tab = "observation",
+                           table_name = table_name,
                            codelist_vector = codelist_heavy_vector)
 
   ### Combine queries with cohort, retaining all smoking records prior to the index date

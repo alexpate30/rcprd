@@ -17,6 +17,7 @@
 #' @param db_open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
 #' @param db Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.
 #' @param db_filepath Full filepath to SQLITE database on hard disk, to be queried.
+#' @param table_name Specify name of table in the SQLite database to be queried, if this is different from 'observation'.
 #' @param out_save_disk If `TRUE` will attempt to save outputted data frame to directory "data/extraction/".
 #' @param out_subdir Sub-directory of "data/extraction/" to save outputted data frame into.
 #' @param out_filepath Full filepath and filename to save outputted data frame into.
@@ -33,6 +34,9 @@
 #' and then save onto the hard disk manually.
 #'
 #' Currently only returns most recent test result. This will be updated to return more than one most recent test result if specified.
+#'
+#' The argument `table_name` is only necessary if the name of the table being queried does not match 'observation'. This will occur when
+#' `str_match` is used in `cprd_extract` or `add_to_database` to create the .sqlite database.
 #'
 #' @returns A data frame containing standard deviation of test results.
 #'
@@ -77,6 +81,7 @@ extract_test_data_var <- function(cohort,
                                   db_open = NULL,
                                   db = NULL,
                                   db_filepath = NULL,
+                                  table_name = NULL,
                                   out_save_disk = FALSE,
                                   out_subdir = NULL,
                                   out_filepath = NULL,
@@ -117,6 +122,7 @@ extract_test_data_var <- function(cohort,
                      db = db,
                      db_filepath = db_filepath,
                      tab = "observation",
+                     table_name = table_name,
                      codelist_vector = codelist_vector)
 
   ### Get test data for individuals in cohort, within time range and remove outliers
