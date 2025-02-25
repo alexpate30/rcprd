@@ -53,7 +53,7 @@
 <span>  use_set <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">db</span>,</span>
 <span>  extract_txt_func <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  tablename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,7 +94,7 @@
 <dd><p>User-defined function to read the .txt file into R.</p></dd>
 
 
-<dt id="arg-tablename">tablename<a class="anchor" aria-label="anchor" href="#arg-tablename"></a></dt>
+<dt id="arg-table-name">table_name<a class="anchor" aria-label="anchor" href="#arg-table-name"></a></dt>
 <dd><p>Name of table in SQLite database that the data will be added to.</p></dd>
 
 
@@ -108,7 +108,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Will add the file to a table named <code>filetype</code> in the SQLite database, unless <code>tablename</code> is specified.</p>
+    <p>Will add the file to a table named <code>filetype</code> in the SQLite database, unless <code>table_name</code> is specified.</p>
 <p>If <code>use_set = FALSE</code>, then <code>subset_patids</code> should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
 If <code>use_set = TRUE</code>, then <code>subset_patids</code> should be a dataframe with two columns, <code>patid</code> and <code>set</code>, where <code>set</code> corresponds to the number in the file name
 following the word 'set'. This functionality is provided to increase computational efficiency when subsetting to a cohort of patients which is very large (millions).

@@ -58,6 +58,7 @@
 <span>  db_open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_save_disk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  out_subdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -125,6 +126,10 @@
 <dd><p>Full filepath to SQLITE database on hard disk, to be queried.</p></dd>
 
 
+<dt id="arg-table-name">table_name<a class="anchor" aria-label="anchor" href="#arg-table-name"></a></dt>
+<dd><p>Specify name of table in the SQLite database to be queried, if this is different from 'observation'.</p></dd>
+
+
 <dt id="arg-out-save-disk">out_save_disk<a class="anchor" aria-label="anchor" href="#arg-out-save-disk"></a></dt>
 <dd><p>If <code>TRUE</code> will attempt to save outputted data frame to directory "data/extraction/".</p></dd>
 
@@ -161,6 +166,8 @@ The codelist on the hard disk must be stored in a directory called "codelists/an
 contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for argument <code>tab</code>. The input to argument <code>codelist</code> should just be a character string of
 the name of the files (excluding the suffix '.csv'). The <code>codelist_vector</code> option will take precedence over the <code>codelist</code> argument if both are specified.</p>
 <p>Currently only returns most recent test result. This will be updated to return more than one most recent test result if specified.</p>
+<p>The argument <code>table_name</code> is only necessary if the name of the table being queried does not match 'observation'. This will occur when
+<code>str_match</code> is used in <code>cprd_extract</code> or <code>add_to_database</code> to create the .sqlite database.</p>
     </div>
 
     <div class="section level2">
@@ -174,11 +181,11 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist_vector</
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 16:21:13.215478</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 16:26:57.518526</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 16:21:13.228181</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 16:26:57.53251</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 16:21:13.239332</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 16:26:57.544515</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>

@@ -51,6 +51,7 @@
 <span>  db_cprd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aurum"</span>, <span class="st">"gold"</span><span class="op">)</span>,</span>
 <span>  tab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"observation"</span>, <span class="st">"drugissue"</span>, <span class="st">"clinical"</span>, <span class="st">"immunisation"</span>, <span class="st">"test"</span>, <span class="st">"therapy"</span>,</span>
 <span>    <span class="st">"hes_primary"</span>, <span class="st">"death"</span><span class="op">)</span>,</span>
+<span>  table_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  codelist_vector <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -80,7 +81,11 @@
 
 
 <dt id="arg-tab">tab<a class="anchor" aria-label="anchor" href="#arg-tab"></a></dt>
-<dd><p>Name of table in SQLite database that is to be queried.</p></dd>
+<dd><p>CPRD filetype</p></dd>
+
+
+<dt id="arg-table-name">table_name<a class="anchor" aria-label="anchor" href="#arg-table-name"></a></dt>
+<dd><p>Specify name of table in the SQLite database to be queried, if this is different from <code>tab</code>.</p></dd>
 
 
 <dt id="arg-codelist-vector">codelist_vector<a class="anchor" aria-label="anchor" href="#arg-codelist-vector"></a></dt>
@@ -100,6 +105,8 @@ using the object as input to parameter <code>db_open</code>. After wards, the co
 <p>Specifying <code>codelist</code> requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen <code>tab</code>. The codelist can
 also be read in manually, and supplied as a character vector to <code>codelist_vector</code>. If <code>codelist_vector</code> is defined, this will take precedence over <code>codelist</code>.</p>
+<p>The argument <code>table_name</code> is only necessary if the name of the table being queried does not match the CPRD filetype specified in <code>tab</code>. This will occur when
+<code>str_match</code> is used in <code>cprd_extract</code> or <code>add_to_database</code> to create the .sqlite database.</p>
     </div>
 
     <div class="section level2">
@@ -112,11 +119,11 @@ also be read in manually, and supplied as a character vector to <code>codelist_v
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 16:21:10.398651</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 16:26:54.769871</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 16:21:10.41118</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 16:26:54.782531</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 16:21:10.422101</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 16:26:54.793752</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Query database for a specific medcode</span></span></span>

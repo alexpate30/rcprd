@@ -58,6 +58,7 @@
 <span>  db <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  db_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"observation"</span>, <span class="st">"drugissue"</span>, <span class="st">"hes_primary"</span>, <span class="st">"death"</span><span class="op">)</span>,</span>
+<span>  table_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_save_disk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  out_subdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_filepath <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -125,6 +126,10 @@
 <dd><p>Table name to query in SQLite database.</p></dd>
 
 
+<dt id="arg-table-name">table_name<a class="anchor" aria-label="anchor" href="#arg-table-name"></a></dt>
+<dd><p>Specify name of table in the SQLite database to be queried, if this is different from <code>tab</code>.</p></dd>
+
+
 <dt id="arg-out-save-disk">out_save_disk<a class="anchor" aria-label="anchor" href="#arg-out-save-disk"></a></dt>
 <dd><p>If <code>TRUE</code> will attempt to save outputted data frame to directory "data/extraction/".</p></dd>
 
@@ -162,6 +167,8 @@ contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for
 the name of the files (excluding the suffix '.csv'). The <code>codelist_vector</code> option will take precedence over the <code>codelist</code> argument if both are specified.</p>
 <p>If the time until event is the same as time until censored, this will be considered an event (var_indicator = 1)</p>
 <p>If <code>dtcens.lag &gt; 0</code>, then the time until the event of interest will be the time until the minimum of the event of interest, and date of censoring.</p>
+<p>The argument <code>table_name</code> is only necessary if the name of the table being queried does not match the CPRD filetype specified in <code>tab</code>. This will occur when
+<code>str_match</code> is used in <code>cprd_extract</code> or <code>add_to_database</code> to create the .sqlite database.</p>
     </div>
 
     <div class="section level2">
@@ -175,11 +182,11 @@ the name of the files (excluding the suffix '.csv'). The <code>codelist_vector</
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 16:21:13.479526</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 16:26:57.801457</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 16:21:13.492835</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 16:26:57.81431</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 16:21:13.504063</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 16:26:57.825913</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date and censoring date</span></span></span>
