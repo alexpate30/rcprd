@@ -19,6 +19,7 @@ extract_ho(
   db = NULL,
   db_filepath = NULL,
   tab = c("observation", "drugissue", "hes_primary", "death"),
+  table_name = NULL,
   out_save_disk = FALSE,
   out_subdir = NULL,
   out_filepath = NULL,
@@ -54,6 +55,8 @@ extract_ho(
 
 \item{tab}{Table name to query in SQLite database.}
 
+\item{table_name}{Specify name of table in the SQLite database to be queried, if this is different from \code{tab}.}
+
 \item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
 \item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
@@ -85,6 +88,9 @@ Codelists can be specified in two ways. The first is to read the codelist into R
 The codelist on the hard disk must be stored in a directory called "codelists/analysis/" relative to the working directory. The codelist must be a .csv file, and
 contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for argument \code{tab}. The input to argument \code{codelist} should just be a character string of
 the name of the files (excluding the suffix '.csv'). The \code{codelist_vector} option will take precedence over the \code{codelist} argument if both are specified.
+
+The argument \code{table_name} is only necessary if the name of the table being queried does not match the CPRD filetype specified in \code{tab}. This will occur when
+\code{str_match} is used in \code{cprd_extract} or \code{add_to_database} to create the .sqlite database.
 }
 \examples{
 

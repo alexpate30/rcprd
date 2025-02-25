@@ -23,6 +23,7 @@ extract_smoking(
   db_open = NULL,
   db = NULL,
   db_filepath = NULL,
+  table_name = NULL,
   out_save_disk = FALSE,
   out_subdir = NULL,
   out_filepath = NULL,
@@ -66,6 +67,8 @@ extract_smoking(
 
 \item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
+\item{table_name}{Specify name of table in the SQLite database to be queried, if this is different from 'observation'.}
+
 \item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
 \item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
@@ -103,6 +106,9 @@ character vector. This option will take precedence over the codelists stored on 
 
 We take the most recent smoking status record. If an individuals most recent smoking status is a non-smoker,
 but they have a history of smoking prior to this, these individuals will be classed as ex-smokers.
+
+The argument \code{table_name} is only necessary if the name of the table being queried does not match 'observation'. This will occur when
+\code{str_match} is used in \code{cprd_extract} or \code{add_to_database} to create the .sqlite database.
 }
 \examples{
 

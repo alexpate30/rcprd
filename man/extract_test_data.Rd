@@ -21,6 +21,7 @@ extract_test_data(
   db_open = NULL,
   db = NULL,
   db_filepath = NULL,
+  table_name = NULL,
   out_save_disk = FALSE,
   out_subdir = NULL,
   out_filepath = NULL,
@@ -60,6 +61,8 @@ extract_test_data(
 
 \item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
+\item{table_name}{Specify name of table in the SQLite database to be queried, if this is different from 'observation'.}
+
 \item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
 \item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
@@ -92,6 +95,9 @@ contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for
 the name of the files (excluding the suffix '.csv'). The \code{codelist_vector} option will take precedence over the \code{codelist} argument if both are specified.
 
 Currently only returns most recent test result. This will be updated to return more than one most recent test result if specified.
+
+The argument \code{table_name} is only necessary if the name of the table being queried does not match 'observation'. This will occur when
+\code{str_match} is used in \code{cprd_extract} or \code{add_to_database} to create the .sqlite database.
 }
 \examples{
 

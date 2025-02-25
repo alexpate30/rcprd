@@ -23,6 +23,7 @@ extract_cholhdl_ratio(
   db_open = NULL,
   db = NULL,
   db_filepath = NULL,
+  table_name = NULL,
   out_save_disk = FALSE,
   out_subdir = NULL,
   out_filepath = NULL,
@@ -66,6 +67,8 @@ extract_cholhdl_ratio(
 
 \item{db_filepath}{Full filepath to SQLITE database on hard disk, to be queried.}
 
+\item{table_name}{Specify name of table in the SQLite database to be queried, if this is different from 'observation'.}
+
 \item{out_save_disk}{If \code{TRUE} will attempt to save outputted data frame to directory "data/extraction/".}
 
 \item{out_subdir}{Sub-directory of "data/extraction/" to save outputted data frame into.}
@@ -99,6 +102,9 @@ Specifying the non-vector type codelists requires a specific underlying director
 to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen \code{tab}. The input
 to these variables should just be the name of the files (excluding the suffix .csv). The codelists can also be read in manually, and supplied as a
 character vector. This option will take precedence over the codelists stored on the hard disk if both are specified.
+
+The argument \code{table_name} is only necessary if the name of the table being queried does not match 'observation'. This will occur when
+\code{str_match} is used in \code{cprd_extract} or \code{add_to_database} to create the .sqlite database.
 }
 \examples{
 
