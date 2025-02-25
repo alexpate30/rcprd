@@ -107,7 +107,7 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   RSQLite::dbDisconnect(aurum_extract)
 
   ###
-  ### Attempt 5 (manually define str_match and tablename)
+  ### Attempt 5 (manually define str_match and table_name)
 
   ### Reconnect
   aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
@@ -116,12 +116,12 @@ testthat::test_that("Extract multiple ways and expect equivalence. Testing add_t
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "observation", subset_patids = c(1,3,4,6),
-               str_match = "observation", tablename = "scrambled", use_set = FALSE)
+               str_match = "observation", table_name = "scrambled", use_set = FALSE)
 
   cprd_extract(aurum_extract,
                filepath = system.file("aurum_data", package = "rcprd"),
                filetype = "drugissue", subset_patids = c(1,3,4,6),
-               str_match = "drugissue", tablename = "eggs", use_set = FALSE)
+               str_match = "drugissue", table_name = "eggs", use_set = FALSE)
 
   ### Save output
   obs5 <- RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM scrambled')

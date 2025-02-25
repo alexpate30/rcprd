@@ -11,13 +11,13 @@
 #' @param use_set Reduce subset_patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset_patids is large. See vignette XXXX for more details.
 #' @param db  An open SQLite database connection created using RSQLite::dbConnect.
 #' @param extract_txt_func User-defined function to read the .txt file into R.
-#' @param tablename Name of table in SQLite database that the data will be added to.
+#' @param table_name Name of table in SQLite database that the data will be added to.
 #' @param ... Extract arguments passed to read.table (or extract_txt_func) when reading in .txt files.
 #'
 #' @returns Adds .txt file to SQLite database on hard disk.
 #'
 #' @details
-#' Will add the file to a table named `filetype` in the SQLite database, unless `tablename` is specified.
+#' Will add the file to a table named `filetype` in the SQLite database, unless `table_name` is specified.
 #'
 #' If `use_set = FALSE`, then `subset_patids` should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
 #' If `use_set = TRUE`, then `subset_patids` should be a dataframe with two columns, `patid` and `set`, where `set` corresponds to the number in the file name
@@ -61,7 +61,7 @@ add_to_database <- function(filepath,
                             use_set = FALSE,
                             db,
                             extract_txt_func = NULL,
-                            tablename = NULL,
+                            table_name = NULL,
                             ...){
 
   ### Check filetype
@@ -106,10 +106,10 @@ add_to_database <- function(filepath,
   }
 
   ### Add to sqlite database
-  if (is.null(tablename)){
+  if (is.null(table_name)){
     RSQLite::dbWriteTable(db, filetype, ext.dat, ...)
   } else {
-    RSQLite::dbWriteTable(db, tablename, ext.dat, ...)
+    RSQLite::dbWriteTable(db, table_name, ext.dat, ...)
   }
 
 }
@@ -129,7 +129,7 @@ add_to_database <- function(filepath,
 #' @param use_set Reduce subset_patids to just those with a corresponding set value to the .txt file being read in. Can greatly improve computational efficiency when subset_patids is large. See vignette XXXX for more details.
 #' @param extract_txt_func User-defined function to read the .txt file into R.
 #' @param str_match Character vector to match on when searching for file names to add to the database.
-#' @param tablename Name of table in SQLite database that the data will be added to.
+#' @param table_name Name of table in SQLite database that the data will be added to.
 #'
 #' @returns Adds .txt file to SQLite database on hard disk.
 #'
@@ -137,7 +137,7 @@ add_to_database <- function(filepath,
 #' By default, will add files that contain `filetype` in the file name to a table named `filetype` in the SQLite database.
 #' If `str_match` is specified, will add files that contain `str_match` in the file name to a table named `str_match` in the SQLite database.
 #' In this case, `filetype` will still be used to choose which function reads in and formats the raw data, although this can be overwritten with
-#' `extract_txt_func`. If argument `tablename` is specified, data will be added to a table called `tablename` in the SQLite database.
+#' `extract_txt_func`. If argument `table_name` is specified, data will be added to a table called `table_name` in the SQLite database.
 #'
 #' Currently, rcprd only deals with `filetype = c("observation", "drugissue", "referral", "problem", "consultation", "hes_primary", "death")` by default.
 #' However, by using `str_match` and `extract_txt_func`, the user can manually search for files with any string in the file name, and read them in
@@ -186,7 +186,7 @@ cprd_extract <- function(db,
                          use_set = FALSE,
                          extract_txt_func = NULL,
                          str_match = NULL,
-                         tablename = NULL){
+                         table_name = NULL){
 
   ### Check filetype
   filetype <- match.arg(filetype)
@@ -210,8 +210,8 @@ cprd_extract <- function(db,
     filenames <- filenames[stringr::str_detect(filenames, filetype)]
   } else {
     filenames <- filenames[stringr::str_detect(filenames, str_match)]
-    if (is.null(tablename)){
-      tablename <- str_match
+    if (is.null(table_name)){
+      table_name <- str_match
     }
   }
 
@@ -235,7 +235,7 @@ cprd_extract <- function(db,
                     use_set = use_set,
                     db = db,
                     extract_txt_func = extract_txt_func,
-                    tablename = tablename,
+                    table_name = table_name,
                     overwrite = TRUE)
     ### Print progress bar
     utils::setTxtProgressBar(pb, progress)
@@ -252,7 +252,7 @@ cprd_extract <- function(db,
                         use_set = use_set,
                         db = db,
                         extract_txt_func = extract_txt_func,
-                        tablename = tablename,
+                        table_name = table_name,
                         append = TRUE)
         ## Add progress to progress bar
         progress <- progress + 1
