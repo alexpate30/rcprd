@@ -14,7 +14,7 @@ add_to_database(
   use_set = FALSE,
   db,
   extract_txt_func = NULL,
-  tablename = NULL,
+  table_name = NULL,
   ...
 )
 }
@@ -35,7 +35,7 @@ add_to_database(
 
 \item{extract_txt_func}{User-defined function to read the .txt file into R.}
 
-\item{tablename}{Name of table in SQLite database that the data will be added to.}
+\item{table_name}{Name of table in SQLite database that the data will be added to.}
 
 \item{...}{Extract arguments passed to read.table (or extract_txt_func) when reading in .txt files.}
 }
@@ -46,7 +46,7 @@ Adds .txt file to SQLite database on hard disk.
 Add the raw data from one of the CPRD flatfiles to an SQLite database.
 }
 \details{
-Will add the file to a table named \code{filetype} in the SQLite database, unless \code{tablename} is specified.
+Will add the file to a table named \code{filetype} in the SQLite database, unless \code{table_name} is specified.
 
 If \code{use_set = FALSE}, then \code{subset_patids} should be a vector of patid's that the .txt files will be subsetted on before adding to the SQLite database.
 If \code{use_set = TRUE}, then \code{subset_patids} should be a dataframe with two columns, \code{patid} and \code{set}, where \code{set} corresponds to the number in the file name

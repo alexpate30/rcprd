@@ -12,6 +12,7 @@ db_query(
   db_cprd = c("aurum", "gold"),
   tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy",
     "hes_primary", "death"),
+  table_name = NULL,
   codelist_vector = NULL
 )
 }
@@ -26,7 +27,9 @@ db_query(
 
 \item{db_cprd}{CPRD Aurum ('aurum') or gold ('gold').}
 
-\item{tab}{Name of table in SQLite database that is to be queried.}
+\item{tab}{CPRD filetype}
+
+\item{table_name}{Specify name of table in the SQLite database to be queried, if this is different from \code{tab}.}
 
 \item{codelist_vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
 }
@@ -45,6 +48,9 @@ using the object as input to parameter \code{db_open}. After wards, the connecti
 Specifying \code{codelist} requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen \code{tab}. The codelist can
 also be read in manually, and supplied as a character vector to \code{codelist_vector}. If \code{codelist_vector} is defined, this will take precedence over \code{codelist}.
+
+The argument \code{table_name} is only necessary if the name of the table being queried does not match the CPRD filetype specified in \code{tab}. This will occur when
+\code{str_match} is used in \code{cprd_extract} or \code{add_to_database} to create the .sqlite database.
 }
 \examples{
 ## Create connection to a temporary database
