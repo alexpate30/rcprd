@@ -444,10 +444,10 @@ within the same SQLite database.</p>
 <span><span class="co">#&gt; 1     1      93      1        88        83    -16118     -1013      98</span></span>
 <span><span class="co">#&gt; 2     1      93      1        55        59    -13322    -12900      88</span></span>
 <span><span class="co">#&gt; 3     1      16      1        22        82     -8677     -3543      50</span></span>
-<span><span class="co">#&gt;         prodcodeid dosageid quantity quantunitid duration estnhscost quanunitid</span></span>
-<span><span class="co">#&gt; 1 3092241000033113       58       18          33       27         12          6</span></span>
-<span><span class="co">#&gt; 2   92041000033111       62       93          83       59         11         25</span></span>
-<span><span class="co">#&gt; 3  971241000033111       87       43          83       88         65         92</span></span></code></pre></div>
+<span><span class="co">#&gt;         prodcodeid dosageid quantity quantunitid duration estnhscost</span></span>
+<span><span class="co">#&gt; 1 3092241000033113       58       18          33       27         12</span></span>
+<span><span class="co">#&gt; 2   92041000033111       62       93          83       59         11</span></span>
+<span><span class="co">#&gt; 3  971241000033111       87       43          83       88         65</span></span></code></pre></div>
 <p>Listing the tables in the SQLite database shows there are now two,
 named <em>observation</em> and <em>drugissue</em>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -500,11 +500,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 17:17:47.16991</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-25 18:21:54.798104</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 17:17:47.183645</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-25 18:21:54.814685</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 17:17:47.197771</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-25 18:21:54.826211</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows</span></span>
@@ -528,11 +528,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"drugissue"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-02-25 17:17:47.278215</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-25 18:21:54.906496</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-02-25 17:17:47.294237</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-25 18:21:54.923039</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-02-25 17:17:47.305549</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-25 18:21:54.934665</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### List tables</span></span>
@@ -545,10 +545,10 @@ the same as previously.</p>
 <span><span class="co">#&gt; 1     1      93      1        88        83    -16118     -1013      98</span></span>
 <span><span class="co">#&gt; 2     1      93      1        55        59    -13322    -12900      88</span></span>
 <span><span class="co">#&gt; 3     1      16      1        22        82     -8677     -3543      50</span></span>
-<span><span class="co">#&gt;         prodcodeid dosageid quantity quantunitid duration estnhscost quanunitid</span></span>
-<span><span class="co">#&gt; 1 3092241000033113       58       18          33       27         12          6</span></span>
-<span><span class="co">#&gt; 2   92041000033111       62       93          83       59         11         25</span></span>
-<span><span class="co">#&gt; 3  971241000033111       87       43          83       88         65         92</span></span>
+<span><span class="co">#&gt;         prodcodeid dosageid quantity quantunitid duration estnhscost</span></span>
+<span><span class="co">#&gt; 1 3092241000033113       58       18          33       27         12</span></span>
+<span><span class="co">#&gt; 2   92041000033111       62       93          83       59         11</span></span>
+<span><span class="co">#&gt; 3  971241000033111       87       43          83       88         65</span></span>
 <span></span>
 <span><span class="co">### Disconnect</span></span>
 <span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></code></pre></div>
@@ -631,11 +631,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 17:17:47.462423</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-25 18:21:55.09386</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 17:17:47.476017</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-25 18:21:55.107788</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 17:17:47.487582</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-25 18:21:55.119534</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Add drugissue files</span></span>
@@ -645,11 +645,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-02-25 17:17:47.500036</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-25 18:21:55.135162</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-02-25 17:17:47.515546</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-25 18:21:55.148275</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-02-25 17:17:47.527186</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-25 18:21:55.159765</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows of each table</span></span>
@@ -671,10 +671,10 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span><span class="co">#&gt; 1     1      93      1        88        83    -16118     -1013      98</span></span>
 <span><span class="co">#&gt; 2     1      93      1        55        59    -13322    -12900      88</span></span>
 <span><span class="co">#&gt; 3     1      16      1        22        82     -8677     -3543      50</span></span>
-<span><span class="co">#&gt;         prodcodeid dosageid quantity quantunitid duration estnhscost quanunitid</span></span>
-<span><span class="co">#&gt; 1 3092241000033113       58       18          33       27         12          6</span></span>
-<span><span class="co">#&gt; 2   92041000033111       62       93          83       59         11         25</span></span>
-<span><span class="co">#&gt; 3  971241000033111       87       43          83       88         65         92</span></span></code></pre></div>
+<span><span class="co">#&gt;         prodcodeid dosageid quantity quantunitid duration estnhscost</span></span>
+<span><span class="co">#&gt; 1 3092241000033113       58       18          33       27         12</span></span>
+<span><span class="co">#&gt; 2   92041000033111       62       93          83       59         11</span></span>
+<span><span class="co">#&gt; 3  971241000033111       87       43          83       88         65</span></span></code></pre></div>
 <p>Note that there is no difference compared to the previously extracted
 SQLite databases. The computational gains from applying the subsetting
 in this manner will not be realised in this example. We do not close the
@@ -1040,11 +1040,11 @@ examples:</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-02-25 17:17:48.723502</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-25 18:21:56.340911</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-02-25 17:17:48.737464</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-25 18:21:56.353755</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-02-25 17:17:48.750993</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-25 18:21:56.365742</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">## Disconnect</span></span>
