@@ -3,7 +3,8 @@
 ### General function for when no classes need to be applied
 extract_txt <- function(filepath, ...){
 
-  utils::read.table(filepath, sep = "\t", ..., header = TRUE)
+  data.table::fread(filepath, sep = "\t", ..., header = TRUE) |>
+    as.data.frame()
 
 }
 
@@ -17,7 +18,8 @@ extract_txt <- function(filepath, ...){
 #' @param select Character vector of variable names to select
 extract_txt_char <- function(filepath, ..., select = NULL){
 
-  out <- utils::read.table(filepath, sep = "\t", ..., colClasses = "character", header = TRUE)
+  out <- data.table::fread(filepath, sep = "\t", ..., colClasses = "character", header = TRUE) |>
+    as.data.frame()
 
   ## Apply selected columns
   if(!is.null(select)){
@@ -37,9 +39,10 @@ extract_txt_char <- function(filepath, ..., select = NULL){
 #' @param ... Arguments to pass onto utils::read.table
 extract_txt_linkage <- function(filepath, ...){
 
-  utils::read.table(filepath, sep = "\t", ..., colClasses = c("character", "integer", "character", "integer", "integer", "integer",
+  data.table::fread(filepath, sep = "\t", ..., colClasses = c("character", "integer", "character", "integer", "integer", "integer",
                                                               "integer", "integer", "integer","integer", "integer", "integer",
-                                                              "integer", "integer", "integer","integer"))
+                                                              "integer", "integer", "integer","integer")) |>
+    as.data.frame()
 }
 
 #' Read in raw .txt patient file
@@ -53,8 +56,9 @@ extract_txt_linkage <- function(filepath, ...){
 extract_txt_pat <- function(filepath, ..., set = FALSE){
 
   ## Extract data
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE, colClasses = c("character", "integer", "character", "integer", "integer", "integer",
-                                                                                    "character", "character", "integer", "character", "integer", "character"))
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE, colClasses = c("character", "integer", "character", "integer", "integer", "integer",
+                                                                                    "character", "character", "integer", "character", "integer", "character")) |>
+    as.data.frame()
 
   ## Convert to dates where relevant
   out$regstartdate <- as.Date(out$regstartdate, format = "%d/%m/%Y")
@@ -86,9 +90,11 @@ extract_txt_pat <- function(filepath, ..., set = FALSE){
 extract_txt_obs <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
                            colClasses = c("character","character","integer","character","character","character","character","character","character",
-                                          "numeric","integer","integer","numeric","numeric","character"))
+                                          "numeric","integer","integer","numeric","numeric","character")) |>
+    as.data.frame()
+
   ## Convert to dates where relevant
   out$obsdate <- as.Date(out$obsdate, format = "%d/%m/%Y")
   out$enterdate <- as.Date(out$enterdate, format = "%d/%m/%Y")
@@ -112,9 +118,11 @@ extract_txt_obs <- function(filepath, ..., select = NULL){
 extract_txt_prob <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
                            colClasses = c("character","character","integer","character","character","integer","character","character","integer",
-                                          "integer","integer"))
+                                          "integer","integer")) |>
+    as.data.frame()
+
   ## Convert to dates where relevant
   out$probenddate <- as.Date(out$probenddate, format = "%d/%m/%Y")
   out$lastrevdate <- as.Date(out$lastrevdate, format = "%d/%m/%Y")
@@ -138,8 +146,9 @@ extract_txt_prob <- function(filepath, ..., select = NULL){
 extract_txt_ref <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
-                           colClasses = c("character","character","integer","integer","integer","integer","integer","integer"))
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
+                           colClasses = c("character","character","integer","integer","integer","integer","integer","integer")) |>
+    as.data.frame()
 
   ## Apply selected columns
   if(!is.null(select)){
@@ -160,9 +169,11 @@ extract_txt_ref <- function(filepath, ..., select = NULL){
 extract_txt_drug <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
                            colClasses = c("character","character","integer","character","character","character","character","character","character",
-                                          "character","numeric","integer","integer","numeric"))
+                                          "character","numeric","integer","integer","numeric")) |>
+    as.data.frame()
+
   ## Convert to dates where relevant
   out$issuedate <- as.Date(out$issuedate, format = "%d/%m/%Y")
   out$enterdate <- as.Date(out$enterdate, format = "%d/%m/%Y")
@@ -186,8 +197,9 @@ extract_txt_drug <- function(filepath, ..., select = NULL){
 extract_txt_cons <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
-                           colClasses = c("character","character","integer","character","character","character","character","integer","character"))
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
+                           colClasses = c("character","character","integer","character","character","character","character","integer","character")) |>
+    as.data.frame()
 
   ## Convert to dates where relevant
   out$consdate <- as.Date(out$consdate, format = "%d/%m/%Y")
@@ -213,8 +225,9 @@ extract_txt_cons <- function(filepath, ..., select = NULL){
 extract_txt_hes_primary <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
-                           colClasses = "character")
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
+                           colClasses = "character") |>
+    as.data.frame()
 
   ## Convert to dates where relevant
   out$admidate <- as.Date(out$admidate, format = "%d/%m/%Y")
@@ -240,8 +253,9 @@ extract_txt_hes_primary <- function(filepath, ..., select = NULL){
 extract_txt_death <- function(filepath, ..., select = NULL){
 
   ## Extract and apply classes
-  out <- utils::read.table(filepath, sep = "\t", ..., header = TRUE,
-                           colClasses = "character")
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE,
+                           colClasses = "character") |>
+    as.data.frame()
 
   ## Convert to dates where relevant
   out$dor <- as.Date(out$dor, format = "%d/%m/%Y")
