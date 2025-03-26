@@ -132,7 +132,7 @@ knitr::kable(lookups.weight, caption = "Unit measurements for weight")
 The majority of unit measurements are kg (98.67%) or NA (1.24%). Most observations are therefore assumed to be recorded in kg, however we also know from that for numunitid $\in {1691, 2318, 2997 or 6265}$, this refers to stone. Observations with these units of measurements are therefore converted to kg.
 
 ```{r, echo = FALSE}
-lookups.height <- read.csv("identify_numunits_sbp.csv")[,-1]
+lookups.height <- read.csv("identify_numunits_height.csv")[,-1]
 knitr::kable(lookups.height, caption = "Unit measurements for height")
 ```
 
