@@ -79,6 +79,33 @@ extract_txt_pat <- function(filepath, ..., set = FALSE){
   return(out)
 }
 
+#' Read in raw .txt practice file
+#'
+#' @description
+#' Read in raw .txt practice file
+#'
+#' @param filepath File path to raw .txt file
+#' @param ... Arguments to pass onto utils::read.table
+#' @param set If `TRUE` will create a variable called `set` which will contain the number that comes after the word 'set' in the file name.
+extract_txt_prac <- function(filepath, ..., selsect = NULL){
+
+  ## Extract data
+  out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE, colClasses = c("integer", "character", "character", "integer")) |>
+    as.data.frame()
+
+  ## Convert to dates where relevant
+  out$lcd <- as.Date(out$lcd, format = "%d/%m/%Y")
+  out$uts <- as.Date(out$uts, format = "%d/%m/%Y")
+
+  ## Apply selected columns
+  if(!is.null(select)){
+    out <- out[,select]
+  }
+
+  ### Return
+  return(out)
+}
+
 #' Read in raw .txt observation file
 #'
 #' @description
