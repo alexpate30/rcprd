@@ -139,11 +139,11 @@ but do not want to remove all observations with NA in the <code>value</code> col
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 13:38:17.091299</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 14:15:20.451044</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 13:38:17.10383</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 14:15:20.464199</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 13:38:17.114644</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 14:15:20.475517</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Query database for a specific medcode</span></span></span>
@@ -162,11 +162,11 @@ but do not want to remove all observations with NA in the <code>value</code> col
 <span class="r-in"><span>db_query <span class="op">=</span> <span class="va">db_query</span>,</span></span>
 <span class="r-in"><span>query_type <span class="op">=</span> <span class="st">"med"</span>,</span></span>
 <span class="r-in"><span>numobs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     patid       medcodeid obsdate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;          &lt;char&gt;   &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      1 187341000000114   -5373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      2 187341000000114   -5769</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      6 187341000000114  -14727</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     patid       medcodeid    obsdate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;          &lt;char&gt;     &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      1 187341000000114 1955-04-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      2 187341000000114 1954-03-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      6 187341000000114 1929-09-06</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## clean up</span></span></span>
 <span class="r-in"><span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></span>

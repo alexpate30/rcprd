@@ -119,22 +119,22 @@ also be read in manually, and supplied as a character vector to <code>codelist_v
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 13:38:18.230272</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 14:15:21.620732</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 13:38:18.242805</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 14:15:21.633488</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 13:38:18.25704</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 14:15:21.648292</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Query database for a specific medcode</span></span></span>
 <span class="r-in"><span><span class="fu">db_query</span><span class="op">(</span>db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>tab <span class="op">=</span><span class="st">"observation"</span>,</span></span>
 <span class="r-in"><span>codelist_vector <span class="op">=</span> <span class="st">"187341000000114"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     patid consid pracid  obsid obsdate enterdate staffid parentobsid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt; &lt;char&gt;  &lt;int&gt; &lt;char&gt;   &lt;num&gt;     &lt;num&gt;  &lt;char&gt;      &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      1     42      1     81   -5373      4302      85          35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      2     56      1     77   -5769    -13828      24           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      6     40      1     41  -14727     -6929      98          80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     patid consid pracid  obsid    obsdate  enterdate staffid parentobsid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt; &lt;char&gt;  &lt;int&gt; &lt;char&gt;     &lt;Date&gt;     &lt;Date&gt;  &lt;char&gt;      &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      1     42      1     81 1955-04-17 1981-10-12      85          35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      2     56      1     77 1954-03-17 1932-02-22      24           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      6     40      1     41 1929-09-06 1951-01-12      98          80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          medcodeid value numunitid obstypeid numrangelow numrangehigh probobsid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;char&gt; &lt;num&gt;     &lt;int&gt;     &lt;int&gt;       &lt;num&gt;        &lt;num&gt;    &lt;char&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 187341000000114    84        79        67          24           22         5</span>
