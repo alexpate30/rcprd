@@ -181,7 +181,7 @@ extract_time_until <- function(cohort,
   ### Calculate the time until event of interest, set to NA and remove if beyond censdt
   variable_dat <-
     dplyr::mutate(variable_dat,
-                  var_time = dplyr::case_when(obsdate <= censdt + censdt_lag ~ pmin(obsdate, censdt) - as.numeric(indexdt),
+                  var_time = dplyr::case_when(obsdate <= censdt + censdt_lag ~ as.numeric(pmin(obsdate, censdt) - indexdt),
                                               obsdate > censdt + censdt_lag ~ NA),
                   var_indicator = dplyr::case_when(!is.na(var_time) ~ 1,
                                                    TRUE ~ NA)) |>
