@@ -21,7 +21,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
 
   ### Define codelist
-  codelist <- "187341000000114"
+  codelist <- "51268016"
 
   ###
   ### Extract a history of type variable using extract_ho
@@ -34,7 +34,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   testthat::expect_equal(nrow(ho), 6)
   testthat::expect_equal(colnames(ho), c("patid", "ho"))
-  testthat::expect_equal(ho$ho, c(0, 1, 0, 0, 0, 1))
+  testthat::expect_equal(ho$ho, c(0, 0, 0, 0, 0, 1))
 
   ###
   ### Extract a medication history of type variable using extract_ho
@@ -61,8 +61,8 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   testthat::expect_equal(nrow(time_until), 6)
   testthat::expect_equal(colnames(time_until), c("patid", "var_time", "var_indicator"))
-  testthat::expect_equal(time_until$var_time, c(106, 16436,  16436,  16436,  16436,  16436))
-  testthat::expect_equal(time_until$var_indicator, c(1, 0,  0,  0,  0,  0))
+  testthat::expect_equal(time_until$var_time, c(16436, 16436,  16436,  16436,  16436,  2862))
+  testthat::expect_equal(time_until$var_indicator, c(0, 0,  0,  0,  0,  1))
 
   ### Change code list for test data functions, as previous code list only had one observation per patient
   codelist <- "498521000006119"
@@ -78,7 +78,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   testthat::expect_equal(nrow(test_data), 6)
   testthat::expect_equal(colnames(test_data), c("patid", "value"))
-  testthat::expect_equal(test_data$value, c(48, NA,  NA,  NA,  18,  NA))
+  testthat::expect_equal(test_data$value, c(NA, NA,  NA,  NA,  18,  NA))
 
   ###
   ### Extract all test results using extract_test_data
@@ -91,9 +91,9 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
                                  db_open = aurum_extract,
                                  return_output = TRUE)
 
-  testthat::expect_equal(nrow(test_data), 10)
+  testthat::expect_equal(nrow(test_data), 8)
   testthat::expect_equal(colnames(test_data), c("patid", "value", "numunitid", "medcodeid", "obsdate"))
-  testthat::expect_equal(test_data$value, c(48, 43, 36, 75, 41, NA, NA, 32, 18, NA))
+  testthat::expect_equal(test_data$value, c(NA, 75, 41, NA, NA, 32, 18, NA))
 
   ###
   ### Extract standard deviation of all test results using extract_test_var
@@ -107,7 +107,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   testthat::expect_equal(nrow(test_data), 6)
   testthat::expect_equal(colnames(test_data), c("patid", "value_var"))
-  testthat::expect_equal(sum(is.na(test_data$value_var)), 3)
+  testthat::expect_equal(sum(is.na(test_data$value_var)), 4)
 
   ## clean up
   RSQLite::dbDisconnect(aurum_extract)
@@ -145,7 +145,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
 
   ### Define codelist
-  codelist <- data.frame(medcodeid = "187341000000114")
+  codelist <- data.frame(medcodeid = "51268016")
   write.csv(codelist, "codelists/analysis/mylist.med.csv")
   codelist <- data.frame(prodcodeid = "1026541000033111")
   write.csv(codelist, "codelists/analysis/mylist.drug.csv")
@@ -244,7 +244,7 @@ testthat::test_that("BMI", {
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "bmi"))
-  testthat::expect_equal(var$bmi, c(48, 41, NA, NA, 32, NA))
+  testthat::expect_equal(var$bmi, c(NA, 41, NA, NA, 32, NA))
 
   ## clean up
   RSQLite::dbDisconnect(aurum_extract)
