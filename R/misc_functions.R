@@ -910,7 +910,7 @@ extract_cohort <- function(filepath,
 #' @examples
 #'
 #' ## Extract cohort data
-#' prac<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
+#' prac<-extract_practices(filepath = system.file("aurum_data", package = "rcprd"))
 #' prac
 #'
 #' @export
