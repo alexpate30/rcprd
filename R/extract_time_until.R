@@ -132,7 +132,8 @@ extract_time_until <- function(cohort,
   colnames(cohort)[colnames(cohort) == censdt] <- "censdt"
 
   ## Reduce cohort to variables of interest
-  cohort <- cohort[,c("patid", "indexdt", "censdt")]
+  cohort <- cohort[,c("patid", "indexdt", "censdt", "yob")]
+
   ## Assign variable name if unspecified
   if (is.null(varname_time)){
     varname_time <- "var_time"
