@@ -9,7 +9,7 @@ extract_txt_cons(filepath, ..., select = NULL)
 \arguments{
 \item{filepath}{File path to raw .txt file}
 
-\item{...}{Arguments to pass onto utils::read.table}
+\item{...}{Arguments to pass onto data.table::fread}
 
 \item{select}{Character vector of variable names to select}
 }

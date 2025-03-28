@@ -9,9 +9,9 @@ extract_txt_prac(filepath, ..., select = NULL)
 \arguments{
 \item{filepath}{File path to raw .txt file}
 
-\item{...}{Arguments to pass onto utils::read.table}
+\item{...}{Arguments to pass onto data.table::fread}
 
-\item{set}{If \code{TRUE} will create a variable called \code{set} which will contain the number that comes after the word 'set' in the file name.}
+\item{select}{Character vector of variable names to select}
 }
 \description{
 Read in raw .txt practice file

@@ -9,7 +9,7 @@ extract_txt_pat(filepath, ..., set = FALSE)
 \arguments{
 \item{filepath}{File path to raw .txt file}
 
-\item{...}{Arguments to pass onto utils::read.table}
+\item{...}{Arguments to pass onto data.table::fread}
 
 \item{set}{If \code{TRUE} will create a variable called \code{set} which will contain the number that comes after the word 'set' in the file name.}
 }

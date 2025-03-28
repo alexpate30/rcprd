@@ -9,7 +9,7 @@ extract_txt_linkage(filepath, ...)
 \arguments{
 \item{filepath}{File path to raw .txt file}
 
-\item{...}{Arguments to pass onto utils::read.table}
+\item{...}{Arguments to pass onto data.table::fread}
 }
 \description{
 Read in linkage eligibility file
