@@ -5,7 +5,7 @@
 \title{Query an RSQLite database.}
 \usage{
 db_query(
-  codelist,
+  codelist = NULL,
   db_open = NULL,
   db = NULL,
   db_filepath = NULL,
@@ -13,7 +13,8 @@ db_query(
   tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy",
     "hes_primary", "death"),
   table_name = NULL,
-  codelist_vector = NULL
+  codelist_vector = NULL,
+  n = NULL
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ db_query(
 \item{table_name}{Specify name of table in the SQLite database to be queried, if this is different from \code{tab}.}
 
 \item{codelist_vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
+
+\item{n}{number of observations to output}
 }
 \value{
 A data.table with observations contained in the specified codelist.

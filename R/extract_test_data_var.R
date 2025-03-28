@@ -69,8 +69,8 @@
 #' @export
 extract_test_data_var <- function(cohort,
                                   varname = NULL,
-                                  codelist,
-                                  codelist_vector,
+                                  codelist = NULL,
+                                  codelist_vector = NULL,
                                   indexdt,
                                   t = NULL,
                                   t_varname = TRUE,
