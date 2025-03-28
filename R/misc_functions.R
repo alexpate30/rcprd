@@ -537,12 +537,8 @@ combine_query_boolean.aurum <- function(db_query,
   cohort_qry <- merge(cohort, db_query, by.x = "patid", by.y = "patid")
   cohort_qry <- data.table::as.data.table(cohort_qry)
 
-  ### Reduce to variables of interest
-  if (query_type == "med"){
-    cohort_qry <- cohort_qry[,c("patid", "indexdt", "obsdate")]
-  } else if (query_type == "drug"){
-    cohort_qry <- cohort_qry[,c("patid", "indexdt", "issuedate")]
-    ## rename issuedate to obsdate so we can use same code for medical or drug queries
+  ### rename issuedate to obsdate so we can use same code for medical or drug queries
+  if (query_type == "drug"){
     colnames(cohort_qry)[colnames(cohort_qry) == "issuedate"] <- "obsdate"
   }
 
@@ -551,6 +547,9 @@ combine_query_boolean.aurum <- function(db_query,
 
   ### Remove values outside of specified time range
   cohort_qry <- cohort_qry[obsdate <= indexdt + time_post & obsdate > indexdt - time_prev]
+
+  ### Reduce to variables of interest
+  cohort_qry <- cohort_qry[,c("patid", "indexdt", "obsdate")]
 
   ### Identify which patients have had the required number of events in the specified time period
   cohort_qry <- cohort_qry |>
