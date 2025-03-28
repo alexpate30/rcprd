@@ -14,7 +14,7 @@ extract_txt <- function(filepath, ...){
 #' Read in txt file with all colClasses = "character"
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_char <- function(filepath, ..., select = NULL){
 
@@ -36,7 +36,7 @@ extract_txt_char <- function(filepath, ..., select = NULL){
 #' Read in linkage eligibility file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 extract_txt_linkage <- function(filepath, ...){
 
   data.table::fread(filepath, sep = "\t", ..., colClasses = c("character", "integer", "character", "integer", "integer", "integer",
@@ -51,7 +51,7 @@ extract_txt_linkage <- function(filepath, ...){
 #' Read in raw .txt patient file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param set If `TRUE` will create a variable called `set` which will contain the number that comes after the word 'set' in the file name.
 extract_txt_pat <- function(filepath, ..., set = FALSE){
 
@@ -85,8 +85,8 @@ extract_txt_pat <- function(filepath, ..., set = FALSE){
 #' Read in raw .txt practice file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
-#' @param set If `TRUE` will create a variable called `set` which will contain the number that comes after the word 'set' in the file name.
+#' @param ... Arguments to pass onto data.table::fread
+#' @param select Character vector of variable names to select
 extract_txt_prac <- function(filepath, ..., select = NULL){
 
   ## Extract data
@@ -112,7 +112,7 @@ extract_txt_prac <- function(filepath, ..., select = NULL){
 #' Read in raw .txt observation file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_obs <- function(filepath, ..., select = NULL){
 
@@ -140,7 +140,7 @@ extract_txt_obs <- function(filepath, ..., select = NULL){
 #' Read in raw .txt problem file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_prob <- function(filepath, ..., select = NULL){
 
@@ -168,7 +168,7 @@ extract_txt_prob <- function(filepath, ..., select = NULL){
 #' Read in raw .txt referral file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_ref <- function(filepath, ..., select = NULL){
 
@@ -191,7 +191,7 @@ extract_txt_ref <- function(filepath, ..., select = NULL){
 #' Read in raw .txt drugissue file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_drug <- function(filepath, ..., select = NULL){
 
@@ -219,7 +219,7 @@ extract_txt_drug <- function(filepath, ..., select = NULL){
 #' Read in raw .txt consultation file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_cons <- function(filepath, ..., select = NULL){
 
@@ -247,7 +247,7 @@ extract_txt_cons <- function(filepath, ..., select = NULL){
 #' Read in raw HES primary diagnoses file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_hes_primary <- function(filepath, ..., select = NULL){
 
@@ -275,7 +275,7 @@ extract_txt_hes_primary <- function(filepath, ..., select = NULL){
 #' Read in raw ONS death data file
 #'
 #' @param filepath File path to raw .txt file
-#' @param ... Arguments to pass onto utils::read.table
+#' @param ... Arguments to pass onto data.table::fread
 #' @param select Character vector of variable names to select
 extract_txt_death <- function(filepath, ..., select = NULL){
 
