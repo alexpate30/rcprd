@@ -782,7 +782,7 @@ prep_cohort <- function(cohort, indexdt, t, reduce = TRUE){
 
   ### Reduce cohort to variables of interest
   if (reduce == TRUE){
-    cohort <- cohort[,c("patid", "indexdt")]
+    cohort <- cohort[,c("patid", "indexdt", "yob")]
   }
 
   ### If t has been specified, round it to nearest integer, add to indexdt to extract data at appropriate time
