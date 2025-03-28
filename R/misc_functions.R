@@ -399,6 +399,17 @@ db_query <- function(codelist,
     RSQLite::dbDisconnect(mydb)
   }
 
+  ### Format dates
+  if ("obsdate" %in% colnames(db_query)){
+    db_query$obsdate <- as.Date(db_query$obsdate)
+  }
+  if ("enterdate" %in% colnames(db_query)){
+    db_query$enterdate <- as.Date(db_query$enterdate)
+  }
+  if ("issuedate" %in% colnames(db_query)){
+    db_query$issuedate <- as.Date(db_query$issuedate)
+  }
+
   ### Assign class
   if (db_cprd == "aurum"){
     class(db_query) <- append("aurum", class(db_query))
