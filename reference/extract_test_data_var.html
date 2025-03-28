@@ -46,8 +46,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extract_test_data_var</span><span class="op">(</span></span>
 <span>  <span class="va">cohort</span>,</span>
 <span>  varname <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">codelist</span>,</span>
-<span>  <span class="va">codelist_vector</span>,</span>
+<span>  codelist <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">indexdt</span>,</span>
 <span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  t_varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -176,11 +176,11 @@ and then save onto the hard disk manually.</p>
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 14:51:06.132623</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 15:23:41.402143</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 14:51:06.145406</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 15:23:41.414964</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 14:51:06.15676</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 15:23:41.431293</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
@@ -194,7 +194,19 @@ and then save onto the hard disk manually.</p>
 <span class="r-in"><span>db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span></span>
 <span class="r-in"><span>time_prev <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
 <span class="r-in"><span>return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in extract_test_data_var(pat, codelist_vector = "187341000000114",     indexdt = "fup_start", db_open = aurum_extract, time_prev = Inf,     return_output = TRUE):</span> argument "codelist" is missing, with no default</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    patid value_var</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     10        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     12        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      5        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      6        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     7        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     8        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     9        NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## clean up</span></span></span>
 <span class="r-in"><span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></span>
