@@ -547,7 +547,7 @@ combine_query_boolean.aurum <- function(db_query,
   }
 
   ### Remove values before 1900 or before person was born
-  cohort_qry <- cohort_qry[lubridate::year(obsdate) >= yob & obsdate > as.Date("01/01/1900", format = "%d/%m%Y")]
+  cohort_qry <- cohort_qry[lubridate::year(obsdate) >= yob & obsdate > as.Date("01/01/1900", format = "%d/%m/%Y")]
 
   ### Remove values outside of specified time range
   cohort_qry <- cohort_qry[obsdate <= indexdt + time_post & obsdate > indexdt - time_prev]
