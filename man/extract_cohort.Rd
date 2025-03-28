@@ -7,7 +7,7 @@
 extract_cohort(filepath, patids = NULL, select = NULL, set = FALSE)
 }
 \arguments{
-\item{filepath}{Path to directory containing .txt files.}
+\item{filepath}{Path to directory containing patient .txt files.}
 
 \item{patids}{Patids of patients to retain in the cohort. Character vector. Numeric values should not be used.}
 
