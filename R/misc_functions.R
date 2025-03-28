@@ -313,39 +313,93 @@ cprd_extract <- function(db,
 #' unlink(file.path(tempdir(), "temp.sqlite"))
 #'
 #' @export
-db_query <- function(codelist,
+db_query <- function(codelist = NULL,
                      db_open = NULL,
                      db = NULL,
                      db_filepath = NULL,
                      db_cprd = c("aurum", "gold"),
                      tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary", "death"),
                      table_name = NULL,
-                     codelist_vector = NULL){
+                     codelist_vector = NULL,
+                     n = NULL){
+
+  # codelist = NULL
+  # db_open = aurum_extract
+  # db = NULL
+  # db_filepath = NULL
+  # db_cprd = "aurum"
+  # tab = "observation"
+  # table_name = NULL
+  # codelist_vector = NULL
 
   ### Match args
   db_cprd <- match.arg(db_cprd)
 
-  ### Extract codelist
-  if (is.null(codelist_vector)){
-    codelist <- data.table::fread(file = paste(getwd(),"/codelists/analysis/", codelist, ".csv", sep = ""),
-                                  sep = ",", header = TRUE, colClasses = "character")
-    if (tab %in% c("hes_primary", "death")){
-      codelist <- codelist$ICD10
+  ### Set table_name
+  if (is.null(table_name)){table_name <- tab}
+
+  ### If no codelist specified, write a simple query
+  if (is.null(codelist_vector) & is.null(codelist)){
+    qry <- paste("SELECT * FROM", table_name)
+
+  } else {
+
+    ###
+    ### Else, define query based off codelist
+    ###
+
+    ### Extract codelist
+    if (is.null(codelist_vector)){
+      codelist <- data.table::fread(file = paste(getwd(),"/codelists/analysis/", codelist, ".csv", sep = ""),
+                                    sep = ",", header = TRUE, colClasses = "character")
+      if (tab %in% c("hes_primary", "death")){
+        codelist <- codelist$ICD10
+      } else if (db_cprd == "aurum"){
+        if (tab == "observation"){
+          codelist <- codelist$medcodeid
+        } else if (tab == "drugissue"){
+          codelist <- codelist$prodcodeid
+        }
+      } else if (db_cprd == "gold"){
+        if (tab %in% c("clinical", "immunisation", "test")){
+          codelist <- codelist$medcode
+        } else if (tab == "therapy"){
+          codelist <- codelist$prodcode
+        }
+      }
+    } else {
+      codelist <- codelist_vector
+    }
+
+    ###
+    ### Create the query
+    ###
+
+    ### If the table has been created using str_match, then we need to search the table called table_name
+    ### However, if created as normal, then the table_name will be equal to tab
+    if (tab == "hes_primary"){
+      where_clause <- paste0("`ICD_PRIMARY` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
+    } else if (tab == "death"){
+      where_clause <- paste0("`cause` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
     } else if (db_cprd == "aurum"){
       if (tab == "observation"){
-        codelist <- codelist$medcodeid
+        where_clause <- paste0("`medcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+        qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       } else if (tab == "drugissue"){
-        codelist <- codelist$prodcodeid
+        where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+        qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       }
     } else if (db_cprd == "gold"){
       if (tab %in% c("clinical", "immunisation", "test")){
-        codelist <- codelist$medcode
+        where_clause <- paste0("`medcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+        qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       } else if (tab == "therapy"){
-        codelist <- codelist$prodcode
+        where_clause <- paste0("`prodcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+        qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       }
     }
-  } else {
-    codelist <- codelist_vector
   }
 
   ### Connect to SQLite database
@@ -359,39 +413,12 @@ db_query <- function(codelist,
     mydb <- db_open
   }
 
-  ###
-  ### Create the query
-  ###
-
-  ### If the table has been created using str_match, then we need to search the table called table_name
-  ### However, if created as normal, then the table_name will be equal to tab
-  if (is.null(table_name)){table_name <- tab}
-  if (tab == "hes_primary"){
-    where_clause <- paste0("`ICD_PRIMARY` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-    qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-  } else if (tab == "death"){
-    where_clause <- paste0("`cause` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-    qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-  } else if (db_cprd == "aurum"){
-    if (tab == "observation"){
-      where_clause <- paste0("`medcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-    } else if (tab == "drugissue"){
-      where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-    }
-  } else if (db_cprd == "gold"){
-    if (tab %in% c("clinical", "immunisation", "test")){
-      where_clause <- paste0("`medcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-    } else if (tab == "therapy"){
-      where_clause <- paste0("`prodcode` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
-      qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-    }
-  }
-
   ### Run the query and turn into data.table
-  db_query <- RSQLite::dbGetQuery(mydb, qry)
+  if (is.null(n)){
+    db_query <- RSQLite::dbGetQuery(mydb, qry)
+  } else {
+    db_query <- RSQLite::dbGetQuery(mydb, qry, n = n)
+  }
   db_query <- data.table::as.data.table(db_query)
 
   ### Disconnect

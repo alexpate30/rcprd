@@ -199,7 +199,7 @@ cprd_extract(db = aurum_extract,
              filetype = "observation", subset_patids = c(1,3,4,6), use_set = FALSE)
 
 ### Query first three rows
-RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation', n = 3)
+db_query(db_open = aurum_extract, tab = "observation", n = 3)
 ```
 
 The process is then repeated for the drugissue files.
@@ -214,7 +214,7 @@ cprd_extract(db = aurum_extract,
 RSQLite::dbListTables(aurum_extract)
 
 ### Query first three rows
-RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM drugissue', n = 3)
+db_query(db_open = aurum_extract, tab = "drugissue", n = 3)
 
 ### Disconnect
 RSQLite::dbDisconnect(aurum_extract)
@@ -254,8 +254,8 @@ cprd_extract(db = aurum_extract,
              use_set = TRUE)
 
 ### Query first three rows of each table
-RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM observation', n = 3)
-RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM drugissue', n = 3)
+db_query(db_open = aurum_extract, tab = "observation", n = 3)
+db_query(db_open = aurum_extract, tab = "drugissue", n = 3)
 ```
 
 Note that there is no difference compared to the previously extracted SQLite databases. The computational gains from applying the subsetting in this manner will not be realised in this example. We do not close the connection, as we will now move onto querying the database to extract variables for creating an analysis-ready dataset.
