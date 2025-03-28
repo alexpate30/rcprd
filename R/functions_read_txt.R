@@ -87,7 +87,7 @@ extract_txt_pat <- function(filepath, ..., set = FALSE){
 #' @param filepath File path to raw .txt file
 #' @param ... Arguments to pass onto utils::read.table
 #' @param set If `TRUE` will create a variable called `set` which will contain the number that comes after the word 'set' in the file name.
-extract_txt_prac <- function(filepath, ..., selsect = NULL){
+extract_txt_prac <- function(filepath, ..., select = NULL){
 
   ## Extract data
   out <- data.table::fread(filepath, sep = "\t", ..., header = TRUE, colClasses = c("integer", "character", "character", "integer")) |>
