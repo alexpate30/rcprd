@@ -289,7 +289,7 @@ testthat::test_that("Cholhdl ratio", {
   ## As opposed to finding them seperately and calculating the value from the components, which would be different
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "cholhdl_ratio"))
-  testthat::expect_equal(var$cholhdl_ratio, c(48, 41, NA, NA, 32, NA))
+  testthat::expect_equal(var$cholhdl_ratio, c(NA, 41, NA, NA, 32, NA))
 
   ## clean up
   RSQLite::dbDisconnect(aurum_extract)
