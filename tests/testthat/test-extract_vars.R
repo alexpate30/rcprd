@@ -39,7 +39,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ###
   ### Extract a medication history of type variable using extract_ho
   ho.drug <- extract_ho(pat,
-                        codelist_vector = "3092241000033113",
+                        codelist_vector = "1026541000033111",
                         indexdt = "fup_start",
                         db_open = aurum_extract,
                         tab = "drugissue",
@@ -47,7 +47,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
 
   testthat::expect_equal(nrow(ho.drug), 6)
   testthat::expect_equal(colnames(ho.drug), c("patid", "ho"))
-  testthat::expect_equal(ho.drug$ho, c(1, 0, 0, 0, 0, 0))
+  testthat::expect_equal(ho.drug$ho, c(0, 0, 0, 0, 1, 0))
 
   ###
   ### Extract a time until variable using extract_time_until
@@ -147,7 +147,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   ### Define codelist
   codelist <- data.frame(medcodeid = "187341000000114")
   write.csv(codelist, "codelists/analysis/mylist.med.csv")
-  codelist <- data.frame(prodcodeid = "3092241000033113")
+  codelist <- data.frame(prodcodeid = "1026541000033111")
   write.csv(codelist, "codelists/analysis/mylist.drug.csv")
 
   ### Extract a history of type variable and save to disc automatically, by just specifying name of database
@@ -322,13 +322,13 @@ testthat::test_that("Diabetes", {
   ### Extract diabetes
   var <- extract_diabetes(cohort = pat,
                           codelist_type1_vector = 498521000006119,
-                          codelist_type2_vector = 401539014,
+                          codelist_type2_vector = 1784724014,
                           indexdt = "indexdt",
                           db_open = aurum_extract)
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "diabetes"))
-  testthat::expect_equal(as.character(var$diabetes), c("Type1", "Absent", "Absent", "Absent", "Type1", "Absent"))
+  testthat::expect_equal(as.character(var$diabetes), c("Absent", "Absent", "Absent", "Absent", "Type1", "Type2"))
 
   ## clean up
   RSQLite::dbDisconnect(aurum_extract)
@@ -409,7 +409,7 @@ testthat::test_that("Impotence", {
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "impotence"))
-  testthat::expect_equal(var$impotence, c(1, 0, 0, 0, 1, 0))
+  testthat::expect_equal(var$impotence, c(0, 0, 0, 0, 1, 0))
 
   ## clean up
   RSQLite::dbDisconnect(aurum_extract)
