@@ -829,7 +829,7 @@ implement_output <- function(variable_dat, varname, out_save_disk, out_subdir, o
 #' @description
 #' Create cohort from patient files
 #'
-#' @param filepath Path to directory containing .txt files.
+#' @param filepath Path to directory containing patient .txt files.
 #' @param patids Patids of patients to retain in the cohort. Character vector. Numeric values should not be used.
 #' @param select Character vector of column names to select.
 #' @param set If `TRUE` will create a variable called `set` which will contain the number that comes after the word 'set' in the file name.
@@ -896,3 +896,55 @@ extract_cohort <- function(filepath,
   return(pat)
 
 }
+
+#' Combine practice files
+#'
+#' @description
+#' Combine practice files
+#'
+#' @param filepath Path to directory containing practice .txt files.
+#' @param select Character vector of column names to select.
+#'
+#' @returns Data frame with patient information
+#'
+#' @examples
+#'
+#' ## Extract cohort data
+#' prac<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
+#' prac
+#'
+#' @export
+extract_practices <- function(filepath,
+                              select = NULL){
+
+  ### Get filenames of patient files
+  filenames <- list.files(filepath, pattern = ".txt", full.names = TRUE)
+
+  ### Reduce to those with "practice" in the filename
+  filenames <- filenames[stringr::str_detect(filenames, "practice")]
+
+  ### Read in all patient files and concatenate
+  if (length(filenames) >= 1){
+    prac <-  extract_txt_prac(filenames[1])
+    if (length(filenames) > 1){
+      ## Append for all subsequent files
+      for (filename in filenames[-1]){
+        prac.temp <-  extract_txt_prac(filename)
+        prac <- rbind(prac, prac.temp)
+      }
+    }
+  } else if (length(filenames) == 0){
+    stop("No files to import")
+  }
+
+  ### Select variables
+  if(!is.null(select)){
+    ## Apply selection
+    prac <- prac[,select]
+  }
+
+  ### return prac
+  return(prac)
+
+}
+

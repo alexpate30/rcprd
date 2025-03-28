@@ -87,7 +87,7 @@ library(rcprd)
 list.files(system.file("aurum_data", package = "rcprd"), pattern = ".txt")
 ```
 
-The first step in most analyses is creating and defining a cohort of individuals, which will involve working with the patient files. Data from the patient files can be combined using the `extract_cohort` function. This will look in the directory specified through the `filepath` argument, for any file containing "patient" in the file name. All files will be read in and concatenated into a single dataset. In some circumstances, researchers may be provided with a list of patids which meet their inclusion/exclusion criteria. In this case, these can be specified through the `patids` argument (which requires a character vector). Suppose the individuals meeting the exclusion criteria are those with patid = 1, 3, 4 and 6. We would then specify:
+The first step in most analyses is creating and defining a cohort of individuals, which will involve working with the patient files. Data from the patient files can be combined using the `extract_cohort()` function. This will look in the directory specified through the `filepath` argument, for any file containing "patient" in the file name. All files will be read in and concatenated into a single dataset. In some circumstances, researchers may be provided with a list of patids which meet their inclusion/exclusion criteria. In this case, these can be specified through the `patids` argument (which requires a character vector). Suppose the individuals meeting the exclusion criteria are those with patid = 1, 3, 4 and 6. We would then specify:
 
 ```{r}
 pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"), patids = as.character(c(1,3,4,6)))
@@ -101,17 +101,30 @@ pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 str(pat)
 ```
 
+Often this then needs to be merged with the practice file, which contains information such as the last date of data collection for the practice. The practice files can be read in and combined using the function `extract_practices()`,
+
+```{r}
+prac <- extract_practices(filepath = system.file("aurum_data", package = "rcprd"))
+str(prac)
+```
+
+and should then be merged with the patient file based on the `pracid` variable:
+
+```{r}
+pat <- merge(pat, prac, by.x = "pracid", by.y = "pracid")
+```
+
 The cohort of individuals would then be defined by applying study specific inclusion/exclusion criteria. For example, all individuals with > 1 day valid follow up aged 65+, after 1st January 2000. Such criteria can be applied solely using the information available in patient files. In this example, we define the individuals that met the inclusion criteria to be those with patid = 1, 3, 4 and 6. 
 
 ```{r}
 pat <- subset(pat, patid %in% c(1,3,4,6))
 ```
 
-Once the cohort has been defined, the next step is to extract medical/prescription data for these individuals.
+Once the cohort has been defined, we recommended saving this as an .rds file so it can be easily accessed, as it will be required as input for many of the subsequent functions. In this hypothetical example the inclusion/exclusion criteria are not dependent on linked data or primary care data, and therefore we jump to step 5. 
 
-## Step 2: Reading in data and creating an SQLite database
+## Step 5: Reading in data and creating an SQLite database
 
-Data for individuals in the cohort of interest is extracted from the .txt files and put into a SQLite database. This SQLite database is stored on a fixed storage device and can be queried when defining an analysis-ready dataset.
+Step 5 reads in the medical/prescription data from the raw .txt files and adds this into a SQLite database. This will only be done for individuals meeting the inclusion/exclusion criteria. The SQLite database is stored on a fixed storage device and will be subsequently queried when extracting variables to create an analysis-ready dataset. Please note, is the answer to Q1 was yes, resulting in the implementation of step 2, the process for creating the SQLite database (step 2) will follow the exact same process as outlined here.
 
 ### Add individual files to SQLite database using `add_to_database`
 
@@ -247,15 +260,17 @@ RSQLite::dbGetQuery(aurum_extract, 'SELECT * FROM drugissue', n = 3)
 
 Note that there is no difference compared to the previously extracted SQLite databases. The computational gains from applying the subsetting in this manner will not be realised in this example. We do not close the connection, as we will now move onto querying the database to extract variables for creating an analysis-ready dataset.
 
-## Step 3: Querying the SQLite database to extract variables
+## Step 6: Querying the SQLite database to extract variables
 
-Once the data has been extracted and stored in an SQLite database, it can now be queried to create variables of interest. The normal process for extracting variables from electronic health records is to create code lists, a group of codes which denote the same condition. The database would then be queried for observations with medical codes matching those in the code list. A `variable` would then be defined based on this query. Whether this is a binary variable, indicating whether an individual has any record of a given code, or the most recent test result with the given code, or something much more complex. In CPRD Aurum, medical diagnoses and tests are identified from the *observation* file using *medcodeids*, and prescription data is identified from the drugissue file using *prodcodeids*. Creation of code lists is an important step of data extraction, and we refer elsewhere for details on best practice for developing code lists, and the limitations of working with code lists [@Williams2019; @Williams2017; @Watson2017; @Gulliford2009; @Matthewman2024]. The functions in this section are split into three groups:
+Once the data has been extracted and stored in an SQLite database, it can now be queried to create variables of interest. Please note, if the answer to Q1 was yes, resulting in the implementation of steps 2 and 3, the process for querying the SQLite database in order to apply the exclusion criteria (step 3) will follow the exact same process as outlined here. 
+
+The normal process for extracting variables from electronic health records is to create code lists, a group of codes which denote the same condition. The database would then be queried for observations with medical codes matching those in the code list. A `variable` would then be defined based on this query. Whether this is a binary variable, indicating whether an individual has any record of a given code, or the most recent test result with the given code, or something much more complex. In CPRD Aurum, medical diagnoses and tests are identified from the *observation* file using *medcodeids*, and prescription data is identified from the drugissue file using *prodcodeids*. Creation of code lists is an important step of data extraction, and we refer elsewhere for details on best practice for developing code lists, and the limitations of working with code lists [@Williams2019; @Williams2017; @Watson2017; @Gulliford2009; @Matthewman2024]. The functions in this section are split into three groups:
 
 - Functions for extracting common variable types.
 - Functions for extracting specific variables
 - Functions for database queries and custom variable extraction
 
-These functions extract and query the data relative to an *index date*. The index date may be a fixed date (e.g. 1st January 2010), a date which is different for each individual (e.g. date age 50 reached), or a combination of the two (e.g., maximum of 1st January 2010 and date aged 50 reached). Note, if the inclusion/exclusion criteria for the cohort are dependent on medical diagnoses or prescriptions, the functions in this section will be necessary in order to apply these criteria, and further reduce the cohort (step 2.2).
+These functions extract and query the data relative to an *index date*. The index date may be a fixed date (e.g. 1st January 2010), a date which is different for each individual (e.g. date age 50 reached), or a combination of the two (e.g., maximum of 1st January 2010 and date aged 50 reached).
 
 ### Functions for extracting common variable types
 
@@ -311,7 +326,7 @@ test_data <- extract_test_data(cohort = pat,
 str(test_data)
 ```
 
-More than one observation can be returned by specifying `numobs`. Metadata of the test result, such as the unit of measurement, date recorded, and the medical code, can be returned by settings `numunitid = TRUE`. A variation of this function, `extract_test_data_var`, will returns the standard deviation of the test data within the specified time and value range. Once all the variables of interest have been extracted, they can be merged into an analysis-ready dataset (step 4).
+More than one observation can be returned by specifying `numobs`. Metadata of the test result, such as the unit of measurement, date recorded, and the medical code, can be returned by settings `numunitid = TRUE`. A variation of this function, `extract_test_data_var`, will returns the standard deviation of the test data within the specified time and value range. Once all the variables of interest have been extracted, they can be merged into an analysis-ready dataset (step 7).
 
 ```{r}
 ### Recursive merge
@@ -467,7 +482,7 @@ Note that in order to run `extract_ho` here, a connection to the SQLite database
 readRDS("data/extraction/var_ho.rds")
 ```
 
-This setup can be used in conjunction with any of the functions from step 3 (i.e. `extract_test_var`, `extract_time_until` or `db_query`).
+This setup can be used in conjunction with any of the functions from step 6 (i.e. `extract_test_var`, `extract_time_until` or `db_query`).
 
 ```{r, include = FALSE}
 ### Return filespace to how it was prior to example
