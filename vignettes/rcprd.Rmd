@@ -1,9 +1,12 @@
 ---
 title: "rcprd: An R package to simplify the extraction and processing of CPRD data, and create analysis-ready datasets"
+pkgdown:
+  as_is: true
 output: 
   html_vignette:
     number_sections: true
     toc: yes
+    math_method: mathml
 vignette: >
   %\VignetteIndexEntry{rcprd}
   %\VignetteEngine{knitr::rmarkdown}
