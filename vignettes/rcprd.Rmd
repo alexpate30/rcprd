@@ -77,7 +77,7 @@ Our recommended process for developing an analysis-ready dataset is as follows (
 knitr::include_graphics("FlowChart.png")
 ```
 
-The process can be done entirely within R using rcprd functions, without any specialist understanding of SQLite databases. We recommend this process because once set up, querying the SQLite database is computationally much quicker than reading each of the raw files into the R workspace and querying these separately. It also reduces the probability of errors induced from creating numerous loops through the raw data files. We now move onto a worked example, where we showcase how to implement the above process using **rcprd** and the functions which are detailed in Table 1.
+This process aligns with the process implemented by CPRD when cohort inclusion/exclusion criteria are dependent on linked data (see Q2 and step 4). The process can be done entirely within R using rcprd functions, without any specialist understanding of SQLite databases. We recommend this process because once set up, querying the SQLite database is computationally much quicker than reading each of the raw files into the R workspace and querying these separately. It also reduces the probability of errors induced from creating numerous loops through the raw data files. We now move onto a worked example, where we showcase how to implement the above process using **rcprd** and the functions which are detailed in Table 1.
 
 ```{r, echo = FALSE, out.width = "100%", fig.cap = "Table 1: Table of rcprd functions"}
 #![Table 1: Table of rcprd functions](FunctionTable20240906.png){width = 100%}
@@ -86,7 +86,7 @@ knitr::include_graphics("FunctionTable20240906.png")
 
 # Worked example for data extraction
 
-## Step 1: Defining a cohort
+## Steps 1 - 4: Defining a cohort
 
 We have provided simulated patient, observation and drugissue files which will be utilisied in the worked example. The names of the files share the same naming convention given in section 2.1, and column names of the data match the real Aurum data. Numeric variables were simulated at random as integers between 1 and 100, date variables as a date between 01/01/1900 and 01/01/2000, gender as an integer 1 or 2, and year of birth as an integer between 1900 and 2000. Patient id and practice id were assigned manually. These files are contained in the *inst/aurum_data* directory of **rcprd**. After installing **rcprd**, this directory can be accessed using the command `system.file("aurum_data", package = "rcprd")`. This contains data on 12 fake patients, split across two patient files (*set1* and *set2*) and three observation and drugissue files (all *set1*):
 
@@ -131,11 +131,11 @@ The cohort of individuals would then be defined by applying study specific inclu
 pat <- subset(pat, patid %in% c(1,3,4,6))
 ```
 
-Once the cohort has been defined, we recommended saving this as an .rds file so it can be easily accessed, as it will be required as input for many of the subsequent functions. In this hypothetical example the inclusion/exclusion criteria are not dependent on linked data or primary care data, and therefore we jump to step 5. 
+Once the cohort has been defined, we recommended saving this as an .rds file so it can be easily accessed, as it will be required as input for many of the subsequent functions. In this hypothetical example the inclusion/exclusion criteria are not dependent on linked data or primary care data, and therefore we jump to step 5. However, if the answer to Q1 was yes, resulting in the implementation of step 2, the process for creating the SQLite database (step 2) and querying this to apply the inclusnio/exclusion criteria (step 3) will follow the exact same processes as outlined in sections 3.2 and 3.3. If the answer to Q2 was yes, and type 1 linked data is required to apply the inclusion/exclusion criteria, this can be done without the use of **rcprd** or an SQLite database. Type 1 linked data is normally provided as a single text file, which can be readily loaded into R and manipulated in order to apply the criteria. 
 
 ## Step 5: Reading in data and creating an SQLite database
 
-Step 5 reads in the medical/prescription data from the raw .txt files and adds this into a SQLite database. This will only be done for individuals meeting the inclusion/exclusion criteria. The SQLite database is stored on a fixed storage device and will be subsequently queried when extracting variables to create an analysis-ready dataset. Please note, is the answer to Q1 was yes, resulting in the implementation of step 2, the process for creating the SQLite database (step 2) will follow the exact same process as outlined here.
+Step 5 reads in the medical/prescription data from the raw .txt files and adds this into a SQLite database. This will only be done for individuals meeting the inclusion/exclusion criteria. The SQLite database is stored on a fixed storage device and will be subsequently queried when extracting variables to create an analysis-ready dataset.
 
 ### Add individual files to SQLite database using `add_to_database`
 
