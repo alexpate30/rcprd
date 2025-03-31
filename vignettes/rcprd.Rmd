@@ -1,5 +1,7 @@
 ---
 title: "rcprd: An R package to simplify the extraction and processing of CPRD data, and create analysis-ready datasets"
+pkgdown:
+  as_is: true
 output: 
   html_vignette:
     number_sections: true
