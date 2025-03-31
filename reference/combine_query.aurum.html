@@ -67,7 +67,7 @@ interested in medical diagnoses from the observation file, and <code>type = test
 <span>  numobs <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  value_na_rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  earliest_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  reduce_output <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  reduce_output <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -139,11 +139,11 @@ but do not want to remove all observations with NA in the <code>value</code> col
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 16:30:58.830781</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 10:55:08.130784</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 16:30:58.844064</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 10:55:08.148504</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 16:30:58.855275</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 10:55:08.160893</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Query database for a specific medcode</span></span></span>
@@ -162,10 +162,22 @@ but do not want to remove all observations with NA in the <code>value</code> col
 <span class="r-in"><span>db_query <span class="op">=</span> <span class="va">db_query</span>,</span></span>
 <span class="r-in"><span>query_type <span class="op">=</span> <span class="st">"med"</span>,</span></span>
 <span class="r-in"><span>numobs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     patid       medcodeid    obsdate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;          &lt;char&gt;     &lt;Date&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      2 187341000000114 1954-03-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      6 187341000000114 1929-09-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     patid pracid.x usualgpstaffid gender   yob   mob emis_ddate regstartdate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;    &lt;int&gt;         &lt;char&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;Date&gt;       &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      2       79             11      1  1932    NA 1979-02-14   1929-02-23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      6       54             11      1  1914    NA 1926-09-09   1970-08-28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    patienttypeid regenddate acceptable cprd_ddate    indexdt consid pracid.y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;int&gt;     &lt;Date&gt;      &lt;int&gt;     &lt;Date&gt;     &lt;Date&gt; &lt;char&gt;    &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:            21 1945-03-19          0 1932-02-05 2020-01-01     56        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:            85 1983-03-14          1 1963-08-27 2020-01-01     40        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     obsid    obsdate  enterdate staffid parentobsid       medcodeid value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;     &lt;Date&gt;     &lt;Date&gt;  &lt;char&gt;      &lt;char&gt;          &lt;char&gt; &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     77 1954-03-17 1932-02-22      24           4 187341000000114    46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     41 1929-09-06 1951-01-12      98          80 187341000000114    28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    numunitid obstypeid numrangelow numrangehigh probobsid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;int&gt;     &lt;int&gt;       &lt;num&gt;        &lt;num&gt;    &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        92        81          56           30        18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        20         5          41           97        92</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## clean up</span></span></span>
 <span class="r-in"><span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></span>

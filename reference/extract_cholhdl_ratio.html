@@ -52,6 +52,9 @@
 <span>  codelist_ratio_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  codelist_chol_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  codelist_hdl_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_ratio_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_chol_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  codelist_hdl_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">indexdt</span>,</span>
 <span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  t_varname <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -104,6 +107,18 @@
 
 <dt id="arg-codelist-hdl-vector">codelist_hdl_vector<a class="anchor" aria-label="anchor" href="#arg-codelist-hdl-vector"></a></dt>
 <dd><p>Vector of codes for high-density lipoprotein to query the database with.</p></dd>
+
+
+<dt id="arg-codelist-ratio-df">codelist_ratio_df<a class="anchor" aria-label="anchor" href="#arg-codelist-ratio-df"></a></dt>
+<dd><p>data.frame of codes for ratio to query the database with.</p></dd>
+
+
+<dt id="arg-codelist-chol-df">codelist_chol_df<a class="anchor" aria-label="anchor" href="#arg-codelist-chol-df"></a></dt>
+<dd><p>data.frame of codes for total cholesterol to query the database with.</p></dd>
+
+
+<dt id="arg-codelist-hdl-df">codelist_hdl_df<a class="anchor" aria-label="anchor" href="#arg-codelist-hdl-df"></a></dt>
+<dd><p>data.frame of codes for high-density lipoprotein to query the database with.</p></dd>
 
 
 <dt id="arg-indexdt">indexdt<a class="anchor" aria-label="anchor" href="#arg-indexdt"></a></dt>
@@ -202,11 +217,11 @@ character vector. This option will take precedence over the codelists stored on 
 <span class="r-in"><span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-28 16:31:01.188413</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 10:55:10.336052</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |=======================                                               |  33%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-28 16:31:01.201401</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 10:55:10.349661</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |===============================================                       |  67%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-28 16:31:01.212613</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 10:55:10.361715</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Define cohort and add index date</span></span></span>
