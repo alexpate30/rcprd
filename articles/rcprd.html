@@ -51,8 +51,6 @@
 </nav><div class="container template-article">
 
 
-
-
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
@@ -68,8 +66,9 @@
 <p><em>This article does not contain any real patient data. All patient
 data has been simulated but formatted to match the structure of CPRD
 Aurum data.</em></p>
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<div class="section level2" number="1">
+<h2 id="introduction">
+<span class="header-section-number">1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The Clinical Practice Research Datalink (CPRD) is a large resource of
 Electronic Health Records from the UK, owned by the UK Medicines and
@@ -157,11 +156,15 @@ flexible to the point that it could be used to extract and store data
 from any electronic health record, which will be touched on in the
 discussion.</p>
 </div>
-<div class="section level2">
-<h2 id="data-structure-and-extraction-process">Data Structure and Extraction Process<a class="anchor" aria-label="anchor" href="#data-structure-and-extraction-process"></a>
+<div class="section level2" number="2">
+<h2 id="data-structure-and-extraction-process">
+<span class="header-section-number">2</span> Data Structure and
+Extraction Process<a class="anchor" aria-label="anchor" href="#data-structure-and-extraction-process"></a>
 </h2>
-<div class="section level3">
-<h3 id="structure-of-cprd-aurum-data">Structure of CPRD Aurum data<a class="anchor" aria-label="anchor" href="#structure-of-cprd-aurum-data"></a>
+<div class="section level3" number="2.1">
+<h3 id="structure-of-cprd-aurum-data">
+<span class="header-section-number">2.1</span> Structure of CPRD
+Aurum data<a class="anchor" aria-label="anchor" href="#structure-of-cprd-aurum-data"></a>
 </h3>
 <p>We first define the terminology which will be used throughout this
 article:</p>
@@ -203,25 +206,20 @@ example, the observation files for patients in <em>set1</em>, will have
 The same is true for the DrugIssue files. The naming structure for these
 is as follows:</p>
 <ul>
-<li>aurum_allpatid_set<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>_extract_patient_001.txt</li>
-<li>aurum_allpatid_set<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>_extract_observation_0<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>.txt</li>
-<li>aurum_allpatid_set<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>_extract_drugissue_0<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>.txt</li>
+<li>aurum_allpatid_set<span class="math inline">\(X\)</span>_extract_patient_001.txt</li>
+<li>aurum_allpatid_set<span class="math inline">\(X\)</span>_extract_observation_0<span class="math inline">\(Y\)</span>.txt</li>
+<li>aurum_allpatid_set<span class="math inline">\(X\)</span>_extract_drugissue_0<span class="math inline">\(Y\)</span>.txt</li>
 </ul>
-<p>where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>∈</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi></mrow></mrow><annotation encoding="application/x-tex">X\in{1,2,3,...}</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>∈</mo><mrow><mn>01</mn><mo>,</mo><mn>02</mn><mo>,</mo><mn>03</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi></mrow></mrow><annotation encoding="application/x-tex">Y\in{01,02,03,...}</annotation></semantics></math>.
-Note that the prefix to the file names may vary (i.e. the
-‘aurum_allpatid’ part) however we expect the naming convention with
-regards to
-‘set<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>’,
-file type, and
-‘0<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>’
-to remain consistent. If this changes in the future, we will endeavour
-to update the <strong>rcprd</strong> as soon as possible.</p>
+<p>where <span class="math inline">\(X\in{1,2,3,...}\)</span> and <span class="math inline">\(Y\in{01,02,03,...}\)</span>. Note that the prefix
+to the file names may vary (i.e. the ‘aurum_allpatid’ part) however we
+expect the naming convention with regards to ‘set<span class="math inline">\(X\)</span>’, file type, and ‘0<span class="math inline">\(Y\)</span>’ to remain consistent. If this changes
+in the future, we will endeavour to update the <strong>rcprd</strong> as
+soon as possible.</p>
 </div>
-<div class="section level3">
-<h3 id="recommended-process-for-extraction">Recommended process for extraction<a class="anchor" aria-label="anchor" href="#recommended-process-for-extraction"></a>
+<div class="section level3" number="2.2">
+<h3 id="recommended-process-for-extraction">
+<span class="header-section-number">2.2</span> Recommended process
+for extraction<a class="anchor" aria-label="anchor" href="#recommended-process-for-extraction"></a>
 </h3>
 <p>Our recommended process for developing an analysis-ready dataset is
 as follows (see Figure 1 for a visual representation of this):</p>
@@ -271,11 +269,15 @@ Table 1: Table of rcprd functions
 </div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="worked-example-for-data-extraction">Worked example for data extraction<a class="anchor" aria-label="anchor" href="#worked-example-for-data-extraction"></a>
+<div class="section level2" number="3">
+<h2 id="worked-example-for-data-extraction">
+<span class="header-section-number">3</span> Worked example for data
+extraction<a class="anchor" aria-label="anchor" href="#worked-example-for-data-extraction"></a>
 </h2>
-<div class="section level3">
-<h3 id="step-1-defining-a-cohort">Step 1: Defining a cohort<a class="anchor" aria-label="anchor" href="#step-1-defining-a-cohort"></a>
+<div class="section level3" number="3.1">
+<h3 id="step-1-defining-a-cohort">
+<span class="header-section-number">3.1</span> Step 1: Defining a
+cohort<a class="anchor" aria-label="anchor" href="#step-1-defining-a-cohort"></a>
 </h3>
 <p>We have provided simulated patient, observation and drugissue files
 which will be utilisied in the worked example. The names of the files
@@ -385,8 +387,10 @@ for many of the subsequent functions. In this hypothetical example the
 inclusion/exclusion criteria are not dependent on linked data or primary
 care data, and therefore we jump to step 5.</p>
 </div>
-<div class="section level3">
-<h3 id="step-5-reading-in-data-and-creating-an-sqlite-database">Step 5: Reading in data and creating an SQLite database<a class="anchor" aria-label="anchor" href="#step-5-reading-in-data-and-creating-an-sqlite-database"></a>
+<div class="section level3" number="3.2">
+<h3 id="step-5-reading-in-data-and-creating-an-sqlite-database">
+<span class="header-section-number">3.2</span> Step 5: Reading in
+data and creating an SQLite database<a class="anchor" aria-label="anchor" href="#step-5-reading-in-data-and-creating-an-sqlite-database"></a>
 </h3>
 <p>Step 5 reads in the medical/prescription data from the raw .txt files
 and adds this into a SQLite database. This will only be done for
@@ -396,9 +400,10 @@ queried when extracting variables to create an analysis-ready dataset.
 Please note, is the answer to Q1 was yes, resulting in the
 implementation of step 2, the process for creating the SQLite database
 (step 2) will follow the exact same process as outlined here.</p>
-<div class="section level4">
-<h4 id="add-individual-files-to-sqlite-database-using-add_to_database">Add individual files to SQLite database using
-<code>add_to_database</code><a class="anchor" aria-label="anchor" href="#add-individual-files-to-sqlite-database-using-add_to_database"></a>
+<div class="section level4" number="3.2.1">
+<h4 id="add-individual-files-to-sqlite-database-using-add_to_database">
+<span class="header-section-number">3.2.1</span> Add individual
+files to SQLite database using <code>add_to_database</code><a class="anchor" aria-label="anchor" href="#add-individual-files-to-sqlite-database-using-add_to_database"></a>
 </h4>
 <p>The function <code>add_to_database</code> can be used to add
 individual files to the SQLite database. Start by defining and
@@ -504,9 +509,10 @@ finished.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="add-all-relevant-files-to-sqlite-database-using-cprd_extract">Add all relevant files to SQLite database using
-<code>cprd_extract</code><a class="anchor" aria-label="anchor" href="#add-all-relevant-files-to-sqlite-database-using-cprd_extract"></a>
+<div class="section level4" number="3.2.2">
+<h4 id="add-all-relevant-files-to-sqlite-database-using-cprd_extract">
+<span class="header-section-number">3.2.2</span> Add all relevant
+files to SQLite database using <code>cprd_extract</code><a class="anchor" aria-label="anchor" href="#add-all-relevant-files-to-sqlite-database-using-cprd_extract"></a>
 </h4>
 <p>In practice, there will be a high number of files to add to the
 SQLite database and adding each one using <code>add_to_database</code>
@@ -534,11 +540,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:21:14.148244</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:23:07.925394</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:21:14.165146</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:23:07.939037</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:21:14.177063</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:23:07.95377</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows</span></span>
@@ -565,11 +571,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"drugissue"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 16:21:14.259022</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 16:23:07.97761</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 16:21:14.27545</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 16:23:07.993658</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 16:21:14.287306</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 16:23:08.005274</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### List tables</span></span>
@@ -609,9 +615,11 @@ is not recommended to run interactively. While creation of the SQLite
 database may be time consuming, subsequent queries will be far more
 efficient, so this is short term pain for a long term gain.</p>
 </div>
-<div class="section level4">
-<h4 id="add-all-relevant-files-to-sqlite-database-in-a-computationally-efficient-manner-using-the-set-functionality-">Add all relevant files to SQLite database in a computationally
-efficient manner using the <code>set</code> functionality.<a class="anchor" aria-label="anchor" href="#add-all-relevant-files-to-sqlite-database-in-a-computationally-efficient-manner-using-the-set-functionality-"></a>
+<div class="section level4" number="3.2.3">
+<h4 id="add-all-relevant-files-to-sqlite-database-in-a-computationally-efficient-manner-using-the-set-functionality-">
+<span class="header-section-number">3.2.3</span> Add all relevant
+files to SQLite database in a computationally efficient manner using the
+<code>set</code> functionality.<a class="anchor" aria-label="anchor" href="#add-all-relevant-files-to-sqlite-database-in-a-computationally-efficient-manner-using-the-set-functionality-"></a>
 </h4>
 <p>When the number of patients in your cohort is very large (for example
 millions, or tens of millions), the <code>add_to_database</code>
@@ -674,11 +682,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:21:14.444708</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:23:08.045081</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:21:14.458773</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:23:08.059057</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:21:14.470967</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:23:08.071222</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Add drugissue files</span></span>
@@ -688,11 +696,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 16:21:14.487042</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 16:23:08.087447</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 16:21:14.500247</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 16:23:08.100606</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 16:21:14.512088</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 16:23:08.11228</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows of each table</span></span>
@@ -730,8 +738,10 @@ connection, as we will now move onto querying the database to extract
 variables for creating an analysis-ready dataset.</p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="step-6-querying-the-sqlite-database-to-extract-variables">Step 6: Querying the SQLite database to extract variables<a class="anchor" aria-label="anchor" href="#step-6-querying-the-sqlite-database-to-extract-variables"></a>
+<div class="section level3" number="3.3">
+<h3 id="step-6-querying-the-sqlite-database-to-extract-variables">
+<span class="header-section-number">3.3</span> Step 6: Querying the
+SQLite database to extract variables<a class="anchor" aria-label="anchor" href="#step-6-querying-the-sqlite-database-to-extract-variables"></a>
 </h3>
 <p>Once the data has been extracted and stored in an SQLite database, it
 can now be queried to create variables of interest. Please note, if the
@@ -765,8 +775,10 @@ date</em>. The index date may be a fixed date (e.g. 1st January 2010), a
 date which is different for each individual (e.g. date age 50 reached),
 or a combination of the two (e.g., maximum of 1st January 2010 and date
 aged 50 reached).</p>
-<div class="section level4">
-<h4 id="functions-for-extracting-common-variable-types">Functions for extracting common variable types<a class="anchor" aria-label="anchor" href="#functions-for-extracting-common-variable-types"></a>
+<div class="section level4" number="3.3.1">
+<h4 id="functions-for-extracting-common-variable-types">
+<span class="header-section-number">3.3.1</span> Functions for
+extracting common variable types<a class="anchor" aria-label="anchor" href="#functions-for-extracting-common-variable-types"></a>
 </h4>
 <p>There are functions to extract three common variable types, history
 of condition/medication prior to index date (<code>extract_ho</code>),
@@ -910,8 +922,10 @@ returned in the output when it is meaningful to do so. For example, in
 their medical history, and therefore it’s unclear which should be
 returned.</p>
 </div>
-<div class="section level4">
-<h4 id="functions-for-extracting-specific-variables">Functions for extracting specific variables<a class="anchor" aria-label="anchor" href="#functions-for-extracting-specific-variables"></a>
+<div class="section level4" number="3.3.2">
+<h4 id="functions-for-extracting-specific-variables">
+<span class="header-section-number">3.3.2</span> Functions for
+extracting specific variables<a class="anchor" aria-label="anchor" href="#functions-for-extracting-specific-variables"></a>
 </h4>
 <p>There are also a number of functions that can be used to extract
 specific variables:</p>
@@ -965,8 +979,10 @@ functions to extract variables, we encourage taking the time to ensure
 that the way the variable is extracted matches the definition in ones
 study, and edit these functions and algorithms accordingly.</p>
 </div>
-<div class="section level4">
-<h4 id="functions-for-database-queries-and-custom-variable-extraction">Functions for database queries and custom variable extraction<a class="anchor" aria-label="anchor" href="#functions-for-database-queries-and-custom-variable-extraction"></a>
+<div class="section level4" number="3.3.3">
+<h4 id="functions-for-database-queries-and-custom-variable-extraction">
+<span class="header-section-number">3.3.3</span> Functions for
+database queries and custom variable extraction<a class="anchor" aria-label="anchor" href="#functions-for-database-queries-and-custom-variable-extraction"></a>
 </h4>
 <p>These functions are utilised internally in the functions from
 sections 3.3.1 and 3.3.2. They have been provided to more easily enable
@@ -1064,9 +1080,11 @@ the observations and the <em>prodcodeid</em> will be returned. If
 output. The functions in this section can be used as building blocks to
 extract desired variables (e.g. see functions in section 3.3.2).</p>
 </div>
-<div class="section level4">
-<h4 id="saving-extracted-variables-directly-to-a-disk-drive-and-utilising-raurums-suggested-directory-system">Saving extracted variables directly to a disk drive, and utilising
-rAURUMs suggested directory system<a class="anchor" aria-label="anchor" href="#saving-extracted-variables-directly-to-a-disk-drive-and-utilising-raurums-suggested-directory-system"></a>
+<div class="section level4" number="3.3.4">
+<h4 id="saving-extracted-variables-directly-to-a-disk-drive-and-utilising-raurums-suggested-directory-system">
+<span class="header-section-number">3.3.4</span> Saving extracted
+variables directly to a disk drive, and utilising rAURUMs suggested
+directory system<a class="anchor" aria-label="anchor" href="#saving-extracted-variables-directly-to-a-disk-drive-and-utilising-raurums-suggested-directory-system"></a>
 </h4>
 <p>So far all extracted variables (using functions from section 3.3.1
 and 3.3.2) have been read into the R workspace by specifying
@@ -1152,11 +1170,11 @@ examples:</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:21:15.903275</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:23:08.646199</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:21:15.921225</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:23:08.659452</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:21:15.933179</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:23:08.670739</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">## Disconnect</span></span>
@@ -1196,8 +1214,10 @@ drive in an .rds file, and can be read in using:</p>
 step 6 (i.e. <code>extract_test_var</code>,
 <code>extract_time_until</code> or <code>db_query</code>).</p>
 </div>
-<div class="section level4">
-<h4 id="extracting-longitudinal-datatime-varying-covariates">Extracting longitudinal data/time varying covariates<a class="anchor" aria-label="anchor" href="#extracting-longitudinal-datatime-varying-covariates"></a>
+<div class="section level4" number="3.3.5">
+<h4 id="extracting-longitudinal-datatime-varying-covariates">
+<span class="header-section-number">3.3.5</span> Extracting
+longitudinal data/time varying covariates<a class="anchor" aria-label="anchor" href="#extracting-longitudinal-datatime-varying-covariates"></a>
 </h4>
 <p>All of the functions in section 3.3.1 and 3.3.2 have the option to
 extract data at a given time point post index date (specified through
@@ -1208,8 +1228,10 @@ directly to the disk drive (<code>out_save_disk = TRUE</code>), the time
 at which data was extracted from, <code>t</code>, will be added to the
 file name by default.</p>
 </div>
-<div class="section level4">
-<h4 id="working-with-linked-data">Working with linked data<a class="anchor" aria-label="anchor" href="#working-with-linked-data"></a>
+<div class="section level4" number="3.3.6">
+<h4 id="working-with-linked-data">
+<span class="header-section-number">3.3.6</span> Working with linked
+data<a class="anchor" aria-label="anchor" href="#working-with-linked-data"></a>
 </h4>
 <p>This worked example has overlooked how to work with linked data.
 Linked data can be added to the SQLite database. The primary diagnosis
@@ -1228,8 +1250,9 @@ into R and dealt with in the R workspace.</p>
 </div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="discussion">Discussion<a class="anchor" aria-label="anchor" href="#discussion"></a>
+<div class="section level2" number="4">
+<h2 id="discussion">
+<span class="header-section-number">4</span> Discussion<a class="anchor" aria-label="anchor" href="#discussion"></a>
 </h2>
 <p><strong>rcprd</strong> is an R package which allows users to process
 CPRD Aurum data in R in a consistent and computationally efficiency
@@ -1324,8 +1347,9 @@ projects. <strong>rcprd</strong> will be actively maintained for the
 foreseeable future. Suggestions for improvement are encouraged and can
 be posted on GitHub: <a href="https://github.com/alexpate30/calibmsm" class="external-link uri">https://github.com/alexpate30/calibmsm</a>.</p>
 </div>
-<div class="section level2">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<div class="section level2" number="5">
+<h2 id="references">
+<span class="header-section-number">5</span> References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-ClinicalPracticeResearchDatalink2022" class="csl-entry">
