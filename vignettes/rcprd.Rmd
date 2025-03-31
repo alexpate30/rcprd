@@ -56,19 +56,28 @@ where $X\in{1,2,3,...}$ and $Y\in{01,02,03,...}$. Note that the prefix to the fi
 
 Our recommended process for developing an analysis-ready dataset is as follows (see Figure 1 for a visual representation of this):
 
-* Step 1: Define cohort of interest by applying inclusion/exclusion criteria which can be applied using only the patient file.
-* Step 2.1: Read medical/prescription/other data for cohort of interest into R and write into an SQLite database.
-* Step 2.2: [CONDITIONAL ON EXCLUSION CRITERIA] Query this SQLite database for specific codes and tests to apply remaining inclusion/exclusion criteria that are dependent on medical history.
-* Step 2.3: [Optional] Reduce SQLite database to only contain data on individuals in final cohort. This may be worthwhile if the inclusion/exclusion criteria in step 3 excluded a large number of individuals. This will mean future queries into the SQLite database will run much quicker.
-* Step 3: Query this SQLite database for specific codes and tests to create variables for each individual in the cohort. These are stored as .rds objects, which R data analysts will be familiar with.
-* Step 4: Combine extracted variables into an analysis-ready dataset, also stored as an .rds object.
+* Step 1: Extract initial cohort using extract_cohort() and apply initial inclusion/exclusion criteria which can be applied using only the patient file.
+* Q1: Do the inclusion/exclusion criteria depend on primary care data?
+  +	If yes -> (proceed to step 2)
+  + If no -> (proceed to Q2)
+* Step 2: For patients that meet inclusion/exclusion criteria from step 1, add relevant primary care data into an SQLite database using cprd_extract().
+* Step 3: Query SQLite database in order to apply further inclusion/exclusion criteria.
+* Q2: Do the inclusion/exclusion criteria depend on linked data?
+  + If yes -> (proceed to step 4)
+  + If no -> (proceed to step 5)
+* Step 4: Request type 1 linked data^* for individuals and apply remaining inclusion/exclusion criteria. 
+* Step 5: For patients in the final cohort, add relevant primary care data into an SQLite database using cprd_extract(). If an SQLite database was already created in step 2, and only a small number of individuals were excluded in steps 3 and 4, consider skipping this step. However, if a large number of individuals were excluded, it is worthwhile to create the new SQLite database, as it will be much smaller and future queries for extracting variables will run much quicker.
+* Step 6: Query this SQLite database for specific codes and tests to create variables for each individual in the cohort. These are stored as .rds objects, which R data analysts will be familiar with.
+* Step 7: Combine extracted variables into an analysis-ready dataset, also stored as an .rds object.
+
+^*type 1 linked data is defined as “linked data required in order to finalise the study population”
 
 ```{r, echo = FALSE, out.width = "100%", fig.cap = "Figure 1: Flowchart for recommended data extraction process. Blue boxes denoate data files. Orange boxes denote application of rcprd functions."}
 #![Figure 1: Flowchart for recommended data extraction process](){width = 100%}
 knitr::include_graphics("FlowChart.png")
 ```
 
-Step 2.2 only needs to be applied if there are inclusion/exclusion criteria dependent on data stored outside of the patient file, for example, excluding individuals with a certain medical condition or being prescribed a particular drug. Step 2.3, to remove data on the individuals excluded in step 2.2, is optional. The process can be done entirely within R using rcprd functions, without any specialist understanding of SQLite databases. We recommend this process because once set up, querying the SQLite database is computationally much quicker than reading each of the raw files into the R workspace and querying these separately. It also reduces the probability of errors induced from creating numerous loops through the raw data files. We now move onto a worked example, where we showcase how to implement the above process using **rcprd** and the functions which are detailed in Table 1.
+The process can be done entirely within R using rcprd functions, without any specialist understanding of SQLite databases. We recommend this process because once set up, querying the SQLite database is computationally much quicker than reading each of the raw files into the R workspace and querying these separately. It also reduces the probability of errors induced from creating numerous loops through the raw data files. We now move onto a worked example, where we showcase how to implement the above process using **rcprd** and the functions which are detailed in Table 1.
 
 ```{r, echo = FALSE, out.width = "100%", fig.cap = "Table 1: Table of rcprd functions"}
 #![Table 1: Table of rcprd functions](FunctionTable20240906.png){width = 100%}
