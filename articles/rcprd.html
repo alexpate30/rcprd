@@ -523,8 +523,8 @@ files into the SQLite database. If the connection
 case here, it will be overwritten when running
 <code>cprd_extract</code>. The directory containing the files should be
 specified using <code>filepath</code>. It will only read in and add
-files with the text string specified in <code>filetype</code>, which
-takes values in
+files with the text string specified in <code>filetype</code> in their
+file name. The <code>filetype</code> argument takes values in
 <code>c("observation", "drugissue", "referral", "problem", "consultation")</code>.
 We then query the first three rows of this database, and note they are
 the same as previously.</p>
@@ -534,11 +534,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 10:55:19.546691</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:21:14.148244</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 10:55:19.564093</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:21:14.165146</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 10:55:19.576209</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:21:14.177063</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows</span></span>
@@ -565,11 +565,11 @@ the same as previously.</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, </span>
 <span>             filetype <span class="op">=</span> <span class="st">"drugissue"</span>, subset_patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 10:55:19.658807</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 16:21:14.259022</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 10:55:19.675381</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 16:21:14.27545</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 10:55:19.687198</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 16:21:14.287306</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### List tables</span></span>
@@ -591,15 +591,23 @@ the same as previously.</p>
 <span></span>
 <span><span class="co">### Disconnect</span></span>
 <span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></code></pre></div>
-<p>The string to match on, function to read in the raw data, and the
-name of the table in the SQLite database, can be altered using the
-<code>str_match</code>, <code>extract_txt_func</code> and
-<code>table_name</code> arguments respectively. Note that this function
-may run for a considerable period of time when working with the entire
-CPRD AURUM database, and therefore it is not recommended to run
-interactively. While creation of the SQLite database may be time
-consuming, subsequent queries will be far more efficient, so this is
-short term pain for a long term gain.</p>
+<p>The string in the file name to match on, function to read in the raw
+data, and the name of the table in the SQLite database, can be altered
+using the <code>str_match</code>, <code>extract_txt_func</code> and
+<code>table_name</code> arguments respectively. Note the use of
+<code>str_match</code> may be of particular importance if the naming
+convention of the raw data differs from what we have described above.
+The argument <code>rm_duplicates = TRUE</code> can be specified to
+de-duplicate records before adding into the SQLite database. This will
+increase computation time, and the derivation of many variables will not
+be effected by having duplicate records, so consider carefully whether
+it’s necessary to apply this step or not. There will also be the
+opportunity to de-duplicate the records later on when querying the data.
+Note that <code>cprd_extract</code> may run for a considerable period of
+time when working with the entire CPRD AURUM database, and therefore it
+is not recommended to run interactively. While creation of the SQLite
+database may be time consuming, subsequent queries will be far more
+efficient, so this is short term pain for a long term gain.</p>
 </div>
 <div class="section level4">
 <h4 id="add-all-relevant-files-to-sqlite-database-in-a-computationally-efficient-manner-using-the-set-functionality-">Add all relevant files to SQLite database in a computationally
@@ -636,21 +644,17 @@ variable is the same for all individuals in this cohort, however this
 will not be the case in practice.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_cohort.html">extract_cohort</a></span><span class="op">(</span>filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>, patids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span><span class="op">)</span>, set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">pat</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    4 obs. of  13 variables:</span></span>
-<span><span class="co">#&gt;  $ patid         : chr  "1" "3" "4" "6"</span></span>
-<span><span class="co">#&gt;  $ pracid        : int  49 98 53 54</span></span>
-<span><span class="co">#&gt;  $ usualgpstaffid: chr  "6" "43" "72" "11"</span></span>
-<span><span class="co">#&gt;  $ gender        : int  2 1 2 1</span></span>
-<span><span class="co">#&gt;  $ yob           : int  1984 1930 1915 1914</span></span>
-<span><span class="co">#&gt;  $ mob           : int  NA NA NA NA</span></span>
-<span><span class="co">#&gt;  $ emis_ddate    : Date, format: "1976-11-21" "1972-06-01" ...</span></span>
-<span><span class="co">#&gt;  $ regstartdate  : Date, format: "1940-07-24" "1913-07-02" ...</span></span>
-<span><span class="co">#&gt;  $ patienttypeid : int  58 81 10 85</span></span>
-<span><span class="co">#&gt;  $ regenddate    : Date, format: "1996-08-25" "1997-04-24" ...</span></span>
-<span><span class="co">#&gt;  $ acceptable    : int  1 1 0 1</span></span>
-<span><span class="co">#&gt;  $ cprd_ddate    : Date, format: "1935-03-17" "1912-04-27" ...</span></span>
-<span><span class="co">#&gt;  $ set           : num  1 1 1 1</span></span></code></pre></div>
+<span><span class="va">pat</span></span>
+<span><span class="co">#&gt;   patid pracid usualgpstaffid gender  yob mob emis_ddate regstartdate</span></span>
+<span><span class="co">#&gt; 1     1     49              6      2 1984  NA 1976-11-21   1940-07-24</span></span>
+<span><span class="co">#&gt; 3     3     98             43      1 1930  NA 1972-06-01   1913-07-02</span></span>
+<span><span class="co">#&gt; 4     4     53             72      2 1915  NA 1989-04-24   1969-07-11</span></span>
+<span><span class="co">#&gt; 6     6     54             11      1 1914  NA 1926-09-09   1970-08-28</span></span>
+<span><span class="co">#&gt;   patienttypeid regenddate acceptable cprd_ddate set</span></span>
+<span><span class="co">#&gt; 1            58 1996-08-25          1 1935-03-17   1</span></span>
+<span><span class="co">#&gt; 3            81 1997-04-24          1 1912-04-27   1</span></span>
+<span><span class="co">#&gt; 4            10 1951-09-05          0 1921-02-13   1</span></span>
+<span><span class="co">#&gt; 6            85 1983-03-14          1 1963-08-27   1</span></span></code></pre></div>
 <p>The patient file read in is the same as previously, with the addition
 of the <code>set</code> column. This file can be reduced to just the
 <code>patid</code> and <code>set</code> columns, and used as the input
@@ -670,11 +674,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 10:55:19.849257</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:21:14.444708</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 10:55:19.863497</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:21:14.458773</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 10:55:19.876085</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:21:14.470967</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Add drugissue files</span></span>
@@ -684,11 +688,11 @@ the data.frame provided to <code>subset_patids</code>.</p>
 <span>             subset_patids <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>             use_set <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 10:55:19.892391</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2025-03-31 16:21:14.487042</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 10:55:19.905776</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2025-03-31 16:21:14.500247</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 10:55:19.917715</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2025-03-31 16:21:14.512088</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">### Query first three rows of each table</span></span>
@@ -792,10 +796,12 @@ and is specified through the <code>indexdt</code> argument.</p>
 <span>                 db_open <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
 <span>                 tab <span class="op">=</span> <span class="st">"observation"</span>,</span>
 <span>                 return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ho</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    4 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;  $ patid: chr  "1" "3" "4" "6"</span></span>
-<span><span class="co">#&gt;  $ ho   : int  0 0 0 1</span></span></code></pre></div>
+<span><span class="va">ho</span></span>
+<span><span class="co">#&gt;   patid ho</span></span>
+<span><span class="co">#&gt; 1     1  0</span></span>
+<span><span class="co">#&gt; 3     3  0</span></span>
+<span><span class="co">#&gt; 4     4  0</span></span>
+<span><span class="co">#&gt; 6     6  1</span></span></code></pre></div>
 <p>The second is <code>extract_time_until</code>, which defines a
 time-to-event/survival variable. This has two components, the time until
 the first record of a specified code or censoring, and an indicator for
@@ -806,6 +812,9 @@ can be specified through <code>censdt</code>.</p>
 <code class="sourceCode R"><span><span class="co">### Add an censoring date to cohort</span></span>
 <span><span class="va">pat</span><span class="op">$</span><span class="va">fup_end</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"01/01/2024"</span>, format <span class="op">=</span> <span class="st">"%d/%m/%Y"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co">### Define codelist</span></span>
+<span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="st">"51268016"</span></span>
+<span></span>
 <span><span class="co">### Extract a time until variable using extract_time_until</span></span>
 <span><span class="va">time_until</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_until.html">extract_time_until</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>, </span>
 <span>                                 codelist_vector <span class="op">=</span> <span class="va">codelist</span>, </span>
@@ -814,11 +823,12 @@ can be specified through <code>censdt</code>.</p>
 <span>                                 db_open <span class="op">=</span> <span class="va">aurum_extract</span>, </span>
 <span>                                 tab <span class="op">=</span> <span class="st">"observation"</span>,</span>
 <span>                                 return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">time_until</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    4 obs. of  3 variables:</span></span>
-<span><span class="co">#&gt;  $ patid        : chr  "1" "3" "4" "6"</span></span>
-<span><span class="co">#&gt;  $ var_time     : num  1461 1461 1461 1461</span></span>
-<span><span class="co">#&gt;  $ var_indicator: num  0 0 0 0</span></span></code></pre></div>
+<span><span class="va">time_until</span></span>
+<span><span class="co">#&gt;   patid var_time var_indicator</span></span>
+<span><span class="co">#&gt; 1     1     1461             0</span></span>
+<span><span class="co">#&gt; 2     3     1461             0</span></span>
+<span><span class="co">#&gt; 3     4     1461             0</span></span>
+<span><span class="co">#&gt; 4     6     1461             0</span></span></code></pre></div>
 <p>The third is <code>extract_test</code>, which will extract the most
 recent test result in a given time frame. The number of days before and
 after the index date to search for results are specified through
@@ -835,10 +845,12 @@ through <code>lower_bound</code> and <code>upper_bound</code>.</p>
 <span>                          time_post <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>                          time_prev <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>                          return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    4 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;  $ patid: chr  "1" "3" "4" "6"</span></span>
-<span><span class="co">#&gt;  $ value: num  NA NA NA 28</span></span></code></pre></div>
+<span><span class="va">test_data</span></span>
+<span><span class="co">#&gt;   patid value</span></span>
+<span><span class="co">#&gt; 1     1    NA</span></span>
+<span><span class="co">#&gt; 2     3    NA</span></span>
+<span><span class="co">#&gt; 3     4    NA</span></span>
+<span><span class="co">#&gt; 4     6    86</span></span></code></pre></div>
 <p>More than one observation can be returned by specifying
 <code>numobs</code>. Metadata of the test result, such as the unit of
 measurement, date recorded, and the medical code, can be returned by
@@ -855,7 +867,48 @@ analysis-ready dataset (step 7).</p>
 <span><span class="co">#&gt; 1     1      2 1984  0     1461             0    NA</span></span>
 <span><span class="co">#&gt; 2     3      1 1930  0     1461             0    NA</span></span>
 <span><span class="co">#&gt; 3     4      2 1915  0     1461             0    NA</span></span>
-<span><span class="co">#&gt; 4     6      1 1914  1     1461             0    28</span></span></code></pre></div>
+<span><span class="co">#&gt; 4     6      1 1914  1     1461             0    86</span></span></code></pre></div>
+<p>The codelists can also be specified through an R
+<code>data.frame</code> which must contain either a <em>medcodeid</em>
+or <em>prodcodeid</em> column. This may allow the user to run
+sensitivity analyses more easily if they would like to extract the same
+variable for different subgroups of the same codelist. For example:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_codelist_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"condition"</span> <span class="op">=</span> <span class="st">"mycondition"</span>, medcodeid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"221511000000115"</span>, <span class="st">"51268016"</span><span class="op">)</span>, <span class="st">"subgroup"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"subgroup1"</span>, <span class="st">"subgroup2"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/extract_test_data.html">extract_test_data</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span>
+<span>                  codelist_df <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">my_codelist_df</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"subgroup1"</span><span class="op">)</span>,</span>
+<span>                  indexdt <span class="op">=</span> <span class="st">"fup_start"</span>,</span>
+<span>                  db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span>
+<span>                  time_post <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                  time_prev <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>                  return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   patid value   condition       medcodeid  subgroup</span></span>
+<span><span class="co">#&gt; 1     1    NA        &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2     3    68 mycondition 221511000000115 subgroup1</span></span>
+<span><span class="co">#&gt; 3     4    NA        &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4     6    NA        &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/extract_test_data.html">extract_test_data</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span>
+<span>                  codelist_df <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">my_codelist_df</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"subgroup2"</span><span class="op">)</span>,</span>
+<span>                  indexdt <span class="op">=</span> <span class="st">"fup_start"</span>,</span>
+<span>                  db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span>
+<span>                  time_post <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                  time_prev <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>                  return_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   patid value   condition medcodeid  subgroup</span></span>
+<span><span class="co">#&gt; 1     1    NA        &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2     3    NA        &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3     4    NA        &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4     6    86 mycondition  51268016 subgroup2</span></span></code></pre></div>
+<p>Codelists can be specified in this way for any of the functions in
+this section, or sections 3.3.2 and 3.3.3. However, the extra variable
+from the codelist (i.e. the <code>condition</code> and
+<code>subgroup</code> variables in the above example) will only be
+returned in the output when it is meaningful to do so. For example, in
+<code>extract_ho</code>, an individual may have many matching codes in
+their medical history, and therefore it’s unclear which should be
+returned.</p>
 </div>
 <div class="section level4">
 <h4 id="functions-for-extracting-specific-variables">Functions for extracting specific variables<a class="anchor" aria-label="anchor" href="#functions-for-extracting-specific-variables"></a>
@@ -894,17 +947,23 @@ metres in order to calculate BMI scores. This is done through the use of
 the <code>numunitid</code> variable in the observation file. For both
 BMI and cholesterol/high-density lipoprotein ratio, the variable can be
 either be identified directly, or calculated from the component
-mesaures. In each case, the component parts must be recorded in the
+measures. In each case, the component parts must be recorded in the
 specified time range relative to the index date. For smoking status, if
 an individuals most recent medical observation was recorded as a
 non-smoker, but their medical record shows previous smoking, the most
-recent record is changed to ex-smoker. The steps for cleaning the data
-and extracting these variables are provided in the vignette titled <a href="https://alexpate30.github.io/rcprd/articles/Details-on-algorithms-for-extracting-specific-variables.html">Details-on-algorithms-for-extracting-specific-variables</a>.
+recent record is changed to ex-smoker. For diabetes status, diabetes if
+often recorded with generic codes such as “diabetes mellitus”, which
+does not specify which type. This is dealt with by assuming all generic
+codes refer to type 2 diabetes, unless that individual also has a
+specific type 1 diabetes code, in which case they will be determined to
+have type 1 diabetes as opposed to type 2.</p>
+<p>The full details on extracting these variables are provided in the
+vignette titled <a href="https://alexpate30.github.io/rcprd/articles/Details-on-algorithms-for-extracting-specific-variables.html">Details-on-algorithms-for-extracting-specific-variables</a>.
 However, it is important to state, that the correct way to define a
 variable may change from study to study. Therefore when using these
 functions to extract variables, we encourage taking the time to ensure
 that the way the variable is extracted matches the definition in ones
-study.</p>
+study, and edit these functions and algorithms accordingly.</p>
 </div>
 <div class="section level4">
 <h4 id="functions-for-database-queries-and-custom-variable-extraction">Functions for database queries and custom variable extraction<a class="anchor" aria-label="anchor" href="#functions-for-database-queries-and-custom-variable-extraction"></a>
@@ -916,8 +975,12 @@ are not covered in the previous two sections.</p>
 <p>The <code>db_query</code> function will query the SQLite database for
 observations where the <em>medcodeid</em> or <em>prodcodeid</em> is in a
 specified codelist. For example, we can query the <em>observation</em>
-table for all codes with <em>medcodeid</em> of 187341000000114.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+table for all codes with <em>medcodeid</em> of 187341000000114. Setting
+<code>rm_duplicates = TRUE</code> will de-duplicate the output. If the
+codelist is specified through an R <code>data.frame</code> with the
+<code>codelist_df</code> argument, the returned query will also contain
+the variables from the codelist <code>data.frame</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db_query</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/db_query.html">db_query</a></span><span class="op">(</span>db_open <span class="op">=</span> <span class="va">aurum_extract</span>,</span>
 <span>                     tab <span class="op">=</span><span class="st">"observation"</span>,</span>
 <span>                     codelist_vector <span class="op">=</span> <span class="st">"187341000000114"</span><span class="op">)</span></span>
@@ -931,15 +994,15 @@ table for all codes with <em>medcodeid</em> of 187341000000114.</p>
 <span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;     &lt;int&gt;     &lt;int&gt;       &lt;num&gt;        &lt;num&gt;    &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1: 187341000000114    84        79        67          24           22         5</span></span>
 <span><span class="co">#&gt; 2: 187341000000114    28        20         5          41           97        92</span></span></code></pre></div>
-<p>The <code>combine_query_boolean</code> function will assess whether
-each individual in a specified cohort (<code>pat</code>) has an
+<p>The <code>combine_query_boolean</code> function will then assess
+whether each individual in a specified cohort (<code>pat</code>) has an
 observation in the queried data (obtained using <code>db_query</code>)
 within a specified time frame from the index date, returning a 0/1
 vector. The <code>cohort</code> must contain a variable called
 <code>indexdt</code> containing the index date. This function is useful
 when defining ‘history of’ type variables, where we want to know if
 there is any record of a given condition prior to the index date.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Add an index date to pat</span></span>
 <span><span class="va">pat</span><span class="op">$</span><span class="va">indexdt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"01/01/2020"</span>, format <span class="op">=</span> <span class="st">"%d/%m/%Y"</span><span class="op">)</span></span>
 <span></span>
@@ -956,65 +1019,50 @@ queried data and return a specified number of observations
 This is useful when extracting test data and requiring access to the
 values of the tests, or when specifying variables that require &gt; 1
 observation within a certain time frame (i.e. two prescriptions within a
-month prior to index date). For queries from the
-<code>observation</code> table, the query type can be specified as
-<code>"med"</code> or <code>"test"</code>. Inputting
+month prior to index date). Setting <code>reduce_output = TRUE</code>
+will remove the majority of variables from the merged datasets. For
+queries from the <code>observation</code> table, the query type can be
+specified as <code>"med"</code> or <code>"test"</code>. Inputting
 <code>query_type = "med"</code> will just return the date of the
 observations and the <em>medcodeid</em>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Combine query with cohort retaining most recent three records</span></span>
 <span><span class="va">combine.query</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_query.html">combine_query</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span>
 <span>                               db_query <span class="op">=</span> <span class="va">db_query</span>,</span>
 <span>                               query_type <span class="op">=</span> <span class="st">"med"</span>,</span>
-<span>                               numobs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span>                               numobs <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                               reduce_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="va">combine.query</span></span>
-<span><span class="co">#&gt;     patid pracid.x usualgpstaffid gender   yob   mob emis_ddate regstartdate</span></span>
-<span><span class="co">#&gt;    &lt;char&gt;    &lt;int&gt;         &lt;char&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;Date&gt;       &lt;Date&gt;</span></span>
-<span><span class="co">#&gt; 1:      6       54             11      1  1914    NA 1926-09-09   1970-08-28</span></span>
-<span><span class="co">#&gt;    patienttypeid regenddate acceptable cprd_ddate   set  fup_start    fup_end</span></span>
-<span><span class="co">#&gt;            &lt;int&gt;     &lt;Date&gt;      &lt;int&gt;     &lt;Date&gt; &lt;num&gt;     &lt;Date&gt;     &lt;Date&gt;</span></span>
-<span><span class="co">#&gt; 1:            85 1983-03-14          1 1963-08-27     1 2020-01-01 2024-01-01</span></span>
-<span><span class="co">#&gt;       indexdt consid pracid.y  obsid    obsdate  enterdate staffid parentobsid</span></span>
-<span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt;    &lt;int&gt; &lt;char&gt;     &lt;Date&gt;     &lt;Date&gt;  &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 2020-01-01     40        1     41 1929-09-06 1951-01-12      98          80</span></span>
-<span><span class="co">#&gt;          medcodeid value numunitid obstypeid numrangelow numrangehigh probobsid</span></span>
-<span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;     &lt;int&gt;     &lt;int&gt;       &lt;num&gt;        &lt;num&gt;    &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 187341000000114    28        20         5          41           97        92</span></span></code></pre></div>
+<span><span class="co">#&gt;     patid       medcodeid    obsdate</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;          &lt;char&gt;     &lt;Date&gt;</span></span>
+<span><span class="co">#&gt; 1:      6 187341000000114 1929-09-06</span></span></code></pre></div>
 <p>For <code>query_type = "test"</code>, the <code>value</code> and
 other relevant information will also be returned, and those with NA
 values removed (although this can be altered through argument
-<code>value_na_rm</code>). We then close the connection to the
+<code>value_na_rm</code>).We then close the connection to the
 database.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Extract a history of type variable using extract_ho</span></span>
 <span><span class="va">combine.query</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_query.html">combine_query</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span>
 <span>                               db_query <span class="op">=</span> <span class="va">db_query</span>,</span>
 <span>                               query_type <span class="op">=</span> <span class="st">"test"</span>,</span>
-<span>                               numobs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span>                               numobs <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                               reduce_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="va">combine.query</span></span>
-<span><span class="co">#&gt;     patid pracid.x usualgpstaffid gender   yob   mob emis_ddate regstartdate</span></span>
-<span><span class="co">#&gt;    &lt;char&gt;    &lt;int&gt;         &lt;char&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;Date&gt;       &lt;Date&gt;</span></span>
-<span><span class="co">#&gt; 1:      6       54             11      1  1914    NA 1926-09-09   1970-08-28</span></span>
-<span><span class="co">#&gt;    patienttypeid regenddate acceptable cprd_ddate   set  fup_start    fup_end</span></span>
-<span><span class="co">#&gt;            &lt;int&gt;     &lt;Date&gt;      &lt;int&gt;     &lt;Date&gt; &lt;num&gt;     &lt;Date&gt;     &lt;Date&gt;</span></span>
-<span><span class="co">#&gt; 1:            85 1983-03-14          1 1963-08-27     1 2020-01-01 2024-01-01</span></span>
-<span><span class="co">#&gt;       indexdt consid pracid.y  obsid    obsdate  enterdate staffid parentobsid</span></span>
-<span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt;    &lt;int&gt; &lt;char&gt;     &lt;Date&gt;     &lt;Date&gt;  &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 2020-01-01     40        1     41 1929-09-06 1951-01-12      98          80</span></span>
-<span><span class="co">#&gt;          medcodeid value numunitid obstypeid numrangelow numrangehigh probobsid</span></span>
-<span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;     &lt;int&gt;     &lt;int&gt;       &lt;num&gt;        &lt;num&gt;    &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 187341000000114    28        20         5          41           97        92</span></span>
+<span><span class="co">#&gt;     patid       medcodeid    obsdate value numunitid numrangelow numrangehigh</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;          &lt;char&gt;     &lt;Date&gt; &lt;num&gt;     &lt;int&gt;       &lt;num&gt;        &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:      6 187341000000114 1929-09-06    28        20          41           97</span></span>
 <span></span>
 <span><span class="co">### Disconnect</span></span>
 <span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></code></pre></div>
 <p>If the query was from the <code>drugissue</code> table, then
 <code>query_type = "drug"</code> should be specified, and the date of
-the observations and the <em>prodcodeid</em> will be returned. The
-functions in this section do little processing of the extracted data,
-and further manipulation is required in order to define most
-variables.</p>
+the observations and the <em>prodcodeid</em> will be returned. If
+<code>reduce_output = FALSE</code>, no variables will be removed the
+output. The functions in this section can be used as building blocks to
+extract desired variables (e.g. see functions in section 3.3.2).</p>
 </div>
 <div class="section level4">
 <h4 id="saving-extracted-variables-directly-to-a-disk-drive-and-utilising-raurums-suggested-directory-system">Saving extracted variables directly to a disk drive, and utilising
@@ -1076,12 +1124,12 @@ working directory across multiple R markdown code chunks, we use
 <code>knitr::opts_knit$set</code>. To follow this section, the user
 should simply set their working directory as usual using
 <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code>.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Set working directory</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html" class="external-link">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Next, the <code><a href="../reference/create_directory_system.html">create_directory_system()</a></code> function can be used
 to generate the required directory structure.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/create_directory_system.html">create_directory_system</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -1095,7 +1143,7 @@ to generate the required directory structure.</p>
 <p>An SQLite database called “mydb.sqlite” is then created in the
 “data/sql” directory, using the same data from the previous
 examples:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Open connection</span></span>
 <span><span class="va">aurum_extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_database.html">connect_database</a></span><span class="op">(</span><span class="st">"data/sql/mydb.sqlite"</span><span class="op">)</span></span>
 <span></span>
@@ -1104,18 +1152,18 @@ examples:</p>
 <span>             filepath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"aurum_data"</span>, package <span class="op">=</span> <span class="st">"rcprd"</span><span class="op">)</span>,</span>
 <span>             filetype <span class="op">=</span> <span class="st">"observation"</span>, use_set <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 10:55:21.240318</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2025-03-31 16:21:15.903275</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 10:55:21.254317</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2025-03-31 16:21:15.921225</span></span>
 <span><span class="co">#&gt;   |                                                                              |===============================================                       |  67%</span></span>
-<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 10:55:21.270417</span></span>
+<span><span class="co">#&gt; Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2025-03-31 16:21:15.933179</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
 <span><span class="co">## Disconnect</span></span>
 <span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">aurum_extract</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, a code list called <em>mylist.csv</em> is created and saved
 into the <em>codelists/analysis/</em> directory.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### Define codelist</span></span>
 <span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>medcodeid <span class="op">=</span> <span class="st">"187341000000114"</span><span class="op">)</span></span>
 <span></span>
@@ -1124,7 +1172,7 @@ into the <em>codelists/analysis/</em> directory.</p>
 <p>The <em>mydb.sqlite</em> database can now be queried to create a
 ‘history of’ type variable using the codelist <em>mylist.csv</em>, with
 the output saved directly onto the disk drive.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_ho.html">extract_ho</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">pat</span>,</span>
 <span>           codelist <span class="op">=</span> <span class="st">"mylist"</span>,</span>
 <span>           indexdt <span class="op">=</span> <span class="st">"fup_start"</span>,</span>
@@ -1137,7 +1185,7 @@ to the SQLite database did not need to be created, the codelist did not
 need to be in the R workspace, and there is no output from this
 function. Instead the extracted variable has been saved onto the disk
 drive in an .rds file, and can be read in using:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/extraction/var_ho.rds"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   patid ho</span></span>
 <span><span class="co">#&gt; 1     1  0</span></span>

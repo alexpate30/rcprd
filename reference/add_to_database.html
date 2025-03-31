@@ -54,6 +54,7 @@
 <span>  <span class="va">db</span>,</span>
 <span>  extract_txt_func <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rm_duplicates <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -96,6 +97,10 @@
 
 <dt id="arg-table-name">table_name<a class="anchor" aria-label="anchor" href="#arg-table-name"></a></dt>
 <dd><p>Name of table in SQLite database that the data will be added to.</p></dd>
+
+
+<dt id="arg-rm-duplicates">rm_duplicates<a class="anchor" aria-label="anchor" href="#arg-rm-duplicates"></a></dt>
+<dd><p>TRUE/FALSE whether to remove duplicate values (default is FALSE).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
