@@ -9,6 +9,8 @@
 #' @param codelist_type2 Name of codelist (stored on hard disk in "codelists/analysis/") for type 2 diabetes to query the database with.
 #' @param codelist_type1_vector Vector of codes for type 1 diabetes to query the database with.
 #' @param codelist_type2_vector Vector of codes for type 2 diabetes to query the database with.
+#' @param codelist_type1_df data.frame of codes for type 1 diabetes to query the database with.
+#' @param codelist_type2_df data.frame of codes for type 2 diabetes to query the database with.
 #' @param indexdt Name of variable which defines index date in `cohort`.
 #' @param t Number of days after index date at which to calculate variable.
 #' @param t_varname Whether to add `t` to `varname`.
@@ -77,6 +79,8 @@ extract_diabetes <- function(cohort,
                              codelist_type2 = NULL,
                              codelist_type1_vector = NULL,
                              codelist_type2_vector = NULL,
+                             codelist_type1_df = NULL,
+                             codelist_type2_df = NULL,
                              indexdt,
                              t = NULL,
                              t_varname = TRUE,
@@ -121,7 +125,8 @@ extract_diabetes <- function(cohort,
                            db_filepath = db_filepath,
                            tab = "observation",
                            table_name = table_name,
-                           codelist_vector = codelist_type1_vector)
+                           codelist_vector = codelist_type1_vector,
+                           codelist_df = codelist_type1_df)
 
   db.qry.type2 <- db_query(codelist_type2,
                            db_open = db_open,
@@ -129,7 +134,8 @@ extract_diabetes <- function(cohort,
                            db_filepath = db_filepath,
                            tab = "observation",
                            table_name = table_name,
-                           codelist_vector = codelist_type2_vector)
+                           codelist_vector = codelist_type2_vector,
+                           codelist_df = codelist_type2_df)
 
   ### Identify which individuals have a history of type 1 or type 2
   cohort[,"t1dia"] <- combine_query_boolean(db_query = db.qry.type1,

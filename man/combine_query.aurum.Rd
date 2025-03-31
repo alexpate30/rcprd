@@ -15,7 +15,7 @@
   numobs = 1,
   value_na_rm = TRUE,
   earliest_values = FALSE,
-  reduce_output = TRUE
+  reduce_output = FALSE
 )
 }
 \arguments{

@@ -11,6 +11,8 @@ extract_diabetes(
   codelist_type2 = NULL,
   codelist_type1_vector = NULL,
   codelist_type2_vector = NULL,
+  codelist_type1_df = NULL,
+  codelist_type2_df = NULL,
   indexdt,
   t = NULL,
   t_varname = TRUE,
@@ -36,6 +38,10 @@ extract_diabetes(
 \item{codelist_type1_vector}{Vector of codes for type 1 diabetes to query the database with.}
 
 \item{codelist_type2_vector}{Vector of codes for type 2 diabetes to query the database with.}
+
+\item{codelist_type1_df}{data.frame of codes for type 1 diabetes to query the database with.}
+
+\item{codelist_type2_df}{data.frame of codes for type 2 diabetes to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 

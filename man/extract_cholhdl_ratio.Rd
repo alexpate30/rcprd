@@ -13,6 +13,9 @@ extract_cholhdl_ratio(
   codelist_ratio_vector = NULL,
   codelist_chol_vector = NULL,
   codelist_hdl_vector = NULL,
+  codelist_ratio_df = NULL,
+  codelist_chol_df = NULL,
+  codelist_hdl_df = NULL,
   indexdt,
   t = NULL,
   t_varname = TRUE,
@@ -46,6 +49,12 @@ extract_cholhdl_ratio(
 \item{codelist_chol_vector}{Vector of codes for total cholesterol to query the database with.}
 
 \item{codelist_hdl_vector}{Vector of codes for high-density lipoprotein to query the database with.}
+
+\item{codelist_ratio_df}{data.frame of codes for ratio to query the database with.}
+
+\item{codelist_chol_df}{data.frame of codes for total cholesterol to query the database with.}
+
+\item{codelist_hdl_df}{data.frame of codes for high-density lipoprotein to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 

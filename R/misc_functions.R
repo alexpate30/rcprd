@@ -277,7 +277,8 @@ cprd_extract <- function(db,
 #' @param db_cprd CPRD Aurum ('aurum') or gold ('gold').
 #' @param tab CPRD filetype
 #' @param table_name Specify name of table in the SQLite database to be queried, if this is different from `tab`.
-#' @param codelist_vector Vector of codes to query the database with. This takes precedent over `codelist` if both are specified.
+#' @param codelist_vector Vector of codes to query the database with.
+#' @param codelist_df data.frame used to specify the codelist.
 #' @param n number of observations to output
 #'
 #' @details
@@ -288,7 +289,9 @@ cprd_extract <- function(db,
 #'
 #' Specifying `codelist` requires a specific underlying directory structure. The codelist on the hard disk must be stored in "codelists/analysis/" relative
 #' to the working directory, must be a .csv file, and contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen `tab`. The codelist can
-#' also be read in manually, and supplied as a character vector to `codelist_vector`. If `codelist_vector` is defined, this will take precedence over `codelist`.
+#' also be read in manually, and supplied as a character vector to `codelist_vector`. If the codelist is specified through an R data.frame, `codelist_df`,
+#' this must contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen `tab`. Specifying the codelist this way will retain all the other
+#' columns from `codelist_df` in the queried output.
 #'
 #' The argument `table_name` is only necessary if the name of the table being queried does not match the CPRD filetype specified in `tab`. This will occur when
 #' `str_match` is used in `cprd_extract` or `add_to_database` to create the .sqlite database.
@@ -322,6 +325,7 @@ db_query <- function(codelist = NULL,
                      tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary", "death"),
                      table_name = NULL,
                      codelist_vector = NULL,
+                     codelist_df = NULL,
                      n = NULL){
 
   # codelist = NULL
@@ -333,6 +337,11 @@ db_query <- function(codelist = NULL,
   # table_name = NULL
   # codelist_vector = NULL
 
+  ### Error
+  if (as.numeric(!is.null(codelist)) + as.numeric(!is.null(codelist_vector)) + as.numeric(!is.null(codelist_df)) > 1){
+    stop("Cannot specify more than one codelist")
+  }
+
   ### Match args
   db_cprd <- match.arg(db_cprd)
 
@@ -340,7 +349,7 @@ db_query <- function(codelist = NULL,
   if (is.null(table_name)){table_name <- tab}
 
   ### If no codelist specified, write a simple query
-  if (is.null(codelist_vector) & is.null(codelist)){
+  if (is.null(codelist_vector) & is.null(codelist) & is.null(codelist_df)){
     qry <- paste("SELECT * FROM", table_name)
 
   } else {
@@ -351,8 +360,12 @@ db_query <- function(codelist = NULL,
 
     ### Extract codelist
     if (is.null(codelist_vector)){
-      codelist <- data.table::fread(file = paste(getwd(),"/codelists/analysis/", codelist, ".csv", sep = ""),
-                                    sep = ",", header = TRUE, colClasses = "character")
+      if (!is.null(codelist)){
+        codelist <- data.table::fread(file = paste(getwd(),"/codelists/analysis/", codelist, ".csv", sep = ""),
+                                      sep = ",", header = TRUE, colClasses = "character")
+      } else if (!is.null(codelist_df)){
+        codelist <- codelist_df
+      }
       if (tab %in% c("hes_primary", "death")){
         codelist <- codelist$ICD10
       } else if (db_cprd == "aurum"){
@@ -425,6 +438,11 @@ db_query <- function(codelist = NULL,
   ### Disconnect
   if (is.null(db_open)){
     RSQLite::dbDisconnect(mydb)
+  }
+
+  ### If codelist_df specified, merge with this to retain variables
+  if (!is.null(codelist_df)){
+    db_query <- dplyr::left_join(db_query, codelist_df, by = dplyr::join_by(medcodeid))
   }
 
   ### Format dates
@@ -705,7 +723,7 @@ combine_query.aurum <- function(db_query,
                                 numobs = 1,
                                 value_na_rm = TRUE,
                                 earliest_values = FALSE,
-                                reduce_output = TRUE){
+                                reduce_output = FALSE){
 
   ### Merge cohort with the database query keeping observations that are in both
   cohort_qry <- merge(cohort, db_query, by.x = "patid", by.y = "patid")

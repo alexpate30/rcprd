@@ -9,6 +9,7 @@ extract_test_data_var(
   varname = NULL,
   codelist = NULL,
   codelist_vector = NULL,
+  codelist_df = NULL,
   indexdt,
   t = NULL,
   t_varname = TRUE,
@@ -34,6 +35,8 @@ extract_test_data_var(
 \item{codelist}{Name of codelist (stored on hard disk) to query the database with.}
 
 \item{codelist_vector}{Vector of codes to query the database with. This takes precedent over \code{codelist} if both are specified.}
+
+\item{codelist_df}{data.frame used to specify the codelist.}
 
 \item{indexdt}{Name of variable in \code{cohort} which specifies the index date. The extracted variable will be calculated relative to this.}
 

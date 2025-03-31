@@ -17,6 +17,11 @@ extract_smoking(
   codelist_light_vector = NULL,
   codelist_mod_vector = NULL,
   codelist_heavy_vector = NULL,
+  codelist_non_df = NULL,
+  codelist_ex_df = NULL,
+  codelist_light_df = NULL,
+  codelist_mod_df = NULL,
+  codelist_heavy_df = NULL,
   indexdt,
   t = NULL,
   t_varname = TRUE,
@@ -54,6 +59,16 @@ extract_smoking(
 \item{codelist_mod_vector}{Vector of codes for moderate smoker to query the database with.}
 
 \item{codelist_heavy_vector}{Vector of codes for heavy smoker to query the database with.}
+
+\item{codelist_non_df}{data.frame of codes for non-smoker to query the database with.}
+
+\item{codelist_ex_df}{data.frame of codes for ex-smoker to query the database with.}
+
+\item{codelist_light_df}{data.frame of codes for light smoker to query the database with.}
+
+\item{codelist_mod_df}{data.frame of codes for moderate smoker to query the database with.}
+
+\item{codelist_heavy_df}{data.frame of codes for heavy smoker to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 

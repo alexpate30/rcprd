@@ -11,6 +11,9 @@
 #' @param codelist_ratio_vector Vector of codes for ratio to query the database with.
 #' @param codelist_chol_vector Vector of codes for total cholesterol to query the database with.
 #' @param codelist_hdl_vector Vector of codes for high-density lipoprotein to query the database with.
+#' @param codelist_ratio_df data.frame of codes for ratio to query the database with.
+#' @param codelist_chol_df data.frame of codes for total cholesterol to query the database with.
+#' @param codelist_hdl_df data.frame of codes for high-density lipoprotein to query the database with.
 #' @param indexdt Name of variable which defines index date in `cohort`.
 #' @param t Number of days after index date at which to calculate variable.
 #' @param t_varname Whether to add `t` to `varname`.
@@ -88,6 +91,9 @@ extract_cholhdl_ratio <- function(cohort,
                                   codelist_ratio_vector = NULL,
                                   codelist_chol_vector = NULL,
                                   codelist_hdl_vector = NULL,
+                                  codelist_ratio_df = NULL,
+                                  codelist_chol_df = NULL,
+                                  codelist_hdl_df = NULL,
                                   indexdt,
                                   t = NULL,
                                   t_varname = TRUE,
@@ -144,7 +150,8 @@ extract_cholhdl_ratio <- function(cohort,
                            db_filepath = db_filepath,
                            tab = "observation",
                            table_name = table_name,
-                           codelist_vector = codelist_ratio_vector)
+                           codelist_vector = codelist_ratio_vector,
+                           codelist_df = codelist_ratio_df)
 
   db.qry.chol <- db_query(codelist_chol,
                           db_open = db_open,
@@ -152,7 +159,8 @@ extract_cholhdl_ratio <- function(cohort,
                           db_filepath = db_filepath,
                           tab = "observation",
                           table_name = table_name,
-                          codelist_vector = codelist_chol_vector)
+                          codelist_vector = codelist_chol_vector,
+                          codelist_df = codelist_chol_df)
 
   db.qry.hdl <- db_query(codelist_hdl,
                          db_open = db_open,
@@ -160,7 +168,8 @@ extract_cholhdl_ratio <- function(cohort,
                          db_filepath = db_filepath,
                          tab = "observation",
                          table_name = table_name,
-                         codelist_vector = codelist_hdl_vector)
+                         codelist_vector = codelist_hdl_vector,
+                         codelist_df = codelist_hdl_df)
 
   ### Get latest test result for ratio, chol and hdl from the last five years
   variable_dat.ratio <- combine_query(db_query = db.qry.ratio,

@@ -10,6 +10,8 @@
 #' @param codelist_drug Name of codelist (stored on hard disk in "codelists/analysis/") for prescriptions to query the database with.
 #' @param codelist_med_vector Vector of codes for medical diagnoses to query the database with.
 #' @param codelist_drug_vector Vector of codes for prescriptions to query the database with.
+#' @param codelist_med_df data.frame of codes for medical diagnoses to query the database with.
+#' @param codelist_drug_df data.frame of codes for prescriptions to query the database with.
 #' @param indexdt Name of variable which defines index date in `cohort`.
 #' @param t Number of days after index date at which to calculate variable.
 #' @param t_varname Whether to add `t` to `varname`.
@@ -51,6 +53,8 @@ extract_impotence <- function(cohort,
                               codelist_drug = NULL,
                               codelist_med_vector = NULL,
                               codelist_drug_vector = NULL,
+                              codelist_med_df = NULL,
+                              codelist_drug_df = NULL,
                               indexdt,
                               t = NULL,
                               t_varname = TRUE,
@@ -97,7 +101,8 @@ extract_impotence <- function(cohort,
                          db_filepath = db_filepath,
                          tab = "observation",
                          table_name = table_name,
-                         codelist_vector = codelist_med_vector)
+                         codelist_vector = codelist_med_vector,
+                         codelist_df = codelist_med_df)
 
   db.qry.drug <- db_query(codelist_drug,
                           db_open = db_open,
@@ -105,7 +110,8 @@ extract_impotence <- function(cohort,
                           db_filepath = db_filepath,
                           tab = "drugissue",
                           table_name = table_name,
-                          codelist_vector = codelist_drug_vector)
+                          codelist_vector = codelist_drug_vector,
+                          codelist_df = codelist_drug_df)
 
   ### Identify which individuals have a history of type 1 or type 2
   cohort[,"med"] <- combine_query_boolean(db_query = db.qry.med,

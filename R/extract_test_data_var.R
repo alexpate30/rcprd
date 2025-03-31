@@ -7,6 +7,7 @@
 #' @param varname Name of variable in the outputted data frame.
 #' @param codelist Name of codelist (stored on hard disk) to query the database with.
 #' @param codelist_vector Vector of codes to query the database with. This takes precedent over `codelist` if both are specified.
+#' @param codelist_df data.frame used to specify the codelist.
 #' @param indexdt Name of variable in `cohort` which specifies the index date. The extracted variable will be calculated relative to this.
 #' @param t Number of days after \code{indexdt} at which to extract the variable.
 #' @param t_varname Whether to alter the variable name in the outputted data frame to reflect `t`.
@@ -71,6 +72,7 @@ extract_test_data_var <- function(cohort,
                                   varname = NULL,
                                   codelist = NULL,
                                   codelist_vector = NULL,
+                                  codelist_df = NULL,
                                   indexdt,
                                   t = NULL,
                                   t_varname = TRUE,
@@ -123,7 +125,8 @@ extract_test_data_var <- function(cohort,
                      db_filepath = db_filepath,
                      tab = "observation",
                      table_name = table_name,
-                     codelist_vector = codelist_vector)
+                     codelist_vector = codelist_vector,
+                     codelist_df = codelist_df)
 
   ### Get test data for individuals in cohort, within time range and remove outliers
   variable_dat <- combine_query(db_query = db.qry,

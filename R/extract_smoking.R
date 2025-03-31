@@ -15,6 +15,11 @@
 #' @param codelist_light_vector Vector of codes for light smoker to query the database with.
 #' @param codelist_mod_vector Vector of codes for moderate smoker to query the database with.
 #' @param codelist_heavy_vector Vector of codes for heavy smoker to query the database with.
+#' @param codelist_non_df data.frame of codes for non-smoker to query the database with.
+#' @param codelist_ex_df data.frame of codes for ex-smoker to query the database with.
+#' @param codelist_light_df data.frame of codes for light smoker to query the database with.
+#' @param codelist_mod_df data.frame of codes for moderate smoker to query the database with.
+#' @param codelist_heavy_df data.frame of codes for heavy smoker to query the database with.
 #' @param indexdt Name of variable which defines index date in `cohort`.
 #' @param t Number of days after index date at which to calculate variable.
 #' @param t_varname Whether to add `t` to `varname`.
@@ -97,6 +102,11 @@ extract_smoking <- function(cohort,
                             codelist_light_vector = NULL,
                             codelist_mod_vector = NULL,
                             codelist_heavy_vector = NULL,
+                            codelist_non_df = NULL,
+                            codelist_ex_df = NULL,
+                            codelist_light_df = NULL,
+                            codelist_mod_df = NULL,
+                            codelist_heavy_df = NULL,
                             indexdt,
                             t = NULL,
                             t_varname = TRUE,
@@ -144,7 +154,8 @@ extract_smoking <- function(cohort,
                          db_filepath = db_filepath,
                          tab = "observation",
                          table_name = table_name,
-                         codelist_vector = codelist_non_vector)
+                         codelist_vector = codelist_non_vector,
+                         codelist_df = codelist_non_df)
 
   db.qry.ex <- db_query(codelist_ex,
                         db_open = db_open,
@@ -152,7 +163,8 @@ extract_smoking <- function(cohort,
                         db_filepath = db_filepath,
                         tab = "observation",
                         table_name = table_name,
-                        codelist_vector = codelist_ex_vector)
+                        codelist_vector = codelist_ex_vector,
+                        codelist_df = codelist_ex_df)
 
   db.qry.light <- db_query(codelist_light,
                            db_open = db_open,
@@ -160,7 +172,8 @@ extract_smoking <- function(cohort,
                            db_filepath = db_filepath,
                            tab = "observation",
                            table_name = table_name,
-                           codelist_vector = codelist_light_vector)
+                           codelist_vector = codelist_light_vector,
+                           codelist_df = codelist_light_df)
 
   db.qry.mod <- db_query(codelist_mod,
                          db_open = db_open,
@@ -168,7 +181,8 @@ extract_smoking <- function(cohort,
                          db_filepath = db_filepath,
                          tab = "observation",
                          table_name = table_name,
-                         codelist_vector = codelist_mod_vector)
+                         codelist_vector = codelist_mod_vector,
+                         codelist_df = codelist_mod_df)
 
   db.qry.heavy <- db_query(codelist_heavy,
                            db_open = db_open,
@@ -176,7 +190,8 @@ extract_smoking <- function(cohort,
                            db_filepath = db_filepath,
                            tab = "observation",
                            table_name = table_name,
-                           codelist_vector = codelist_heavy_vector)
+                           codelist_vector = codelist_heavy_vector,
+                           codelist_df = codelist_heavy_df)
 
   ### Combine queries with cohort, retaining all smoking records prior to the index date
   ### We treat this as test data, because smoking status may be identified through number of cigarettes smoked per day

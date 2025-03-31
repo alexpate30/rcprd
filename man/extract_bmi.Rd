@@ -13,6 +13,9 @@ extract_bmi(
   codelist_bmi_vector = NULL,
   codelist_weight_vector = NULL,
   codelist_height_vector = NULL,
+  codelist_bmi_df = NULL,
+  codelist_weight_df = NULL,
+  codelist_height_df = NULL,
   indexdt,
   t = NULL,
   t_varname = TRUE,
@@ -46,6 +49,12 @@ extract_bmi(
 \item{codelist_weight_vector}{Vector of codes for weight to query the database with.}
 
 \item{codelist_height_vector}{Vector of codes for height to query the database with.}
+
+\item{codelist_bmi_df}{data.frame of codes for BMI to query the database with.}
+
+\item{codelist_weight_df}{data.frame of codes for weight to query the database with.}
+
+\item{codelist_height_df}{data.frame of codes for height to query the database with.}
 
 \item{indexdt}{Name of variable which defines index date in \code{cohort}.}
 

@@ -6,7 +6,8 @@
 #' @param cohort Cohort of individuals to extract the 'history of' variable for.
 #' @param varname Name of variable in the outputted data frame.
 #' @param codelist Name of codelist (stored on hard disk) to query the database with.
-#' @param codelist_vector Vector of codes to query the database with. This takes precedent over `codelist` if both are specified.
+#' @param codelist_vector Vector of codes to query the database with.
+#' @param codelist_df data.frame used to specify the codelist.
 #' @param indexdt Name of variable in `cohort` which specifies the index date. The extracted variable will be calculated relative to this.
 #' @param t Number of days after \code{indexdt} at which to extract the variable.
 #' @param t_varname Whether to alter the variable name in the outputted data frame to reflect `t`.
@@ -15,7 +16,7 @@
 #' @param lower_bound Lower bound for returned values.
 #' @param upper_bound Upper bound for returned values.
 #' @param numobs Number of test results to return. Will return most recent values that are in the valid time and bound ranges.
-#' @param keep_numunit TRUE/FALSE whether to keep numunitid, medcodeid and obsdate in the outputted dataset
+#' @param keep_numunit TRUE/FALSE whether to keep numunitid, medcodeid and obsdate in the outputted dataset.
 #' @param db_open An open SQLite database connection created using RSQLite::dbConnect, to be queried.
 #' @param db Name of SQLITE database on hard disk (stored in "data/sql/"), to be queried.
 #' @param db_filepath Full filepath to SQLITE database on hard disk, to be queried.
@@ -35,11 +36,13 @@
 #' using `out_filepath` to manually specify the location on the hard disk to save. Alternatively, return the data frame into the R workspace using `return_output = TRUE`
 #' and then save onto the hard disk manually.
 #'
-#' Codelists can be specified in two ways. The first is to read the codelist into R as a character vector and then specify through the argument
-#' `codelist_vector`. Codelists stored on the hard disk can also be referred to from the `codelist` argument, but require a specific underlying directory structure.
+#' Codelists can be specified in three ways. The first is to read the codelist into R as a character vector and then specify through the argument
+#' `codelist_vector`. The second is codelists stored on the hard disk, which can = be referred to from the `codelist` argument, but require a specific underlying directory structure.
 #' The codelist on the hard disk must be stored in a directory called "codelists/analysis/" relative to the working directory. The codelist must be a .csv file, and
-#' contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for argument `tab`. The input to argument `codelist` should just be a character string of
-#' the name of the files (excluding the suffix '.csv'). The `codelist_vector` option will take precedence over the `codelist` argument if both are specified.
+#' contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the input for argument `tab`. The input to argument `codelist` must be a character string of
+#' the name of the files (excluding the suffix '.csv').  The third is to specify the codelist through an R data.frame, `codelist_df`,
+#' this must contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the chosen `tab`. Specifying the codelist this way will retain all the other
+#' columns from `codelist_df` in the queried output.
 #'
 #' Currently only returns most recent test result. This will be updated to return more than one most recent test result if specified.
 #'
@@ -79,6 +82,7 @@ extract_test_data <- function(cohort,
                               varname = NULL,
                               codelist = NULL,
                               codelist_vector = NULL,
+                              codelist_df = NULL,
                               indexdt,
                               t = NULL,
                               t_varname = TRUE,
@@ -133,7 +137,8 @@ extract_test_data <- function(cohort,
                      db_filepath = db_filepath,
                      tab = "observation",
                      table_name = table_name,
-                     codelist_vector = codelist_vector)
+                     codelist_vector = codelist_vector,
+                     codelist_df = codelist_df)
 
   ### Get test data for individuals in cohort, within time range and remove outliers
   variable_dat <- combine_query(db_query = db.qry,
@@ -148,13 +153,19 @@ extract_test_data <- function(cohort,
   ### Create dataframe of cohort and the variable of interest
   variable_dat <- merge(dplyr::select(cohort, patid), variable_dat, by.x = "patid", by.y = "patid", all.x = TRUE)
 
-  ### Reduce to variables of interest
-  if (keep_numunit == FALSE){
-    variable_dat <- variable_dat[,c("patid", "value")]
-  } else {
-    variable_dat <- variable_dat[,c("patid", "value", "numunitid", "medcodeid", "obsdate")]
+  ### Create vector of variables to reduce to
+  keep_vars <- c("patid", "value")
+  if (keep_numunit == TRUE){
+    keep_vars <- append(keep_vars, c("numunitid", "medcodeid", "obsdate"))
   }
+  if (!is.null(codelist_df)){
+    keep_vars <- append(keep_vars, colnames(codelist_df))
+  }
+  ### Remove duplicates
+  keep_vars <- keep_vars[!duplicated(keep_vars)]
 
+  ### Reduce variable_dat to these vars
+  variable_dat <- variable_dat[,keep_vars]
 
   ### Change name of variable to varname
   colnames(variable_dat)[colnames(variable_dat) == "value"] <- varname
