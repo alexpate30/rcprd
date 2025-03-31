@@ -12,6 +12,7 @@
 #' @param db  An open SQLite database connection created using RSQLite::dbConnect.
 #' @param extract_txt_func User-defined function to read the .txt file into R.
 #' @param table_name Name of table in SQLite database that the data will be added to.
+#' @param rm_duplicates TRUE/FALSE whether to remove duplicate values (default is FALSE).
 #' @param ... Extract arguments passed to read.table (or extract_txt_func) when reading in .txt files.
 #'
 #' @returns Adds .txt file to SQLite database on hard disk.
@@ -62,6 +63,7 @@ add_to_database <- function(filepath,
                             db,
                             extract_txt_func = NULL,
                             table_name = NULL,
+                            rm_duplicates = FALSE,
                             ...){
 
   ### Check filetype
@@ -97,12 +99,16 @@ add_to_database <- function(filepath,
       ### Apply subsetting
       subset_patids <- subset_patids[!is.na(fastmatch::fmatch(subset_patids$set, set.filepath)), ]
       subset_patids <- subset_patids$patid
-      #subset_patids <- subset_patids[set == set.filepath, patid]
     }
+
     ### Subset the data to those observations with patid in subset_patids
     ext.dat <- ext.dat[!is.na(fastmatch::fmatch(ext.dat$patid, subset_patids)), ]
-    #ext.dat <- ext.dat[patid %in% subset_patids]
-    #ext.dat <- subset(ext.dat, patid %in% subset_patids)
+
+  }
+
+  ### Remove duplicates
+  if (rm_duplicates == TRUE){
+    ext.dat <- dplyr::distinct(ext.dat)
   }
 
   ### Add to sqlite database
@@ -130,6 +136,7 @@ add_to_database <- function(filepath,
 #' @param extract_txt_func User-defined function to read the .txt file into R.
 #' @param str_match Character vector to match on when searching for file names to add to the database.
 #' @param table_name Name of table in SQLite database that the data will be added to.
+#' @param rm_duplicates TRUE/FALSE whether to remove duplicate values (default is FALSE).
 #'
 #' @returns Adds .txt file to SQLite database on hard disk.
 #'
@@ -186,7 +193,8 @@ cprd_extract <- function(db,
                          use_set = FALSE,
                          extract_txt_func = NULL,
                          str_match = NULL,
-                         table_name = NULL){
+                         table_name = NULL,
+                         rm_duplicates = FALSE){
 
   ### Check filetype
   filetype <- match.arg(filetype)
@@ -215,6 +223,9 @@ cprd_extract <- function(db,
     }
   }
 
+  ### Check for duplicates
+  # ADD HERE XXXX
+
   ### Initialise progress bar
   pb <- utils::txtProgressBar(min = 0,
                               max = length(filenames),
@@ -236,6 +247,7 @@ cprd_extract <- function(db,
                     db = db,
                     extract_txt_func = extract_txt_func,
                     table_name = table_name,
+                    rm_duplicates = rm_duplicates,
                     overwrite = TRUE)
     ### Print progress bar
     utils::setTxtProgressBar(pb, progress)
@@ -253,6 +265,7 @@ cprd_extract <- function(db,
                         db = db,
                         extract_txt_func = extract_txt_func,
                         table_name = table_name,
+                        rm_duplicates = rm_duplicates,
                         append = TRUE)
         ## Add progress to progress bar
         progress <- progress + 1
@@ -280,6 +293,7 @@ cprd_extract <- function(db,
 #' @param codelist_vector Vector of codes to query the database with.
 #' @param codelist_df data.frame used to specify the codelist.
 #' @param n number of observations to output
+#' @param rm_duplicates TRUE/FALSE whether to remove duplicate values (default is FALSE)
 #'
 #' @details
 #' Specifying `db` requires a specific underlying directory structure. The SQLite database must be stored in "data/sql/" relative to the working directory.
@@ -326,7 +340,8 @@ db_query <- function(codelist = NULL,
                      table_name = NULL,
                      codelist_vector = NULL,
                      codelist_df = NULL,
-                     n = NULL){
+                     n = NULL,
+                     rm_duplicates = FALSE){
 
   # codelist = NULL
   # db_open = aurum_extract
@@ -438,6 +453,11 @@ db_query <- function(codelist = NULL,
   ### Disconnect
   if (is.null(db_open)){
     RSQLite::dbDisconnect(mydb)
+  }
+
+  ### Remove duplicates
+  if (rm_duplicates == TRUE){
+    db_query <- dplyr::distinct(db_query)
   }
 
   ### If codelist_df specified, merge with this to retain variables

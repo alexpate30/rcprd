@@ -15,7 +15,8 @@ cprd_extract(
   use_set = FALSE,
   extract_txt_func = NULL,
   str_match = NULL,
-  table_name = NULL
+  table_name = NULL,
+  rm_duplicates = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ cprd_extract(
 \item{str_match}{Character vector to match on when searching for file names to add to the database.}
 
 \item{table_name}{Name of table in SQLite database that the data will be added to.}
+
+\item{rm_duplicates}{TRUE/FALSE whether to remove duplicate values (default is FALSE).}
 }
 \value{
 Adds .txt file to SQLite database on hard disk.

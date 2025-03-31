@@ -193,11 +193,8 @@ extract_time_until <- function(cohort,
                                                    TRUE ~ NA)) |>
     dplyr::filter(!is.na(var_time))
 
-  ### Reduce to variables of interst
-  variable_dat <- variable_dat[,c("patid", "var_time", "var_indicator")]
-
   ### Merge back with cohort
-  variable_dat <- merge(dplyr::select(cohort, patid, indexdt, censdt), variable_dat, by.x = "patid", by.y = "patid", all.x = TRUE)
+  variable_dat <- merge(dplyr::select(cohort, patid, indexdt, censdt), dplyr::select(variable_dat, -indexdt, -censdt), by.x = "patid", by.y = "patid", all.x = TRUE)
 
   ### If the event has NA, set the time to censdt, and indicator to 0
   variable_dat <- dplyr::mutate(variable_dat,

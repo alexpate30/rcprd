@@ -126,7 +126,8 @@ extract_test_data_var <- function(cohort,
                      tab = "observation",
                      table_name = table_name,
                      codelist_vector = codelist_vector,
-                     codelist_df = codelist_df)
+                     codelist_df = codelist_df,
+                     rm_duplicates = TRUE)
 
   ### Get test data for individuals in cohort, within time range and remove outliers
   variable_dat <- combine_query(db_query = db.qry,
@@ -136,7 +137,7 @@ extract_test_data_var <- function(cohort,
                                 time_post = time_post,
                                 lower_bound = lower_bound,
                                 upper_bound = upper_bound,
-                                numobs = 1000)
+                                numobs = 10000)
 
   ### Create a dataframe of patids for individuals who have more than one observation
   patids.multiple <- variable_dat[duplicated(variable_dat$patid)] |>

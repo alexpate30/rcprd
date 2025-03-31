@@ -68,7 +68,7 @@ testthat::test_that("Test extract_ho, extract_time_until and extract_test_data, 
   codelist <- "498521000006119"
 
   ###
-  ### Extract most recent test result using extract_test_data
+  ### Extract tests in the past
   test_data <- extract_test_data(pat,
                                  codelist_vector = codelist,
                                  indexdt = "fup_start",

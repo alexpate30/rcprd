@@ -1,7 +1,7 @@
 ---
 title: "rcprd: An R package to simplify the extraction and processing of CPRD data, and create analysis-ready datasets"
 output: 
-  rmarkdown::html_vignette:
+  html_vignette:
     number_sections: true
     toc: yes
 vignette: >
@@ -190,7 +190,7 @@ In practice, there will be a high number of files to add to the SQLite database 
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
-We then use `cprd_extract` to add all the observation files into the SQLite database. If the connection (`aurum_extract`) is to an existing database, which is the case here, it will be overwritten when running `cprd_extract`. The directory containing the files should be specified using `filepath`. It will only read in and add files with the text string specified in `filetype`, which takes values in `c("observation", "drugissue", "referral", "problem", "consultation")`. We then query the first three rows of this database, and note they are the same as previously.
+We then use `cprd_extract` to add all the observation files into the SQLite database. If the connection (`aurum_extract`) is to an existing database, which is the case here, it will be overwritten when running `cprd_extract`. The directory containing the files should be specified using `filepath`. It will only read in and add files with the text string specified in `filetype` in their file name. The `filetype` argument takes values in `c("observation", "drugissue", "referral", "problem", "consultation")`. We then query the first three rows of this database, and note they are the same as previously.
 
 ```{r}
 ### Extract data
@@ -220,7 +220,7 @@ db_query(db_open = aurum_extract, tab = "drugissue", n = 3)
 RSQLite::dbDisconnect(aurum_extract)
 ```
 
-The string to match on, function to read in the raw data, and the name of the table in the SQLite database, can be altered using the `str_match`, `extract_txt_func` and `table_name` arguments respectively. Note that this function may run for a considerable period of time when working with the entire CPRD AURUM database, and therefore it is not recommended to run interactively. While creation of the SQLite database may be time consuming, subsequent queries will be far more efficient, so this is short term pain for a long term gain.
+The string in the file name to match on, function to read in the raw data, and the name of the table in the SQLite database, can be altered using the `str_match`, `extract_txt_func` and `table_name` arguments respectively. Note the use of `str_match` may be of particular importance if the naming convention of the raw data differs from what we have described above. The argument `rm_duplicates = TRUE` can be specified to de-duplicate records before adding into the SQLite database. This will increase computation time, and the derivation of many variables will not be effected by having duplicate records, so consider carefully whether it's necessary to apply this step or not. There will also be the opportunity to de-duplicate the records later on when querying the data. Note that `cprd_extract` may run for a considerable period of time when working with the entire CPRD AURUM database, and therefore it is not recommended to run interactively. While creation of the SQLite database may be time consuming, subsequent queries will be far more efficient, so this is short term pain for a long term gain.
 
 ### Add all relevant files to SQLite database in a computationally efficient manner using the `set` functionality.
 
@@ -230,7 +230,7 @@ To achieve this, the `subset_patids` object should be a data frame with two requ
 
 ```{r}
 pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"), patids = as.character(c(1,3,4,6)), set = TRUE)
-str(pat)
+pat
 ```
 
 The patient file read in is the same as previously, with the addition of the `set` column. This file can be reduced to just the `patid` and `set` columns, and used as the input to `subset_patids` when running the `add_to_database` and `cprd_extract` functions. When extracting data from observation files with *set1* in the name, it will only search for patient id's with `set == 1` in the data.frame provided to `subset_patids`.
@@ -292,7 +292,7 @@ ho <- extract_ho(cohort = pat,
                  db_open = aurum_extract, 
                  tab = "observation",
                  return_output = TRUE)
-str(ho)
+ho
 ```
 
 The second is `extract_time_until`, which defines a time-to-event/survival variable. This has two components, the time until the first record of a specified code or censoring, and an indicator for whether event was observed or censored. To derive a variable of this type the cohort must also contain a time until censoring variable, which can be specified through `censdt`.
@@ -300,6 +300,9 @@ The second is `extract_time_until`, which defines a time-to-event/survival varia
 ```{r}
 ### Add an censoring date to cohort
 pat$fup_end <- as.Date("01/01/2024", format = "%d/%m/%Y")
+
+### Define codelist
+codelist <- "51268016"
 
 ### Extract a time until variable using extract_time_until
 time_until <- extract_time_until(cohort = pat, 
@@ -309,7 +312,7 @@ time_until <- extract_time_until(cohort = pat,
                                  db_open = aurum_extract, 
                                  tab = "observation",
                                  return_output = TRUE)
-str(time_until)
+time_until
 ```
 
 The third is `extract_test`, which will extract the most recent test result in a given time frame. The number of days before and after the index date to search for results are specified through `time_post` and `time_prev` respectively. Test results are identified from the observation file, using code lists. Lower and upper bounds can also be specified for the extracted data through `lower_bound` and `upper_bound`.
@@ -323,7 +326,7 @@ test_data <- extract_test_data(cohort = pat,
                           time_post = 0,
                           time_prev = Inf,
                           return_output = TRUE)
-str(test_data)
+test_data
 ```
 
 More than one observation can be returned by specifying `numobs`. Metadata of the test result, such as the unit of measurement, date recorded, and the medical code, can be returned by settings `numunitid = TRUE`. A variation of this function, `extract_test_data_var`, will returns the standard deviation of the test data within the specified time and value range. Once all the variables of interest have been extracted, they can be merged into an analysis-ready dataset (step 7).
@@ -334,6 +337,30 @@ analysis.ready.pat <- Reduce(function(df1, df2) merge(df1, df2, by = "patid", al
 analysis.ready.pat
 ```
 
+The codelists can also be specified through an R `data.frame` which must contain either a *medcodeid* or *prodcodeid* column. This may allow the user to run sensitivity analyses more easily if they would like to extract the same variable for different subgroups of the same codelist. For example:
+
+```{r}
+my_codelist_df <- data.frame("condition" = "mycondition", medcodeid = c("221511000000115", "51268016"), "subgroup" = c("subgroup1", "subgroup2"))
+
+extract_test_data(cohort = pat,
+                  codelist_df = subset(my_codelist_df, subgroup == "subgroup1"),
+                  indexdt = "fup_start",
+                  db_open = aurum_extract,
+                  time_post = 0,
+                  time_prev = Inf,
+                  return_output = TRUE)
+
+extract_test_data(cohort = pat,
+                  codelist_df = subset(my_codelist_df, subgroup == "subgroup2"),
+                  indexdt = "fup_start",
+                  db_open = aurum_extract,
+                  time_post = 0,
+                  time_prev = Inf,
+                  return_output = TRUE)
+```
+
+Codelists can be specified in this way for any of the functions in this section, or sections 3.3.2 and 3.3.3. However, the extra variable from the codelist (i.e. the `condition` and `subgroup` variables in the above example) will only be returned in the output when it is meaningful to do so. For example, in `extract_ho`, an individual may have many matching codes in their medical history, and therefore it's unclear which should be returned.
+
 ### Functions for extracting specific variables
 
 There are also a number of functions that can be used to extract specific variables:
@@ -343,13 +370,15 @@ There are also a number of functions that can be used to extract specific variab
 * `extract_diabetes`: Derives a categorical variable for history of type 1 diabetes, history of type 2 diabetes or no history of diabetes. Requires specification of separate codelists for type 1 and type 2 diabetes. Individuals with codes for both are designated as type 1.
 * `extract_smoking`: Derives a categorical variable for smoking status. Requires specification of seperate codelists for non-smoker, ex-smoker, light smoker, moderate smoker and heavy smoker. If the most recent smoking status is non-smoker, but there are historical codes which indicate smoking, then individual will be classified as an ex-smoker. 
 
-It was deemed that these variables required custom functions because their definitions did not fit into any of the variable types from section 3.3.1. In each case, a number of steps are taken in order to clean or manipulate the data in order to get the desired output. For example, height measurements recorded in centimeters are converted to metres in order to calculate BMI scores. This is done through the use of the `numunitid` variable in the observation file. For both BMI and cholesterol/high-density lipoprotein ratio, the variable can be either be identified directly, or calculated from the component mesaures. In each case, the component parts must be recorded in the specified time range relative to the index date. For smoking status, if an individuals most recent medical observation was recorded as a non-smoker, but their medical record shows previous smoking, the most recent record is changed to ex-smoker. The steps for cleaning the data and extracting these variables are provided in the vignette titled [Details-on-algorithms-for-extracting-specific-variables](https://alexpate30.github.io/rcprd/articles/Details-on-algorithms-for-extracting-specific-variables.html). However, it is important to state, that the correct way to define a variable may change from study to study. Therefore when using these functions to extract variables, we encourage taking the time to ensure that the way the variable is extracted matches the definition in ones study. 
+It was deemed that these variables required custom functions because their definitions did not fit into any of the variable types from section 3.3.1. In each case, a number of steps are taken in order to clean or manipulate the data in order to get the desired output. For example, height measurements recorded in centimeters are converted to metres in order to calculate BMI scores. This is done through the use of the `numunitid` variable in the observation file. For both BMI and cholesterol/high-density lipoprotein ratio, the variable can be either be identified directly, or calculated from the component measures. In each case, the component parts must be recorded in the specified time range relative to the index date. For smoking status, if an individuals most recent medical observation was recorded as a non-smoker, but their medical record shows previous smoking, the most recent record is changed to ex-smoker. For diabetes status, diabetes if often recorded with generic codes such as "diabetes mellitus", which does not specify which type. This is dealt with by assuming all generic codes refer to type 2 diabetes, unless that individual also has a specific type 1 diabetes code, in which case they will be determined to have type 1 diabetes as opposed to type 2.
+
+The full details on extracting these variables are provided in the vignette titled [Details-on-algorithms-for-extracting-specific-variables](https://alexpate30.github.io/rcprd/articles/Details-on-algorithms-for-extracting-specific-variables.html). However, it is important to state, that the correct way to define a variable may change from study to study. Therefore when using these functions to extract variables, we encourage taking the time to ensure that the way the variable is extracted matches the definition in ones study, and edit these functions and algorithms accordingly.
 
 ### Functions for database queries and custom variable extraction
 
 These functions are utilised internally in the functions from sections 3.3.1 and 3.3.2. They have been provided to more easily enable package users to write their own functions for extracting variables that are not covered in the previous two sections.
 
-The `db_query` function will query the SQLite database for observations where the *medcodeid* or *prodcodeid* is in a specified codelist. For example, we can query the *observation* table for all codes with *medcodeid* of 187341000000114.
+The `db_query` function will query the SQLite database for observations where the *medcodeid* or *prodcodeid* is in a specified codelist. For example, we can query the *observation* table for all codes with *medcodeid* of 187341000000114. Setting `rm_duplicates = TRUE` will de-duplicate the output. If the codelist is specified through an R `data.frame` with the `codelist_df` argument, the returned query will also contain the variables from the codelist `data.frame`.
 
 ```{r}
 db_query <- db_query(db_open = aurum_extract,
@@ -359,7 +388,7 @@ db_query <- db_query(db_open = aurum_extract,
 db_query
 ```
 
-The `combine_query_boolean` function will assess whether each individual in a specified cohort (`pat`) has an observation in the queried data (obtained using `db_query`) within a specified time frame from the index date, returning a 0/1 vector. The `cohort` must contain a variable called `indexdt` containing the index date. This function is useful when defining 'history of' type variables, where we want to know if there is any record of a given condition prior to the index date. 
+The `combine_query_boolean` function will then assess whether each individual in a specified cohort (`pat`) has an observation in the queried data (obtained using `db_query`) within a specified time frame from the index date, returning a 0/1 vector. The `cohort` must contain a variable called `indexdt` containing the index date. This function is useful when defining 'history of' type variables, where we want to know if there is any record of a given condition prior to the index date. 
 
 ```{r}
 ### Add an index date to pat
@@ -373,26 +402,28 @@ combine.query.boolean <- combine_query_boolean(cohort = pat,
 combine.query.boolean
 ```
 
-The `combine_query` function will merge a cohort with the queried data and return a specified number of observations (`numobs`) within a specified time frame from the index date. This is useful when extracting test data and requiring access to the values of the tests, or when specifying variables that require > 1 observation within a certain time frame (i.e. two prescriptions within a month prior to index date). For queries from the `observation` table, the query type can be specified as `"med"` or `"test"`. Inputting `query_type = "med"` will just return the date of the observations and the *medcodeid*.
+The `combine_query` function will merge a cohort with the queried data and return a specified number of observations (`numobs`) within a specified time frame from the index date. This is useful when extracting test data and requiring access to the values of the tests, or when specifying variables that require > 1 observation within a certain time frame (i.e. two prescriptions within a month prior to index date). Setting `reduce_output = TRUE` will remove the majority of variables from the merged datasets. For queries from the `observation` table, the query type can be specified as `"med"` or `"test"`.  Inputting `query_type = "med"` will just return the date of the observations and the *medcodeid*.
 
 ```{r}
 ### Combine query with cohort retaining most recent three records
 combine.query <- combine_query(cohort = pat,
                                db_query = db_query,
                                query_type = "med",
-                               numobs = 3)
+                               numobs = 3,
+                               reduce_output = TRUE)
   
 combine.query
 ```
 
-For `query_type = "test"`, the `value` and other relevant information will also be returned, and those with NA values removed (although this can be altered through argument `value_na_rm`). We then close the connection to the database.
+For `query_type = "test"`, the `value` and other relevant information will also be returned, and those with NA values removed (although this can be altered through argument `value_na_rm`).We then close the connection to the database.
 
 ```{r}
 ### Extract a history of type variable using extract_ho
 combine.query <- combine_query(cohort = pat,
                                db_query = db_query,
                                query_type = "test",
-                               numobs = 3)
+                               numobs = 3,
+                               reduce_output = TRUE)
   
 combine.query
 
@@ -400,7 +431,7 @@ combine.query
 RSQLite::dbDisconnect(aurum_extract)
 ```
 
-If the query was from the `drugissue` table, then `query_type = "drug"` should be specified, and the date of the observations and the *prodcodeid* will be returned. The functions in this section do little processing of the extracted data, and further manipulation is required in order to define most variables.
+If the query was from the `drugissue` table, then `query_type = "drug"` should be specified, and the date of the observations and the *prodcodeid* will be returned.  If `reduce_output = FALSE`, no variables will be removed the output. The functions in this section can be used as building blocks to extract desired variables (e.g. see functions in section 3.3.2).
 
 ```{r, include = FALSE}
 ### Hide clean up of filespaces prior to moving onto next session (clean up required by CRAN)

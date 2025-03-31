@@ -15,7 +15,8 @@ db_query(
   table_name = NULL,
   codelist_vector = NULL,
   codelist_df = NULL,
-  n = NULL
+  n = NULL,
+  rm_duplicates = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ db_query(
 \item{codelist_df}{data.frame used to specify the codelist.}
 
 \item{n}{number of observations to output}
+
+\item{rm_duplicates}{TRUE/FALSE whether to remove duplicate values (default is FALSE)}
 }
 \value{
 A data.table with observations contained in the specified codelist.

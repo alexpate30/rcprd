@@ -15,6 +15,7 @@ add_to_database(
   db,
   extract_txt_func = NULL,
   table_name = NULL,
+  rm_duplicates = FALSE,
   ...
 )
 }
@@ -36,6 +37,8 @@ add_to_database(
 \item{extract_txt_func}{User-defined function to read the .txt file into R.}
 
 \item{table_name}{Name of table in SQLite database that the data will be added to.}
+
+\item{rm_duplicates}{TRUE/FALSE whether to remove duplicate values (default is FALSE).}
 
 \item{...}{Extract arguments passed to read.table (or extract_txt_func) when reading in .txt files.}
 }

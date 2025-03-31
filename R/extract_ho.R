@@ -133,16 +133,8 @@ extract_ho <- function(cohort,
                                          time_post = time_post,
                                          numobs = numobs)
 
-  ### Create vector of variables to reduce to
-  keep_vars <- c("patid", "ho")
-  if (!is.null(codelist_df)){
-    keep_vars <- append(keep_vars, colnames(codelist_df))
-  }
-  ### Remove duplicates
-  keep_vars <- keep_vars[!duplicated(keep_vars)]
-
   ### Reduce variable_dat to these vars
-  variable_dat <- cohort[,keep_vars]
+  variable_dat <- cohort[,c("patid", "ho")]
 
   ### Change name of variable to varname
   colnames(variable_dat)[colnames(variable_dat) == "ho"] <- varname
