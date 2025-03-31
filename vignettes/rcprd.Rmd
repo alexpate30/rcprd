@@ -65,12 +65,12 @@ Our recommended process for developing an analysis-ready dataset is as follows (
 * Q2: Do the inclusion/exclusion criteria depend on linked data?
   + If yes -> (proceed to step 4)
   + If no -> (proceed to step 5)
-* Step 4: Request type 1 linked data^* for individuals and apply remaining inclusion/exclusion criteria. 
+* Step 4: Request type 1 linked data$^*$ for individuals and apply remaining inclusion/exclusion criteria. 
 * Step 5: For patients in the final cohort, add relevant primary care data into an SQLite database using cprd_extract(). If an SQLite database was already created in step 2, and only a small number of individuals were excluded in steps 3 and 4, consider skipping this step. However, if a large number of individuals were excluded, it is worthwhile to create the new SQLite database, as it will be much smaller and future queries for extracting variables will run much quicker.
 * Step 6: Query this SQLite database for specific codes and tests to create variables for each individual in the cohort. These are stored as .rds objects, which R data analysts will be familiar with.
 * Step 7: Combine extracted variables into an analysis-ready dataset, also stored as an .rds object.
 
-^*type 1 linked data is defined as “linked data required in order to finalise the study population”
+$^*$type 1 linked data is defined as “linked data required in order to finalise the study population”
 
 ```{r, echo = FALSE, out.width = "100%", fig.cap = "Figure 1: Flowchart for recommended data extraction process. Blue boxes denoate data files. Orange boxes denote application of rcprd functions."}
 #![Figure 1: Flowchart for recommended data extraction process](){width = 100%}
@@ -394,7 +394,7 @@ The `db_query` function will query the SQLite database for observations where th
 ```{r}
 db_query <- db_query(db_open = aurum_extract,
                      tab ="observation",
-                     codelist_vector = "187341000000114")
+                     codelist_vector = "114311000006111")
 
 db_query
 ```
