@@ -390,11 +390,11 @@ These functions are utilised internally in the functions from sections 3.3.1 and
 The `db_query` function will query the SQLite database for observations where the *medcodeid* or *prodcodeid* is in a specified codelist. For example, we can query the *observation* table for all codes with *medcodeid* of 114311000006111 Setting `rm_duplicates = TRUE` will de-duplicate the output. If the codelist is specified through an R `data.frame` with the `codelist_df` argument, the returned query will also contain the variables from the codelist `data.frame`.
 
 ```{r}
-db_query <- db_query(db_open = aurum_extract,
-                     tab ="observation",
-                     codelist_vector = "114311000006111")
+my_db_query <- db_query(db_open = aurum_extract,
+                        tab ="observation",
+                        codelist_vector = "114311000006111")
 
-db_query
+my_db_query
 ```
 
 The `combine_query_boolean` function will then assess whether each individual in a specified cohort (`pat`) has an observation in the queried data (obtained using `db_query`) within a specified time frame from the index date, returning a 0/1 vector. The `cohort` must contain a variable called `indexdt` containing the index date. This function is useful when defining 'history of' type variables, where we want to know if there is any record of a given condition prior to the index date. 
@@ -405,7 +405,7 @@ pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
 
 ### Combine query with cohort creating a boolean variable denoting 'history of'
 combine.query.boolean <- combine_query_boolean(cohort = pat,
-                                               db_query = db_query,
+                                               db_query = my_db_query,
                                                query_type = "med")
   
 combine.query.boolean
@@ -416,7 +416,7 @@ The `combine_query` function will merge a cohort with the queried data and retur
 ```{r}
 ### Combine query with cohort retaining most recent three records
 combine.query <- combine_query(cohort = pat,
-                               db_query = db_query,
+                               db_query = my_db_query,
                                query_type = "med",
                                numobs = 3,
                                reduce_output = TRUE)
@@ -429,7 +429,7 @@ For `query_type = "test"`, the `value` and other relevant information will also 
 ```{r}
 ### Extract a history of type variable using extract_ho
 combine.query <- combine_query(cohort = pat,
-                               db_query = db_query,
+                               db_query = my_db_query,
                                query_type = "test",
                                numobs = 3,
                                reduce_output = TRUE)
