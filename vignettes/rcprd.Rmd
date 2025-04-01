@@ -292,14 +292,14 @@ The first, `extract_ho`, extracts a binary variable based on whether individual 
 
 ```{r}
 ### Define codelist
-codelist <- "187341000000114"
+my_vector_codelist <- "187341000000114"
 
 ### Add an index date to cohort
 pat$fup_start <- as.Date("01/01/2020", format = "%d/%m/%Y")
 
 ### Extract a history of type variable using extract_ho
 ho <- extract_ho(cohort = pat, 
-                 codelist_vector = codelist, 
+                 codelist_vector = my_vector_codelist, 
                  indexdt = "fup_start", 
                  db_open = aurum_extract, 
                  tab = "observation",
@@ -313,12 +313,9 @@ The second is `extract_time_until`, which defines a time-to-event/survival varia
 ### Add an censoring date to cohort
 pat$fup_end <- as.Date("01/01/2024", format = "%d/%m/%Y")
 
-### Define codelist
-codelist <- "51268016"
-
 ### Extract a time until variable using extract_time_until
 time_until <- extract_time_until(cohort = pat, 
-                                 codelist_vector = codelist, 
+                                 codelist_vector = my_vector_codelist, 
                                  indexdt = "fup_start", 
                                  censdt = "fup_end",
                                  db_open = aurum_extract, 
@@ -332,7 +329,7 @@ The third is `extract_test`, which will extract the most recent test result in a
 ```{r}
 ### Extract test data using extract_test_data
 test_data <- extract_test_data(cohort = pat, 
-                          codelist_vector = codelist, 
+                          codelist_vector = my_vector_codelist, 
                           indexdt = "fup_start", 
                           db_open = aurum_extract,
                           time_post = 0,
@@ -352,7 +349,7 @@ analysis.ready.pat
 The codelists can also be specified through an R `data.frame` which must contain either a *medcodeid* or *prodcodeid* column. This may allow the user to run sensitivity analyses more easily if they would like to extract the same variable for different subgroups of the same codelist. For example:
 
 ```{r}
-my_codelist_df <- data.frame("condition" = "mycondition", medcodeid = c("221511000000115", "51268016"), "subgroup" = c("subgroup1", "subgroup2"))
+my_codelist_df <- data.frame("condition" = "mycondition", medcodeid = c("221511000000115", "187341000000114"), "subgroup" = c("subgroup1", "subgroup2"))
 
 extract_test_data(cohort = pat,
                   codelist_df = subset(my_codelist_df, subgroup == "subgroup1"),
@@ -390,7 +387,7 @@ The full details on extracting these variables are provided in the vignette titl
 
 These functions are utilised internally in the functions from sections 3.3.1 and 3.3.2. They have been provided to more easily enable package users to write their own functions for extracting variables that are not covered in the previous two sections.
 
-The `db_query` function will query the SQLite database for observations where the *medcodeid* or *prodcodeid* is in a specified codelist. For example, we can query the *observation* table for all codes with *medcodeid* of 187341000000114. Setting `rm_duplicates = TRUE` will de-duplicate the output. If the codelist is specified through an R `data.frame` with the `codelist_df` argument, the returned query will also contain the variables from the codelist `data.frame`.
+The `db_query` function will query the SQLite database for observations where the *medcodeid* or *prodcodeid* is in a specified codelist. For example, we can query the *observation* table for all codes with *medcodeid* of 114311000006111 Setting `rm_duplicates = TRUE` will de-duplicate the output. If the codelist is specified through an R `data.frame` with the `codelist_df` argument, the returned query will also contain the variables from the codelist `data.frame`.
 
 ```{r}
 db_query <- db_query(db_open = aurum_extract,
@@ -501,10 +498,10 @@ Finally, a code list called *mylist.csv* is created and saved into the *codelist
 
 ```{r}
 ### Define codelist
-codelist <- data.frame(medcodeid = "187341000000114")
+my_codelist <- data.frame(medcodeid = "187341000000114")
 
 ### Save codelist
-write.csv(codelist, "codelists/analysis/mylist.csv")
+write.csv(my_codelist, "codelists/analysis/mylist.csv")
 ```
 
 The *mydb.sqlite* database can now be queried to create a 'history of' type variable using the codelist *mylist.csv*, with the output saved directly onto the disk drive.
