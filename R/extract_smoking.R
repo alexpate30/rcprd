@@ -200,30 +200,35 @@ extract_smoking <- function(cohort,
   smoking.non <- combine_query(db_query = db.qry.non,
                                cohort= cohort,
                                query_type = "test",
+                               time_post = 0,
                                numobs = Inf,
                                value_na_rm = FALSE)
 
   smoking.ex <- combine_query(db_query = db.qry.ex,
                               cohort = cohort,
                               query_type = "test",
+                              time_post = 0,
                               numobs = Inf,
                               value_na_rm = FALSE)
 
   smoking.light <- combine_query(db_query = db.qry.light,
                                  cohort = cohort,
                                  query_type = "test",
+                                 time_post = 0,
                                  numobs = Inf,
                                  value_na_rm = FALSE)
 
   smoking.mod <- combine_query(db_query = db.qry.mod,
                                cohort = cohort,
                                query_type = "test",
+                               time_post = 0,
                                numobs = Inf,
                                value_na_rm = FALSE)
 
   smoking.heavy <- combine_query(db_query = db.qry.heavy,
                                  cohort = cohort,
                                  query_type = "test",
+                                 time_post = 0,
                                  numobs = Inf,
                                  value_na_rm = FALSE)
 

@@ -370,7 +370,7 @@ testthat::test_that("Smoking", {
 
   testthat::expect_equal(nrow(var), 6)
   testthat::expect_equal(colnames(var), c("patid", "smoking"))
-  testthat::expect_equal(as.character(var$smoking), c(NA, "Non-smoker", NA, "Moderate", "Ex-smoker", "Moderate"))
+  testthat::expect_equal(as.character(var$smoking), c(NA, NA, NA, "Heavy", "Ex-smoker", "Moderate"))
 
   ## clean up
   RSQLite::dbDisconnect(aurum_extract)
