@@ -1,10 +1,10 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   Details-on-algorithms-for-extracting-specific-variables: Details-on-algorithms-for-extracting-specific-variables.html
   rcprd: rcprd.html
-last_built: 2025-04-01T11:05Z
+last_built: 2025-06-26T09:44Z
 urls:
   reference: https://alexpate30.github.io/rcprd/reference
   article: https://alexpate30.github.io/rcprd/articles
