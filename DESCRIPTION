@@ -22,10 +22,9 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-Depends: 
-    data.table
 Imports: 
     dplyr,
+    data.table,
     fastmatch,
     lubridate,
     RSQLite,
