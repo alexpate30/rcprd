@@ -286,29 +286,34 @@ extract_smoking <- function(cohort,
   smoking.mod <- smoking.mod[!is.na(smoking)]
   smoking.heavy <- smoking.heavy[!is.na(smoking)]
 
-  ### Only retain the most recent observation for each
-  smoking.non <- smoking.non |>
-    dplyr::group_by(patid) |>
-    dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-
-  smoking.ex <- smoking.ex |>
-    dplyr::group_by(patid) |>
-    dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-
-  smoking.light <- smoking.light |>
-    dplyr::group_by(patid) |>
-    dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-
-  smoking.mod <- smoking.mod |>
-    dplyr::group_by(patid) |>
-    dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-
-  smoking.heavy <- smoking.heavy |>
-    dplyr::group_by(patid) |>
-    dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-
   ### Concatenate
-  variable_dat <- rbind(smoking.non, smoking.ex, smoking.light, smoking.mod, smoking.heavy)
+  variable_dat <- rbind(smoking.non, smoking.ex, smoking.light, smoking.mod, smoking.heavy) |>
+    dplyr::arrange(patid, smoking, dplyr::desc(obsdate))
+
+  ### Only retain the most recent observation for each
+  variable_dat <- variable_dat |>
+    dplyr::group_by(patid, smoking) |>
+    dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
+
+  # smoking.non <- smoking.non |>
+  #   dplyr::group_by(patid) |>
+  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
+  #
+  # smoking.ex <- smoking.ex |>
+  #   dplyr::group_by(patid) |>
+  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
+  #
+  # smoking.light <- smoking.light |>
+  #   dplyr::group_by(patid) |>
+  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
+  #
+  # smoking.mod <- smoking.mod |>
+  #   dplyr::group_by(patid) |>
+  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
+  #
+  # smoking.heavy <- smoking.heavy |>
+  #   dplyr::group_by(patid) |>
+  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
 
   ### Arrange so that the first observation is the most recent
   ### If there are multiple on the same day, we take the most severe smoking status
