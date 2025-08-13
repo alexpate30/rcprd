@@ -1,6 +1,6 @@
 Package: rcprd
 Title: Extraction and Management of Clinical Practice Research Datalink Data
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
   c(person(given = "Alexander", family = "Pate", email = "alexander.pate@manchester.ac.uk", role = c("aut", "cre", "cph"),
          comment = c(ORCID = "0000-0002-0849-3458")))
