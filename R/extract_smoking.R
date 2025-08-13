@@ -295,26 +295,6 @@ extract_smoking <- function(cohort,
     dplyr::group_by(patid, smoking) |>
     dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
 
-  # smoking.non <- smoking.non |>
-  #   dplyr::group_by(patid) |>
-  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-  #
-  # smoking.ex <- smoking.ex |>
-  #   dplyr::group_by(patid) |>
-  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-  #
-  # smoking.light <- smoking.light |>
-  #   dplyr::group_by(patid) |>
-  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-  #
-  # smoking.mod <- smoking.mod |>
-  #   dplyr::group_by(patid) |>
-  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-  #
-  # smoking.heavy <- smoking.heavy |>
-  #   dplyr::group_by(patid) |>
-  #   dplyr::filter(dplyr::row_number(dplyr::desc(obsdate)) == 1)
-
   ### Arrange so that the first observation is the most recent
   ### If there are multiple on the same day, we take the most severe smoking status
   variable_dat <-variable_dat |>
