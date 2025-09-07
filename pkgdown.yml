@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Details-on-algorithms-for-extracting-specific-variables: Details-on-algorithms-for-extracting-specific-variables.html
   rcprd: rcprd.html
-last_built: 2025-09-07T13:11Z
+last_built: 2025-09-07T13:13Z
 urls:
   reference: https://alexpate30.github.io/rcprd/reference
   article: https://alexpate30.github.io/rcprd/articles
