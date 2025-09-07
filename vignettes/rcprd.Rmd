@@ -554,6 +554,8 @@ The strength of **rcprd** is to simplify the complex process of turning raw CPRD
 
 In summary, the main goal of this package is to reduce the duplication of time and effort among those using CPRD data for their research, allowing more time to be focused on other aspects of research projects. **rcprd** will be actively maintained for the foreseeable future. Suggestions for improvement are encouraged and can be posted on GitHub: https://github.com/alexpate30/calibmsm.
 
+*A mirror of this vignette has been published on August 19th 2025 [@Pate2025]*
+
 # References
 
 <div id="refs"></div>

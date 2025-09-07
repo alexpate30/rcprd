@@ -1,7 +1,8 @@
-@misc{Richardson2024,
-author = {Richardson, Niel and Cook, Ian and Crane, Nic and Dunnington, Dewey and Francois, Romain and Keane, Jonathan and Moldovan-Grunfeld, Dragos and Jeroen, Ooms and Wujciak-Jens, Jacob},
-title = {{arrow: Integration to 'Apache' 'Arrow'}},
-url = {https://github.com/apache/arrow/},
+@misc{CPRD2024,
+author = {CPRD},
+title = {{CPRD Aurum September 2024 Dataset}},
+url = {https://www.cprd.com/doi/cprd-aurum-march-2024-dataset},
+urldate = {2024-06-12},
 year = {2024}
 }
 @article{Matthewman2024,
@@ -103,13 +104,6 @@ title = {{Term sets: A transparent and reproducible representation of clinical c
 volume = {14},
 year = {2019}
 }
-@misc{CPRD2024,
-author = {CPRD},
-title = {{CPRD Aurum September 2024 Dataset}},
-url = {https://www.cprd.com/doi/cprd-aurum-march-2024-dataset},
-urldate = {2024-06-12},
-year = {2024}
-}
 @misc{TheHealthFoundationAnalyticsLab2021,
 author = {{The Health Foundation Analytics Lab}},
 title = {aurumpipeline},
@@ -161,6 +155,19 @@ publisher = {Oxford University Press},
 title = {{Prognosis Research in Healthcare: Concepts, Methods, and Impact}},
 year = {2019}
 }
+@article{Wolf2019,
+author = {Wolf, Achim and Dedman, Daniel and Campbell, Jennifer and Booth, Helen and Lunn, Darren and Chapman, Jennifer and Myles, Puja},
+doi = {10.1093/ije/dyz034},
+file = {:C\:/Users/mbrxsap3/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Wolf et al. - 2019 - Data resource profile Clinical Practice Research Datalink (CPRD) Aurum.pdf:pdf},
+issn = {14643685},
+journal = {International Journal of Epidemiology},
+number = {6},
+pages = {1740--1740G},
+pmid = {30859197},
+title = {{Data resource profile: Clinical Practice Research Datalink (CPRD) Aurum}},
+volume = {48},
+year = {2019}
+}
 @article{Gulliford2009,
 abstract = {BACKGROUND: Electronic patient records from primary care databases are increasingly used in public health and health services research but methods used to identify cases with disease are not well described. This study aimed to evaluate the relevance of different codes for the identification of acute stroke in a primary care database, and to evaluate trends in the use of different codes over time. METHODS: Data were obtained from the General Practice Research Database from 1997 to 2006. All subjects had a minimum of 24 months of up-to-standard record before the first recorded stroke diagnosis. Initially, we identified stroke cases using a supplemented version of the set of codes for prevalent stroke used by the Office for National Statistics in Key health statistics from general practice 1998 (ONS codes). The ONS codes were then independently reviewed by four raters and a restricted set of 121 codes for 'acute stroke' was identified but the kappa statistic was low at 0.23. RESULTS: Initial extraction of data using the ONS codes gave 48,239 cases of stroke from 1997 to 2006. Application of the restricted set of codes reduced this to 39,424 cases. There were 2,288 cases whose index medical codes were for 'stroke annual review' and 3,112 for 'stroke monitoring'. The frequency of stroke review and monitoring codes as index codes increased from 9 per year in 1997 to 1,612 in 2004, 1,530 in 2005 and 1,424 in 2006. The one year mortality of cases with the restricted set of codes was 29.1{%} but for 'stroke annual review,' 4.6{%} and for 'stroke monitoring codes', 5.7{%}. CONCLUSION: In the analysis of electronic patient records, different medical codes for a single condition may have varying clinical and prognostic significance; utilisation of different medical codes may change over time; researchers with differing clinical or epidemiological experience may have differing interpretations of the relevance of particular codes. There is a need for greater transparency in the selection of sets of codes for different conditions, for the reporting of sensitivity analyses using different sets of codes, as well as sharing of code sets among researchers.},
 author = {Gulliford, Martin C. and Charlton, Judith and Ashworth, Mark and Rudd, Anthony G. and Toschke, Andre Michael and Delaney, Brendan and Grieve, Andy and Heuschmann, Peter U. and Little, Paul and Redfern, Judith and van Staa, Tjeerd and Wolfe, Charles and Yardley, Lucy and McDermott, Lisa},
@@ -190,6 +197,26 @@ title = {{Data Resource Profile: Clinical Practice Research Datalink (CPRD)}},
 volume = {44},
 year = {2015}
 }
+@misc{Richardson2024,
+author = {Richardson, Niel and Cook, Ian and Crane, Nic and Dunnington, Dewey and Francois, Romain and Keane, Jonathan and Moldovan-Grunfeld, Dragos and Jeroen, Ooms and Wujciak-Jens, Jacob},
+title = {{arrow: Integration to 'Apache' 'Arrow'}},
+url = {https://github.com/apache/arrow/},
+year = {2024}
+}
+@article{Pate2025,
+abstract = {The Clinical Practice Research Datalink (CPRD) is a large and widely used resource of electronic health records from the UK, linking primary care data to hospital data, death registration data, cancer registry data, deprivation data and mental health services data. Extraction and management of CPRD data is a computationally demanding process and requires a significant amount of work, in particular when using R. The rcprd package simplifies the process of extracting and processing CPRD data in order to build datasets ready for statistical analysis. Raw CPRD data is provided in thousands of.txt files, making querying this data cumbersome and inefficient. rcprd saves the relevant information into an SQLite database stored on the hard drive which can then be queried efficiently to extract required information about individuals. rcprd follows a four-stage process: 1) Definition of a cohort, 2) Read in medical/prescription data and save into an SQLite database, 3) Query this SQLite database for specific codes and tests to create variables for each individual in the cohort, 4) Combine extracted variables into a dataset ready for statistical analysis. Functions are available to extract common variable types (e.g., history of a condition, or time until an event occurs, relative to an index date), and more general functions for database queries, allowing users to define their own variables for extraction. The entire process can be done from within R, with no knowledge of SQL required. This manuscript showcases the functionality of rcprd by running through an example using simulated CPRD Aurum data. rcprd will reduce the duplication of time and effort among those using CPRD data for research, allowing more time to be focused on other aspects of research projects.},
+author = {Pate, Alexander and Parisi, Rosa and Kontopantelis, Evangelos and Sperrin, Matthew},
+doi = {10.1371/journal.pone.0327229},
+file = {:/nask.man.ac.uk/home$/Documents/JournalsandPapers/Pate2025rcprd.pdf:pdf},
+issn = {19326203},
+journal = {Plos One},
+number = {8 August},
+pages = {1--25},
+title = {{rcprd: An R package to simplify the extraction and processing of Clinical Practice Research Datalink (CPRD) data, and create analysis-ready datasets}},
+url = {https://doi.org/10.1371/journal.pone.0327229},
+volume = {20},
+year = {2025}
+}
 @article{Kontopantelis2018,
 abstract = {UK primary care databases (PCDs) are used by researchers worldwide to inform clinical practice. These databases have been primarily tied to single clinical computer systems, but little is known about the adoption of these systems by primary care practices or their geographical representativeness. We explore the spatial distribution of clinical computing systems and discuss the implications for the longevity and regional representativeness of these resources. Design Cross-sectional study. Setting English primary care clinical computer systems. Participants 7526 general practices in August 2016. Methods Spatial mapping of family practices in England in 2016 by clinical computer system at two geographical levels, the lower Clinical Commissioning Group (CCG, 209 units) and the higher National Health Service regions (14 units). Data for practices included numbers of doctors, nurses and patients, and area deprivation. Results Of 7526 practices, Egton Medical Information Systems (EMIS) was used in 4199 (56%), SystmOne in 2552 (34%) and Vision in 636 (9%). Great regional variability was observed for all systems, with EMIS having a stronger presence in the West of England, London and the South; SystmOne in the East and some regions in the South; and Vision in London, the South, Greater Manchester and Birmingham. Conclusions PCDs based on single clinical computer systems are geographically clustered in England. For example, Clinical Practice Research Datalink and The Health Improvement Network, the most popular primary care databases in terms of research outputs, are based on the Vision clinical computer system, used by <10% of practices and heavily concentrated in three major conurbations and the South. Researchers need to be aware of the analytical challenges posed by clustering, and barriers to accessing alternative PCDs need to be removed.},
 author = {Kontopantelis, Evangelos and Stevens, Richard John and Helms, Peter J. and Edwards, Duncan and Doran, Tim and Ashcroft, Darren M.},
@@ -204,17 +231,4 @@ pmid = {29490968},
 title = {{Spatial distribution of clinical computer systems in primary care in England in 2016 and implications for primary care electronic medical record databases: A cross-sectional population study}},
 volume = {8},
 year = {2018}
-}
-@article{Wolf2019,
-author = {Wolf, Achim and Dedman, Daniel and Campbell, Jennifer and Booth, Helen and Lunn, Darren and Chapman, Jennifer and Myles, Puja},
-doi = {10.1093/ije/dyz034},
-file = {:C\:/Users/mbrxsap3/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Wolf et al. - 2019 - Data resource profile Clinical Practice Research Datalink (CPRD) Aurum.pdf:pdf},
-issn = {14643685},
-journal = {International Journal of Epidemiology},
-number = {6},
-pages = {1740--1740G},
-pmid = {30859197},
-title = {{Data resource profile: Clinical Practice Research Datalink (CPRD) Aurum}},
-volume = {48},
-year = {2019}
 }
