@@ -55,7 +55,7 @@ where $X\in{1,2,3,...}$ and $Y\in{01,02,03,...}$. Note that the prefix to the fi
 
 ## Recommended process for extraction
 
-Our recommended process for developing an analysis-ready dataset is as follows (see Figure 1 for a visual representation of this):
+Our recommended process for developing an analysis-ready dataset is as follows:
 
 * Step 1: Extract initial cohort using extract_cohort() and apply initial inclusion/exclusion criteria which can be applied using only the patient file.
 * Q1: Do the inclusion/exclusion criteria depend on primary care data?
@@ -72,11 +72,6 @@ Our recommended process for developing an analysis-ready dataset is as follows (
 * Step 7: Combine extracted variables into an analysis-ready dataset, also stored as an .rds object.
 
 $^*$type 1 linked data is defined as “linked data required in order to finalise the study population”
-
-```{r, echo = FALSE, out.width = "100%", fig.cap = "Figure 1: Flowchart for recommended data extraction process. Blue boxes denoate data files. Orange boxes denote application of rcprd functions."}
-#![Figure 1: Flowchart for recommended data extraction process](){width = 100%}
-knitr::include_graphics("FlowChart.png")
-```
 
 This process aligns with the process implemented by CPRD when cohort inclusion/exclusion criteria are dependent on linked data (see Q2 and step 4). The process can be done entirely within R using rcprd functions, without any specialist understanding of SQLite databases. We recommend this process because once set up, querying the SQLite database is computationally much quicker than reading each of the raw files into the R workspace and querying these separately. It also reduces the probability of errors induced from creating numerous loops through the raw data files. We now move onto a worked example, where we showcase how to implement the above process using **rcprd** and the functions which are detailed in Table 1.
 
