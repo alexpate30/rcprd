@@ -1,0 +1,227 @@
+# Extract a 'time until' type variable
+
+Query an RSQLite database and a data frame with the time until first
+code of interest or censoring, and an event/censoring indicator.
+
+## Usage
+
+``` r
+extract_time_until(
+  cohort,
+  varname_time = NULL,
+  varname_indicator = NULL,
+  codelist = NULL,
+  codelist_vector = NULL,
+  codelist_df = NULL,
+  indexdt,
+  censdt,
+  censdt_lag = 0,
+  t = NULL,
+  t_varname = TRUE,
+  db_open = NULL,
+  db = NULL,
+  db_filepath = NULL,
+  tab = c("observation", "drugissue", "hes_primary", "death"),
+  table_name = NULL,
+  out_save_disk = FALSE,
+  out_subdir = NULL,
+  out_filepath = NULL,
+  return_output = FALSE
+)
+```
+
+## Arguments
+
+- cohort:
+
+  Cohort of individuals to extract the variable for.
+
+- varname_time:
+
+  Name of time variable in the outputted data frame.
+
+- varname_indicator:
+
+  Name of event/censoring indicator in the outputted data frame.
+
+- codelist:
+
+  Name of codelist (stored on hard disk) to query the database with.
+
+- codelist_vector:
+
+  Vector of codes to query the database with. This takes precedent over
+  `codelist` if both are specified.
+
+- codelist_df:
+
+  data.frame used to specify the codelist.
+
+- indexdt:
+
+  Name of variable in `cohort` which specifies the index date. The
+  extracted variable will be calculated relative to this.
+
+- censdt:
+
+  Name of variable in `cohort` which specifies the censoring date.
+
+- censdt_lag:
+
+  Number of days after censoring where events will still be considered,
+  to account for delays in recording.
+
+- t:
+
+  Number of days after `indexdt` at which to extract the variable.
+
+- t_varname:
+
+  Whether to alter the variable name in the outputted data frame to
+  reflect `t`.
+
+- db_open:
+
+  An open SQLite database connection created using RSQLite::dbConnect,
+  to be queried.
+
+- db:
+
+  Name of SQLITE database on hard disk (stored in "data/sql/"), to be
+  queried.
+
+- db_filepath:
+
+  Full filepath to SQLITE database on hard disk, to be queried.
+
+- tab:
+
+  Table name to query in SQLite database.
+
+- table_name:
+
+  Specify name of table in the SQLite database to be queried, if this is
+  different from `tab`.
+
+- out_save_disk:
+
+  If `TRUE` will attempt to save outputted data frame to directory
+  "data/extraction/".
+
+- out_subdir:
+
+  Sub-directory of "data/extraction/" to save outputted data frame into.
+
+- out_filepath:
+
+  Full filepath and filename to save outputted data frame into.
+
+- return_output:
+
+  If `TRUE` will return outputted data frame into R workspace.
+
+## Value
+
+A data frame with variable patid, a variable containing the time until
+event/censoring, and a variable containing event/censoring indicator.
+
+## Details
+
+Specifying `db` requires a specific underlying directory structure. The
+SQLite database must be stored in "data/sql/" relative to the working
+directory. If the SQLite database is accessed through `db`, the
+connection will be opened and then closed after the query is complete.
+The same is true if the database is accessed through `db_filepath`. A
+connection to the SQLite database can also be opened manually using
+`RSQLite::dbConnect`, and then using the object as input to parameter
+`db_open`. After wards, the connection must be closed manually using
+`RSQLite::dbDisconnect`. If `db_open` is specified, this will take
+precedence over `db` or `db_filepath`.
+
+If `out_save_disk = TRUE`, the data frame will automatically be written
+to an .rds file in a subdirectory "data/extraction/" of the working
+directory. This directory structure must be created in advance.
+`out_subdir` can be used to specify subdirectories within
+"data/extraction/". These options will use a default naming convetion.
+This can be overwritten using `out_filepath` to manually specify the
+location on the hard disk to save. Alternatively, return the data frame
+into the R workspace using `return_output = TRUE` and then save onto the
+hard disk manually.
+
+Codelists can be specified in three ways. The first is to read the
+codelist into R as a character vector and then specify through the
+argument `codelist_vector`. The second is codelists stored on the hard
+disk, which can = be referred to from the `codelist` argument, but
+require a specific underlying directory structure. The codelist on the
+hard disk must be stored in a directory called "codelists/analysis/"
+relative to the working directory. The codelist must be a .csv file, and
+contain a column "medcodeid", "prodcodeid" or "ICD10" depending on the
+input for argument `tab`. The input to argument `codelist` must be a
+character string of the name of the files (excluding the suffix '.csv').
+The third is to specify the codelist through an R data.frame,
+`codelist_df`, this must contain a column "medcodeid", "prodcodeid" or
+"ICD10" depending on the chosen `tab`. Specifying the codelist this way
+will retain all the other columns from `codelist_df` in the queried
+output.
+
+If the time until event is the same as time until censored, this will be
+considered an event (var_indicator = 1)
+
+If `dtcens.lag > 0`, then the time until the event of interest will be
+the time until the minimum of the event of interest, and date of
+censoring.
+
+The argument `table_name` is only necessary if the name of the table
+being queried does not match the CPRD filetype specified in `tab`. This
+will occur when `str_match` is used in `cprd_extract` or
+`add_to_database` to create the .sqlite database.
+
+## Examples
+
+``` r
+## Connect
+aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
+
+## Create SQLite database using cprd_extract
+cprd_extract(aurum_extract,
+filepath = system.file("aurum_data", package = "rcprd"),
+filetype = "observation", use_set = FALSE)
+#>   |                                                                              |                                                                      |   0%
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:57:58.969303
+#>   |                                                                              |=======================                                               |  33%
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:57:58.982609
+#>   |                                                                              |===============================================                       |  67%
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:57:58.994431
+#>   |                                                                              |======================================================================| 100%
+
+## Define cohort and add index date and censoring date
+pat<-extract_cohort(system.file("aurum_data", package = "rcprd"))
+pat$indexdt <- as.Date("01/01/1955", format = "%d/%m/%Y")
+pat$fup_end <- as.Date("01/01/2000", format = "%d/%m/%Y")
+
+## Extract time until event/censoring
+extract_time_until(pat,
+codelist_vector = "187341000000114",
+indexdt = "fup_start",
+censdt = "fup_end",
+db_open = aurum_extract,
+tab = "observation",
+return_output = TRUE)
+#>    patid var_time var_indicator
+#> 1      1    16436             0
+#> 2     10    16436             0
+#> 3     11    16436             0
+#> 4     12    16436             0
+#> 5      2    16436             0
+#> 6      3    16436             0
+#> 7      4    16436             0
+#> 8      5    16436             0
+#> 9      6    16436             0
+#> 10     7    16436             0
+#> 11     8    16436             0
+#> 12     9    16436             0
+
+## clean up
+RSQLite::dbDisconnect(aurum_extract)
+unlink(file.path(tempdir(), "temp.sqlite"))
+```
