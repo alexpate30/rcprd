@@ -92,11 +92,11 @@ cprd_extract(db = aurum_extract,
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
 #>   |                                                                              |                                                                      |   0%
-#> Adding C:/Users/mbrxsap3/AppData/Local/Temp/RtmpuwaPmO/temp_libpath47202dc345af/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 14:39:17.026623
+#> Adding C:/Program Files/R/R-4.5.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:53:51.513214
 #>   |                                                                              |=======================                                               |  33%
-#> Adding C:/Users/mbrxsap3/AppData/Local/Temp/RtmpuwaPmO/temp_libpath47202dc345af/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 14:39:17.055919
+#> Adding C:/Program Files/R/R-4.5.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:53:51.546425
 #>   |                                                                              |===============================================                       |  67%
-#> Adding C:/Users/mbrxsap3/AppData/Local/Temp/RtmpuwaPmO/temp_libpath47202dc345af/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 14:39:17.101152
+#> Adding C:/Program Files/R/R-4.5.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:53:51.578957
 #>   |                                                                              |======================================================================| 100%
 ```
 
