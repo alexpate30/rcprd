@@ -55,7 +55,6 @@ Load rcprd:
 
 ``` r
 library(rcprd)
-#> Loading required package: data.table
 ```
 
 Create cohort based on patient files:
@@ -93,11 +92,11 @@ cprd_extract(db = aurum_extract,
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
 #>   |                                                                              |                                                                      |   0%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2024-11-14 15:20:22.632475
+#> Adding C:/Users/mbrxsap3/AppData/Local/Temp/RtmpuwaPmO/temp_libpath47202dc345af/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 14:39:17.026623
 #>   |                                                                              |=======================                                               |  33%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2024-11-14 15:20:22.746196
+#> Adding C:/Users/mbrxsap3/AppData/Local/Temp/RtmpuwaPmO/temp_libpath47202dc345af/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 14:39:17.055919
 #>   |                                                                              |===============================================                       |  67%
-#> Adding C:/Program Files/R/R-4.4.2/library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2024-11-14 15:20:22.83656
+#> Adding C:/Users/mbrxsap3/AppData/Local/Temp/RtmpuwaPmO/temp_libpath47202dc345af/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 14:39:17.101152
 #>   |                                                                              |======================================================================| 100%
 ```
 
@@ -112,11 +111,11 @@ codelist <- "187341000000114"
 db_query(db_open = aurum_extract,
          tab ="observation",
          codelist_vector = codelist)
-#>     patid consid pracid  obsid obsdate enterdate staffid parentobsid
-#>    <char> <char>  <int> <char>   <num>     <num>  <char>      <char>
-#> 1:      1     42      1     81   -5373      4302      85          35
-#> 2:      2     56      1     77   -5769    -13828      24           4
-#> 3:      6     40      1     41  -14727     -6929      98          80
+#>     patid consid pracid  obsid    obsdate  enterdate staffid parentobsid
+#>    <char> <char>  <int> <char>     <Date>     <Date>  <char>      <char>
+#> 1:      1     42      1     81 1955-04-17 1981-10-12      85          35
+#> 2:      2     56      1     77 1954-03-17 1932-02-22      24           4
+#> 3:      6     40      1     41 1929-09-06 1951-01-12      98          80
 #>          medcodeid value numunitid obstypeid numrangelow numrangehigh probobsid
 #>             <char> <num>     <int>     <int>       <num>        <num>    <char>
 #> 1: 187341000000114    84        79        67          24           22         5
@@ -145,7 +144,7 @@ ho <- extract_ho(pat,
 str(ho)
 #> 'data.frame':    12 obs. of  2 variables:
 #>  $ patid: chr  "1" "2" "3" "4" ...
-#>  $ ho   : int  1 1 0 0 0 1 0 0 0 0 ...
+#>  $ ho   : int  0 1 0 0 0 1 0 0 0 0 ...
 ```
 
 Merge the patient file with the ‘history of’ variable to create an
@@ -156,7 +155,7 @@ analysis-ready dataset:
 analysis.ready.pat <- merge(pat[,c("patid", "fup_start", "gender")], ho, by.x = "patid", by.y = "patid", all.x = TRUE) 
 analysis.ready.pat
 #>    patid  fup_start gender ho
-#> 1      1 2020-01-01      2  1
+#> 1      1 2020-01-01      2  0
 #> 2     10 2020-01-01      2  0
 #> 3     11 2020-01-01      2  0
 #> 4     12 2020-01-01      1  0
