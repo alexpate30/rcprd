@@ -29,7 +29,7 @@ getwd()
 
 ## Create directory system
 create_directory_system(tempdir())
-#> Directory system being created in /tmp/Rtmp0A4veK
+#> Directory system being created in /tmp/RtmpaxuOVr
 file.exists(file.path(tempdir(),"data"))
 #> [1] TRUE
 file.exists(file.path(tempdir(),"code"))
@@ -39,7 +39,7 @@ file.exists(file.path(tempdir(),"codelists"))
 
 ## Return filespace to how it was prior to example
 delete_directory_system(tempdir())
-#> Directory system being deleted from /tmp/Rtmp0A4veK
+#> Directory system being deleted from /tmp/RtmpaxuOVr
 file.exists(file.path(tempdir(),"data"))
 #> [1] FALSE
 file.exists(file.path(tempdir(),"code"))
