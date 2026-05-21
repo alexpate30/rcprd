@@ -421,7 +421,7 @@ db_query <- function(codelist = NULL,
       } else if (tab == "drugissue"){
         where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
         qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
-      }  else if (tab == "consultation"){
+      } else if (tab == "consultation"){
         where_clause <- paste0("`consmedcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
         qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       }

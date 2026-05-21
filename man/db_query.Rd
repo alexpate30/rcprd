@@ -11,7 +11,7 @@ db_query(
   db_filepath = NULL,
   db_cprd = c("aurum", "gold"),
   tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy",
-    "hes_primary", "death"),
+    "hes_primary", "death", "consultation"),
   table_name = NULL,
   codelist_vector = NULL,
   codelist_df = NULL,
