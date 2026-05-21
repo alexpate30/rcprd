@@ -336,7 +336,7 @@ db_query <- function(codelist = NULL,
                      db = NULL,
                      db_filepath = NULL,
                      db_cprd = c("aurum", "gold"),
-                     tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary", "death"),
+                     tab = c("observation", "drugissue", "clinical", "immunisation", "test", "therapy", "hes_primary", "death", "consultation"),
                      table_name = NULL,
                      codelist_vector = NULL,
                      codelist_df = NULL,
@@ -388,6 +388,8 @@ db_query <- function(codelist = NULL,
           codelist <- codelist$medcodeid
         } else if (tab == "drugissue"){
           codelist <- codelist$prodcodeid
+        } else if (tab == "consultation"){
+          codelist <- codelist$medcodeid
         }
       } else if (db_cprd == "gold"){
         if (tab %in% c("clinical", "immunisation", "test")){
@@ -418,6 +420,9 @@ db_query <- function(codelist = NULL,
         qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       } else if (tab == "drugissue"){
         where_clause <- paste0("`prodcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
+        qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
+      }  else if (tab == "consultation"){
+        where_clause <- paste0("`consmedcodeid` IN (", paste("'", codelist, "'", sep = "", collapse = ","), ")")
         qry <- paste("SELECT * FROM", table_name, "WHERE", where_clause)
       }
     } else if (db_cprd == "gold"){
