@@ -127,15 +127,15 @@ for patients in *set1*, will have *set1* in their file name, and then an
 extra suffix 1, 2, 3, etc. The same is true for the DrugIssue files. The
 naming structure for these is as follows:
 
-- aurum_allpatid_set$X$\_extract_patient_001.txt
-- aurum_allpatid_set$X$\_extract_observation_0$Y$.txt
-- aurum_allpatid_set$X$\_extract_drugissue_0$Y$.txt
+- aurum_allpatid_set$`X`$\_extract_patient_001.txt
+- aurum_allpatid_set$`X`$\_extract_observation_0$`Y`$.txt
+- aurum_allpatid_set$`X`$\_extract_drugissue_0$`Y`$.txt
 
-where $X \in {1,2,3,...}$ and $Y \in {01,02,03,...}$. Note that the
+where $`X\in{1,2,3,...}`$ and $`Y\in{01,02,03,...}`$. Note that the
 prefix to the file names may vary (i.e. the ‘aurum_allpatid’ part)
-however we expect the naming convention with regards to ‘set$X$’, file
-type, and ‘0$Y$’ to remain consistent. If this changes in the future, we
-will endeavour to update the **rcprd** as soon as possible.
+however we expect the naming convention with regards to ‘set$`X`$’, file
+type, and ‘0$`Y`$’ to remain consistent. If this changes in the future,
+we will endeavour to update the **rcprd** as soon as possible.
 
 ### 2.2 Recommended process for extraction
 
@@ -156,7 +156,7 @@ follows:
 - Q2: Do the inclusion/exclusion criteria depend on linked data?
   - If yes -\> (proceed to step 4)
   - If no -\> (proceed to step 5)
-- Step 4: Request type 1 linked data$^{*}$ for individuals and apply
+- Step 4: Request type 1 linked data$`^*`$ for individuals and apply
   remaining inclusion/exclusion criteria.
 - Step 5: For patients in the final cohort, add relevant primary care
   data into an SQLite database using cprd_extract(). If an SQLite
@@ -172,7 +172,7 @@ follows:
 - Step 7: Combine extracted variables into an analysis-ready dataset,
   also stored as an .rds object.
 
-$^{*}$type 1 linked data is defined as “linked data required in order to
+$`^*`$type 1 linked data is defined as “linked data required in order to
 finalise the study population”
 
 This process aligns with the process implemented by CPRD when cohort
@@ -210,6 +210,7 @@ fake patients, split across two patient files (*set1* and *set2*) and
 three observation and drugissue files (all *set1*):
 
 ``` r
+
 #devtools::install_github("alexpate30/rcprd")
 #install.packages("rcprd") NOT YET ON CRAN
 library(rcprd)
@@ -241,6 +242,7 @@ vector). Suppose the individuals meeting the exclusion criteria are
 those with patid = 1, 3, 4 and 6. We would then specify:
 
 ``` r
+
 pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"), patids = as.character(c(1,3,4,6)))
 str(pat)
 #> 'data.frame':    4 obs. of  12 variables:
@@ -263,6 +265,7 @@ exclusion criteria themselves. In this case, one would initially create
 a patient file for all individuals.
 
 ``` r
+
 pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 str(pat)
 #> 'data.frame':    12 obs. of  12 variables:
@@ -287,6 +290,7 @@ function
 [`extract_practices()`](https://alexpate30.github.io/rcprd/reference/extract_practices.md),
 
 ``` r
+
 prac <- extract_practices(filepath = system.file("aurum_data", package = "rcprd"))
 str(prac)
 #> 'data.frame':    6 obs. of  4 variables:
@@ -300,6 +304,7 @@ and should then be merged with the patient file based on the `pracid`
 variable:
 
 ``` r
+
 pat <- merge(pat, prac, by.x = "pracid", by.y = "pracid")
 ```
 
@@ -311,6 +316,7 @@ In this example, we define the individuals that met the inclusion
 criteria to be those with patid = 1, 3, 4 and 6.
 
 ``` r
+
 pat <- subset(pat, patid %in% c(1,3,4,6))
 ```
 
@@ -347,6 +353,7 @@ practice this would be a permanent storage location. Specifically,
 file path and SQLite database name.
 
 ``` r
+
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
@@ -366,6 +373,7 @@ to create a new table. For the second and third file, `append = TRUE` is
 specified to append to an existing table.
 
 ``` r
+
 add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_001.txt", package = "rcprd"), 
                 filetype = "observation", subset_patids = c(1,3,4,6), db = aurum_extract, overwrite = TRUE)
 add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_observation_002.txt", package = "rcprd"), 
@@ -382,6 +390,7 @@ from within R is available in *RSQLite*’s documentation (Müller et al.
 2024).
 
 ``` r
+
 db_query(db_open = aurum_extract, tab = "observation", n = 3)
 #>     patid consid pracid  obsid    obsdate  enterdate staffid parentobsid
 #>    <char> <char>  <int> <char>     <Date>     <Date>  <char>      <char>
@@ -407,6 +416,7 @@ database. The table will take the same name as the `filetype` argument,
 unless the `table_name` argument is specified.
 
 ``` r
+
 add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_001.txt", package = "rcprd"), 
                 filetype = "drugissue", subset_patids = c(1,3,4,6), db = aurum_extract, overwrite = TRUE)
 add_to_database(filepath = system.file("aurum_data", "aurum_allpatid_set1_extract_drugissue_002.txt", package = "rcprd"), 
@@ -419,6 +429,7 @@ This table can be queried in the same way, changing the `tab` argument,
 which specifies the name of the table in the SQLite database to query:
 
 ``` r
+
 db_query(db_open = aurum_extract, tab = "drugissue", n = 3)
 #>     patid issueid pracid probobsid drugrecid  issuedate  enterdate staffid
 #>    <char>  <char>  <int>    <char>    <char>     <Date>     <Date>  <char>
@@ -436,6 +447,7 @@ Listing the tables in the SQLite database shows there are now two, named
 *observation* and *drugissue*.
 
 ``` r
+
 RSQLite::dbListTables(aurum_extract)
 #> [1] "drugissue"   "observation"
 ```
@@ -455,6 +467,7 @@ Finally, when manually adding files in this manner, it is good practice
 to close the connection to the SQLite database once finished.
 
 ``` r
+
 RSQLite::dbDisconnect(aurum_extract)
 ```
 
@@ -468,6 +481,7 @@ files in a specified directory that contain a string matching the
 specified file type. Start by creating a connection to the database:
 
 ``` r
+
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
@@ -483,16 +497,17 @@ We then query the first three rows of this database, and note they are
 the same as previously.
 
 ``` r
+
 ### Extract data
 cprd_extract(db = aurum_extract, 
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation", subset_patids = c(1,3,4,6), use_set = FALSE)
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:58:04.715758
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-05-21 15:22:02.950245
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:58:04.730528
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-05-21 15:22:02.964606
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:58:04.743339
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-05-21 15:22:02.979805
 #>   |                                                                              |======================================================================| 100%
 
 ### Query first three rows
@@ -517,16 +532,17 @@ db_query(db_open = aurum_extract, tab = "observation", n = 3)
 The process is then repeated for the drugissue files.
 
 ``` r
+
 ### Extract data
 cprd_extract(db = aurum_extract, 
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "drugissue", subset_patids = c(1,3,4,6), use_set = FALSE)
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2026-02-12 15:58:04.772243
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2026-05-21 15:22:03.00358
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2026-02-12 15:58:04.786154
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2026-05-21 15:22:03.017231
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2026-02-12 15:58:04.797858
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2026-05-21 15:22:03.032139
 #>   |                                                                              |======================================================================| 100%
 
 ### List tables
@@ -600,6 +616,7 @@ the same for all individuals in this cohort, however this will not be
 the case in practice.
 
 ``` r
+
 pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"), patids = as.character(c(1,3,4,6)), set = TRUE)
 pat
 #>   patid pracid usualgpstaffid gender  yob mob emis_ddate regstartdate
@@ -623,6 +640,7 @@ patient id’s with `set == 1` in the data.frame provided to
 `subset_patids`.
 
 ``` r
+
 ### Create connection to SQLite database
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
@@ -633,11 +651,11 @@ cprd_extract(db = aurum_extract,
              subset_patids = pat, 
              use_set = TRUE)
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:58:04.836806
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-05-21 15:22:03.07216
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:58:04.850869
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-05-21 15:22:03.086173
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:58:04.86552
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-05-21 15:22:03.098796
 #>   |                                                                              |======================================================================| 100%
 
 ### Add drugissue files
@@ -647,11 +665,11 @@ cprd_extract(db = aurum_extract,
              subset_patids = pat, 
              use_set = TRUE)
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2026-02-12 15:58:04.878976
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_001.txt 2026-05-21 15:22:03.113944
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2026-02-12 15:58:04.892642
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_002.txt 2026-05-21 15:22:03.131036
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2026-02-12 15:58:04.904971
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_drugissue_003.txt 2026-05-21 15:22:03.14543
 #>   |                                                                              |======================================================================| 100%
 
 ### Query first three rows of each table
@@ -743,6 +761,7 @@ The index date ust be a variable in the cohort dataset, and is specified
 through the `indexdt` argument.
 
 ``` r
+
 ### Define codelist
 my_vector_codelist <- "187341000000114"
 
@@ -772,6 +791,7 @@ type the cohort must also contain a time until censoring variable, which
 can be specified through `censdt`.
 
 ``` r
+
 ### Add an censoring date to cohort
 pat$fup_end <- as.Date("01/01/2024", format = "%d/%m/%Y")
 
@@ -800,6 +820,7 @@ specified for the extracted data through `lower_bound` and
 `upper_bound`.
 
 ``` r
+
 ### Extract test data using extract_test_data
 test_data <- extract_test_data(cohort = pat, 
                           codelist_vector = my_vector_codelist, 
@@ -826,6 +847,7 @@ of interest have been extracted, they can be merged into an
 analysis-ready dataset (step 7).
 
 ``` r
+
 ### Recursive merge
 analysis.ready.pat <- Reduce(function(df1, df2) merge(df1, df2, by = "patid", all.x = TRUE), list(pat[,c("patid", "gender", "yob")], ho, time_until, test_data)) 
 analysis.ready.pat
@@ -843,6 +865,7 @@ extract the same variable for different subgroups of the same codelist.
 For example:
 
 ``` r
+
 my_codelist_df <- data.frame("condition" = "mycondition", medcodeid = c("221511000000115", "187341000000114"), "subgroup" = c("subgroup1", "subgroup2"))
 
 extract_test_data(cohort = pat,
@@ -947,6 +970,7 @@ de-duplicate the output. If the codelist is specified through an R
 also contain the variables from the codelist `data.frame`.
 
 ``` r
+
 my_db_query <- db_query(db_open = aurum_extract,
                         tab ="observation",
                         codelist_vector = "114311000006111")
@@ -985,6 +1009,7 @@ useful when defining ‘history of’ type variables, where we want to know
 if there is any record of a given condition prior to the index date.
 
 ``` r
+
 ### Add an index date to pat
 pat$indexdt <- as.Date("01/01/2020", format = "%d/%m/%Y")
 
@@ -1010,6 +1035,7 @@ query type can be specified as `"med"` or `"test"`. Inputting
 the *medcodeid*.
 
 ``` r
+
 ### Combine query with cohort retaining most recent three records
 combine.query <- combine_query(cohort = pat,
                                db_query = my_db_query,
@@ -1035,6 +1061,7 @@ can be altered through argument `value_na_rm`).We then close the
 connection to the database.
 
 ``` r
+
 ### Extract a history of type variable using extract_ho
 combine.query <- combine_query(cohort = pat,
                                db_query = my_db_query,
@@ -1122,6 +1149,7 @@ section, the user should simply set their working directory as usual
 using [`setwd()`](https://rdrr.io/r/base/getwd.html).
 
 ``` r
+
 ## Set working directory
 knitr::opts_knit$set(root.dir = tempdir())
 ```
@@ -1131,6 +1159,7 @@ Next, the
 function can be used to generate the required directory structure.
 
 ``` r
+
 suppressMessages(
   create_directory_system()
 )
@@ -1147,6 +1176,7 @@ An SQLite database called “mydb.sqlite” is then created in the
 “data/sql” directory, using the same data from the previous examples:
 
 ``` r
+
 ## Open connection
 aurum_extract <- connect_database("data/sql/mydb.sqlite")
 
@@ -1155,11 +1185,11 @@ cprd_extract(db = aurum_extract,
              filepath = system.file("aurum_data", package = "rcprd"),
              filetype = "observation", use_set = FALSE)
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:58:05.473439
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-05-21 15:22:03.817295
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:58:05.491334
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-05-21 15:22:03.832015
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:58:05.503114
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-05-21 15:22:03.843723
 #>   |                                                                              |======================================================================| 100%
 
 ## Disconnect
@@ -1170,6 +1200,7 @@ Finally, a code list called *mylist.csv* is created and saved into the
 *codelists/analysis/* directory.
 
 ``` r
+
 ### Define codelist
 my_codelist <- data.frame(medcodeid = "187341000000114")
 
@@ -1182,6 +1213,7 @@ type variable using the codelist *mylist.csv*, with the output saved
 directly onto the disk drive.
 
 ``` r
+
 extract_ho(cohort = pat,
            codelist = "mylist",
            indexdt = "fup_start",
@@ -1198,6 +1230,7 @@ extracted variable has been saved onto the disk drive in an .rds file,
 and can be read in using:
 
 ``` r
+
 readRDS("data/extraction/var_ho.rds")
 #>   patid ho
 #> 1     1  0
@@ -1333,25 +1366,23 @@ et al. 2025)*
 
 ## 5 References
 
-CPRD. 2022. “CPRD Aurum Data Specification. Version 2.7.”
+CPRD. 2022. *CPRD Aurum Data Specification. Version 2.7*.
 <https://www.cprd.com/>.
 
-———. 2024a. “CPRD Aurum September 2024 Dataset.”
+CPRD. 2024a. *CPRD Aurum September 2024 Dataset*.
 <https://www.cprd.com/doi/cprd-aurum-march-2024-dataset>.
 
-———. 2024b. “CPRD GOLD September 2024 Dataset.”
+CPRD. 2024b. *CPRD GOLD September 2024 Dataset*.
 <https://www.cprd.com/doi/cprd-gold-june-2024-dataset>.
 
-Gulliford, Martin C., Judith Charlton, Mark Ashworth, Anthony G. Rudd,
-Andre Michael Toschke, Brendan Delaney, Andy Grieve, et al. 2009.
+Gulliford, Martin C., Judith Charlton, Mark Ashworth, et al. 2009.
 “Selection of medical diagnostic codes for analysis of electronic
 patient records. Application to stroke in a primary care database.”
 *PLoS ONE* 4 (9). <https://doi.org/10.1371/journal.pone.0007168>.
 
-Herrett, Emily, Arlene M. Gallagher, Krishnan Bhaskaran, Harriet Forbes,
-Rohini Mathur, Tjeerd van Staa, and Liam Smeeth. 2015. “Data Resource
-Profile: Clinical Practice Research Datalink (CPRD).” *International
-Journal of Epidemiology* 44 (3): 827–36.
+Herrett, Emily, Arlene M. Gallagher, Krishnan Bhaskaran, et al. 2015.
+“Data Resource Profile: Clinical Practice Research Datalink (CPRD).”
+*International Journal of Epidemiology* 44 (3): 827–36.
 <https://doi.org/10.1093/ije/dyv098>.
 
 Kontopantelis, Evangelos, Richard John Stevens, Peter J. Helms, Duncan
@@ -1361,14 +1392,13 @@ implications for primary care electronic medical record databases: A
 cross-sectional population study.” *BMJ Open* 8 (2): 1–7.
 <https://doi.org/10.1136/bmjopen-2017-020738>.
 
-Matthewman, Julian, Kirsty Andresen, Anne Suffel, Liang-Yu Lin, Anna
-Schultze, John Tazare, Krishnan Bhaskaran, et al. 2024. “Checklist and
-guidance on creating codelists for electronic health records research.”
-*NIHR Open Research* 4: 20.
+Matthewman, Julian, Kirsty Andresen, Anne Suffel, et al. 2024.
+“Checklist and guidance on creating codelists for electronic health
+records research.” *NIHR Open Research* 4: 20.
 <https://doi.org/10.3310/nihropenres.13550.1>.
 
 Müller, Kirill, Hadley Wickham, David A. James, and Seth Falcon. 2024.
-“RSQLite: SQLite Interface for R.” <https://rsqlite.r-dbi.org>.
+*RSQLite: SQLite Interface for R*. <https://rsqlite.r-dbi.org>.
 
 Padmanabhan, Shivani, Lucy Carty, Ellen Cameron, Rebecca E. Ghosh,
 Rachael Williams, and Helen Strongman. 2019. “Approach to record linkage
@@ -1383,28 +1413,25 @@ processing of Clinical Practice Research Datalink (CPRD) data, and
 create analysis-ready datasets.” *Plos One* 20 (8 August): 1–25.
 <https://doi.org/10.1371/journal.pone.0327229>.
 
-Pye, Stephen R., Thérèse Sheppard, Rebecca M. Joseph, Mark Lunt, Nadyne
-Girard, Jennifer S. Haas, David W. Bates, et al. 2018. “Assumptions made
-when preparing drug exposure data for analysis have an impact on
-results: An unreported step in pharmacoepidemiology studies.”
+Pye, Stephen R., Thérèse Sheppard, Rebecca M. Joseph, et al. 2018.
+“Assumptions made when preparing drug exposure data for analysis have an
+impact on results: An unreported step in pharmacoepidemiology studies.”
 *Pharmacoepidemiology and Drug Safety* 27 (7): 781–88.
 <https://doi.org/10.1002/pds.4440>.
 
-Richardson, Niel, Ian Cook, Nic Crane, Dewey Dunnington, Romain
-Francois, Jonathan Keane, Dragos Moldovan-Grunfeld, Ooms Jeroen, and
-Jacob Wujciak-Jens. 2024. “arrow: Integration to ’Apache’ ’Arrow’.”
-<https://github.com/apache/arrow/>.
+Richardson, Niel, Ian Cook, Nic Crane, et al. 2024. *arrow: Integration
+to ’Apache’ ’Arrow’*. <https://github.com/apache/arrow/>.
 
 Riley, Richard D., Danielle van der Windt, Peter Croft, and Karel G. M.
 Moons. 2019. *Prognosis Research in Healthcare: Concepts, Methods, and
-Impact*. Oxford: Oxford University Press.
+Impact*. Oxford University Press.
 
 Springate, David A., Rosa Parisi, Ivan Olier, David Reeves, and
 Evangelos Kontopantelis. 2017. “rEHR: An R package for manipulating and
 analysing electronic health record data.” *PLoS ONE* 12 (2): 1–25.
 <https://doi.org/10.1371/journal.pone.0171784>.
 
-The Health Foundation Analytics Lab. 2021. “Aurumpipeline.”
+The Health Foundation Analytics Lab. 2021. *Aurumpipeline*.
 <https://github.com/HFAnalyticsLab/aurumpipeline>.
 
 Watson, Jessica, Brian D. Nicholson, Willie Hamilton, and Sarah Price.
@@ -1422,12 +1449,12 @@ Williams, Richard, Evangelos Kontopantelis, Iain Buchan, and Niels Peek.
 A review.” *Journal of Biomedical Informatics* 70: 1–13.
 <https://doi.org/10.1016/j.jbi.2017.04.010>.
 
-Wolf, Achim, Daniel Dedman, Jennifer Campbell, Helen Booth, Darren Lunn,
-Jennifer Chapman, and Puja Myles. 2019. “Data resource profile: Clinical
-Practice Research Datalink (CPRD) Aurum.” *International Journal of
-Epidemiology* 48 (6): 1740–1740G. <https://doi.org/10.1093/ije/dyz034>.
+Wolf, Achim, Daniel Dedman, Jennifer Campbell, et al. 2019. “Data
+resource profile: Clinical Practice Research Datalink (CPRD) Aurum.”
+*International Journal of Epidemiology* 48 (6): 1740–1740G.
+<https://doi.org/10.1093/ije/dyz034>.
 
 Yimer, Belay Birlie, David Selby, Meghna Jani, Goran Nenadic, Mark Lunt,
-and William G. Dixon. 2021. “drugprepr: Prepare Electronic Prescription
-Record Data to Estimate Drug Exposure.”
+and William G. Dixon. 2021. *drugprepr: Prepare Electronic Prescription
+Record Data to Estimate Drug Exposure*.
 <https://cran.r-project.org/package=drugprepr>.

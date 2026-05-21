@@ -217,6 +217,7 @@ being queried does not match 'observation'. This will occur when
 ## Examples
 
 ``` r
+
 ## Connect
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 
@@ -225,11 +226,11 @@ cprd_extract(aurum_extract,
 filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation", use_set = FALSE)
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:57:57.830141
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-05-21 15:21:55.866283
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:57:57.843778
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-05-21 15:21:55.883366
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:57:57.856194
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-05-21 15:21:55.894633
 #>   |                                                                              |======================================================================| 100%
 
 ## Define cohort and add index date

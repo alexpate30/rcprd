@@ -22,6 +22,7 @@ No return value, called to open a database connection.
 ## Examples
 
 ``` r
+
 ## Connect to a database
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 

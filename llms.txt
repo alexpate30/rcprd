@@ -19,6 +19,7 @@ vignette](https://alexpate30.github.io/rcprd/articles/rcprd.html).
 The package can be installed from CRAN as follows:
 
 ``` r
+
 # install.packages("rcprd")
 ```
 
@@ -26,6 +27,7 @@ You can install the development version of rcprd from
 [GitHub](https://github.com/alexpate30/rcprd) with:
 
 ``` r
+
 # install.packages("devtools")
 # devtools::install_github("alexpate30/rcprd")
 ```
@@ -39,12 +41,14 @@ example is simulated.
 Load rcprd:
 
 ``` r
+
 library(rcprd)
 ```
 
 Create cohort based on patient files:
 
 ``` r
+
 pat <- extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 str(pat)
 #> 'data.frame':    12 obs. of  12 variables:
@@ -66,6 +70,7 @@ Connect to an SQLite database (in this example, we create a temporary
 file):
 
 ``` r
+
 aurum_extract <- connect_database(file.path(tempdir(), "temp.sqlite"))
 ```
 
@@ -73,6 +78,7 @@ Read in medical data (from the observation files) and add to the SQLite
 database.
 
 ``` r
+
 cprd_extract(db = aurum_extract, 
              filepath = system.file("aurum_data", package = "rcprd"), 
              filetype = "observation")
@@ -89,6 +95,7 @@ Query the database for specific codes and store in an R object using the
 `db_query` function:
 
 ``` r
+
 ### Create codelist
 codelist <- "187341000000114"
 
@@ -112,6 +119,7 @@ Add an index date to the patient file, which we will extract variables
 relative to:
 
 ``` r
+
 pat$fup_start <- as.Date("01/01/2020", format = "%d/%m/%Y")
 ```
 
@@ -120,6 +128,7 @@ individual has a record with the specified *medcodeid* prior to the
 index date, and equal 0 otherwise.
 
 ``` r
+
 ho <- extract_ho(pat, 
                  codelist_vector = codelist, 
                  indexdt = "fup_start", 
@@ -136,6 +145,7 @@ Merge the patient file with the ‘history of’ variable to create an
 analysis-ready dataset:
 
 ``` r
+
 ### Recursive merge
 analysis.ready.pat <- merge(pat[,c("patid", "fup_start", "gender")], ho, by.x = "patid", by.y = "patid", all.x = TRUE) 
 analysis.ready.pat

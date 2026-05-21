@@ -22,13 +22,14 @@ No return value, deletes directory system in the specified directory.
 ## Examples
 
 ``` r
+
 ## Print current working directory
 getwd()
 #> [1] "/home/runner/work/rcprd/rcprd/docs/reference"
 
 ## Create directory system
 create_directory_system(tempdir())
-#> Directory system being created in /tmp/RtmpKb7HPK
+#> Directory system being created in /tmp/Rtmp0A4veK
 file.exists(file.path(tempdir(),"data"))
 #> [1] TRUE
 file.exists(file.path(tempdir(),"code"))
@@ -38,7 +39,7 @@ file.exists(file.path(tempdir(),"codelists"))
 
 ## Return filespace to how it was prior to example
 delete_directory_system(tempdir())
-#> Directory system being deleted from /tmp/RtmpKb7HPK
+#> Directory system being deleted from /tmp/Rtmp0A4veK
 file.exists(file.path(tempdir(),"data"))
 #> [1] FALSE
 file.exists(file.path(tempdir(),"code"))

@@ -66,11 +66,11 @@ cprd_extract(db = aurum_extract,
 filepath = system.file("aurum_data", package = "rcprd"),
 filetype = "observation")
 #>   |                                                                              |                                                                      |   0%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-02-12 15:57:54.88352
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_001.txt 2026-05-21 15:21:53.087256
 #>   |                                                                              |=======================                                               |  33%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-02-12 15:57:54.898959
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_002.txt 2026-05-21 15:21:53.10008
 #>   |                                                                              |===============================================                       |  67%
-#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-02-12 15:57:54.912479
+#> Adding /home/runner/work/_temp/Library/rcprd/aurum_data/aurum_allpatid_set1_extract_observation_003.txt 2026-05-21 15:21:53.111562
 #>   |                                                                              |======================================================================| 100%
 
 ## Query database for a specific medcode

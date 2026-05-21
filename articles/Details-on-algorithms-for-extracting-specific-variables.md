@@ -1,6 +1,7 @@
 # Details-on-algorithms-for-extracting-specific-variables
 
 ``` r
+
 library(rcprd)
 ```
 
@@ -35,16 +36,16 @@ cohort of interest are then extracted. The algorithm is as follows:
   - The measurements must be non-missing
   - The BMI measurements must be within the user-defined valid range.
 - Rescale height scores to metres. When numunitid is not
-  $\in \{ 173,432,3202\}$, which correspond to metres, the measurement
-  is assumed to be centimetres, and the height measurement is divided by
-  100 (see section 3).
+  $`\in \{173, 432, 3202\}`$, which correspond to metres, the
+  measurement is assumed to be centimetres, and the height measurement
+  is divided by 100 (see section 3).
 - Rescale weight scores to kg. When numunitid is
-  $\in \{ 1691,2318,2997,6265\}$, which correspond to stone, the
+  $`\in \{1691, 2318, 2997, 6265\}`$, which correspond to stone, the
   measurement is converted to kg. All other measurements are assumed to
   be kg (see section 3).
 - Merge height and weight measurements.
   - Calculate BMI for every pair of height and weight measurements using
-    $\frac{weight}{height^{2}}$.
+    $`\frac{weight}{height^{2}}`$.
   - Remove BMI scores that are outside the specified range.
   - Assign observation date to be the height or weight measurement which
     occurred first.
@@ -76,7 +77,7 @@ is as follows:
   (see section 3).
 - Merge total cholesterol and HDL measurements.
   - Calculate cholesterol/HDL for every pair of total cholesterol and
-    HDL measurements using $\frac{totalcholesterol}{HDL}$.
+    HDL measurements using $`\frac{total cholesterol}{HDL}`$.
   - Remove cholesterol/HDL scores that are outside the specified range.
   - Assign observation date to be the total cholesterol or HDL
     measurement which occurred first.
@@ -155,6 +156,7 @@ between 2005 - 2020 using the code lists provided within
 *inst/codelists* directory of **rcprd**.
 
 ``` r
+
 list.files(system.file("codelists", package = "rcprd"))
 #> [1] "edh_bmi_medcodeid.csv"           "edh_chol_medcodeid.csv"         
 #> [3] "edh_cholhdl_ratio_medcodeid.csv" "edh_hdl_medcodeid.csv"          
@@ -208,6 +210,7 @@ is a special case).
 |        NA | 28643841 | NA              | 78.95 |
 
 Unit measurements for cholesterol/high-density lipoprotein ratio
+{.table}
 
 The most common is ‘NA’ (78.95%). The second most common is ‘ratio’
 (12.49%) then 1/1 (2.33%). The confusion about unit of measurement is
@@ -223,7 +226,7 @@ same unit of measurement (ratio).
 |      1155 |    10073 | (Unknown)   |  0.02 |
 |        NA |  2953718 | NA          |  5.67 |
 
-Unit measurements for total cholesterol
+Unit measurements for total cholesterol {.table}
 
 The majority of unit measurements are mmol/L (96.35%) or NA (3.54%). All
 observations are therefore assumed to be recorded in mmol/L.
@@ -235,7 +238,7 @@ observations are therefore assumed to be recorded in mmol/L.
 |       893 |    13292 | (Measured)  |  0.03 |
 |        NA |  1514635 | NA          |  3.54 |
 
-Unit measurements for high-density lipoprotein
+Unit measurements for high-density lipoprotein {.table}
 
 The majority of unit measurements are mmol/L (94.21%) or NA (5.67%). All
 observations are therefore assumed to be recorded in mmol/L.
@@ -254,7 +257,7 @@ observations are therefore assumed to be recorded in mmol/L.
 |      1309 |    57259 | K/M2            |  0.07 |
 |        NA | 48260808 | NA              | 58.08 |
 
-Unit measurements for body mass index
+Unit measurements for body mass index {.table}
 
 The majority of unit measurements are kg/m2 (39.58%), kg/mA2 (1.26%) or
 NA (58.08%). All observations are therefore assumed to be recorded in
@@ -267,13 +270,13 @@ kg/m2.
 |      6265 |    16655 | decimal stones |  0.02 |
 |        NA |  1166808 | NA             |  1.24 |
 
-Unit measurements for weight
+Unit measurements for weight {.table}
 
 The majority of unit measurements are kg (98.67%) or NA (1.24%). Most
 observations are therefore assumed to be recorded in kg, however we also
-know from that for numunitid $\in {1691,2318,2997or6265}$, this refers
-to stone. Observations with these units of measurements are therefore
-converted to kg.
+know from that for numunitid $`\in {1691, 2318, 2997 or 6265}`$, this
+refers to stone. Observations with these units of measurements are
+therefore converted to kg.
 
 | numunitid |        n | Description |  prop |
 |----------:|---------:|:------------|------:|
@@ -283,7 +286,7 @@ converted to kg.
 |       432 |    10404 | metres      |  0.02 |
 |        NA |   772699 | NA          |  1.37 |
 
-Unit measurements for height
+Unit measurements for height {.table}
 
 The majority of unit measurements are cm (96.82%), m (1.7%), metres
 (0.02%) or NA (.37%). All observations with numunit not corresponding to
@@ -299,7 +302,7 @@ enable estimation of BMI.
 |      1207 |    197946 | Systolic    |  0.10 |
 |        NA |    320463 | NA          |  0.16 |
 
-Unit measurements for systolic blood pressure
+Unit measurements for systolic blood pressure {.table}
 
 While there is not a unique algorithm for SBP, we still present the
 results from the database query for this variable. All measurement are

@@ -24,7 +24,7 @@ No return value, creates directory system in the specified directory.
 ``` r
 ## Create directory system compatible with rcprd's automatic saving of output
 create_directory_system(tempdir())
-#> Directory system being created in /tmp/RtmpKb7HPK
+#> Directory system being created in /tmp/Rtmp0A4veK
 file.exists(file.path(tempdir(),"data"))
 #> [1] TRUE
 file.exists(file.path(tempdir(),"code"))
@@ -34,5 +34,5 @@ file.exists(file.path(tempdir(),"codelists"))
 
 ## Return filespace to how it was prior to example
 delete_directory_system(tempdir())
-#> Directory system being deleted from /tmp/RtmpKb7HPK
+#> Directory system being deleted from /tmp/Rtmp0A4veK
 ```

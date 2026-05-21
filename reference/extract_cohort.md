@@ -35,6 +35,7 @@ Data frame with patient information
 ## Examples
 
 ``` r
+
 ## Extract cohort data
 pat<-extract_cohort(filepath = system.file("aurum_data", package = "rcprd"))
 pat
